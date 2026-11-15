@@ -19,6 +19,12 @@ WORKDIR /src/packages/home_backend
 RUN dart pub get
 # Vendoriza as path deps e copia assets/ para build/.
 RUN dart_frog build
+# O binário AOT não resolve assets de pacote: o deploy copia o prompt do
+# catálogo e as regras do feed para build/assets/ (como o deploy.yaml faz).
+RUN cp /src/packages/home_catalog/lib/src/prompt/catalog-prompt.prompt \
+  build/assets/catalog-prompt.prompt
+RUN cp /src/packages/home_timeline/lib/src/feed_rules.json \
+  build/assets/feed_rules.json
 
 WORKDIR /src/packages/home_backend/build
 RUN dart pub get

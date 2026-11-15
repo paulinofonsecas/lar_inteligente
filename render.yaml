@@ -1,0 +1,16 @@
+# Blueprint do Render — backend do Lar Inteligente.
+#
+# "New +" → "Blueprint" apontando para este repositório cria o serviço com
+# estas configurações. Depois, em Environment, informe a URL final do app no
+# Firebase Hosting em HOME_CORS_ALLOWED_ORIGINS (ex.: https://lar-inteligente.web.app).
+services:
+  - type: web
+    name: lar-inteligente-backend
+    runtime: docker
+    dockerfilePath: ./Dockerfile.render
+    plan: free
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: HOME_CORS_ALLOWED_ORIGINS
+        sync: false

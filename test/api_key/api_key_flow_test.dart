@@ -73,7 +73,7 @@ void main() {
       await tester.pumpApp(FakeAgentFactory(), keys: GeminiKeyStore());
       await _settle(tester);
 
-      await tester.tap(find.text('Get a key at aistudio.google.com/apikey'));
+      await tester.tap(find.text('Obtenha uma chave em aistudio.google.com/apikey'));
       await tester.pump();
 
       expect(launcher.launched, ['https://aistudio.google.com/apikey']);
@@ -161,7 +161,7 @@ void main() {
 
       expect(find.byType(ApiKeyDialog), findsOneWidget);
       expect(find.byType(SkeletonSurface), findsOneWidget);
-      expect(find.text('Could not build the dashboard.'), findsNothing);
+      expect(find.text('Não foi possível gerar o painel.'), findsNothing);
       expect(factory.agents.single.sent, isEmpty);
     });
 
@@ -227,7 +227,7 @@ void main() {
 
       await tester.tap(
         find.ancestor(
-          of: find.text('Day'),
+          of: find.text('Dia'),
           matching: find.byWidgetPredicate((widget) => widget is TextButton),
         ),
       );

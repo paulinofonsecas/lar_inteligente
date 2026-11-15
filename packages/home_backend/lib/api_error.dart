@@ -41,7 +41,7 @@ class ApiError {
   /// the response fails validation. Defaults to a generic [message] so
   /// validator details are never leaked to clients.
   const ApiError.unprocessableEntity({
-    this.message = 'Failed to generate a response.',
+    this.message = 'Falha ao gerar uma resposta.',
   }) : statusCode = HttpStatus.unprocessableEntity;
 
   /// {@macro api_error}
@@ -49,21 +49,21 @@ class ApiError {
   /// A `502 Bad Gateway` error, returned when the upstream LLM provider fails.
   /// Defaults to a generic [message] so provider details are never leaked to
   /// clients.
-  const ApiError.badGateway({this.message = 'Failed to generate a response.'})
+  const ApiError.badGateway({this.message = 'Falha ao gerar uma resposta.'})
     : statusCode = HttpStatus.badGateway;
 
   /// {@macro api_error}
   ///
   /// A `503 Service Unavailable` error, returned when every demo slot is taken.
   const ApiError.serviceUnavailable({
-    this.message = 'The demo is full. Try again in a few minutes.',
+    this.message = 'A demo está cheia. Tente de novo em alguns minutos.',
   }) : statusCode = HttpStatus.serviceUnavailable;
 
   /// {@macro api_error}
   ///
   /// A `500 Internal Server Error`. Defaults to a generic [message] so internal
   /// details are never leaked to clients.
-  const ApiError.internalServerError({this.message = 'Internal server error'})
+  const ApiError.internalServerError({this.message = 'Erro interno do servidor'})
     : statusCode = HttpStatus.internalServerError;
 
   /// The HTTP status code of this error.

@@ -10,10 +10,10 @@ AgentTool bakeryOrdersTool(MockDatabase database) {
   return AgentTool(
     name: 'get_bakery_orders',
     description:
-        "Returns a user's bakery orders, such as a cake delivery, with the "
-        'status (pending, confirmed or delivered), when it was confirmed and '
-        'the delivery ETA, plus the messages the bakery was sent. The status '
-        'follows the current time.',
+        'Devolve os pedidos de padaria de um usuário, como a entrega do '
+        'bolo, com o status (pending, confirmed ou delivered), quando foi '
+        'confirmado e o horário previsto da entrega, além das mensagens '
+        'enviadas à padaria. O status segue a hora atual.',
     inputSchema: userIdInputSchema,
     onCall: (args) => database.bakeryFor(requiredUserId(args)),
   );
@@ -28,13 +28,14 @@ AgentTool homeActivityTool(MockDatabase database) {
   return AgentTool(
     name: 'get_home_activity',
     description:
-        'Returns what just happened (`recent`, newest first, the last 30 '
-        'minutes) and what comes next (`next`, soonest first, the next 2 '
-        'hours) for a user, as of the current time. Each moment has a time, '
-        'minutesAgo or inMinutes, a kind (plan, oven, bakery, trip, calendar, '
-        'doorbell, change or inbox), a summary and, when it is about one, the '
-        'deviceId or plan stepId it points at. Call it first to decide which '
-        'cards lead the screen.',
+        'Devolve o que acabou de acontecer (`recent`, do mais novo para o '
+        'mais velho, os últimos 30 minutos) e o que vem a seguir (`next`, do '
+        'mais cedo para o mais tarde, as próximas 2 horas) para um usuário, '
+        'na hora atual. Cada momento tem um horário, minutesAgo ou '
+        'inMinutes, um kind (plan, oven, bakery, trip, calendar, doorbell, '
+        'change ou inbox), um summary e, quando é sobre algo, o deviceId ou '
+        'o stepId do plano que aponta. Chame-a primeiro para decidir quais '
+        'cards abrem a tela.',
     inputSchema: userIdInputSchema,
     onCall: (args) => feed.forUser(requiredUserId(args)),
   );
@@ -49,33 +50,33 @@ AgentTool rescheduleGuestArrivalTool(ScenarioWorld world) {
   return AgentTool(
     name: 'reschedule_guest_arrival',
     description:
-        'Moves when the dinner guests arrive and moves everything that '
-        'depends on it by the same amount: the calendar event, every step of '
-        "the recipe plan, the oven's preheat and roast-in times, and the "
-        "bakery is told. Marco's route is replanned too. Use it when the "
-        'guests come earlier or later, for example "guests are coming an hour '
-        'earlier" is shift_minutes -60. Give exactly one of shift_minutes '
-        '(negative is earlier) or new_arrival. Pass requested_by, the user '
-        'who is asking, so the other people the dinner is assigned to are '
-        'told in their inbox what changed. Returns every change it made, the '
-        'notifications included. Read the data again before you describe the '
-        'result.',
+        'Move a hora de chegada das visitas e move tudo que depende dela na '
+        'mesma proporção: o evento do calendário, todos os passos do plano '
+        'da receita, os horários de preaquecer e assar do forno, e a padaria '
+        'é avisada. A rota do Marco é replanejada também. Use quando as '
+        'visitas chegam mais cedo ou mais tarde, por exemplo "as visitas '
+        'chegam uma hora mais cedo" é shift_minutes -60. Dê exatamente um de '
+        'shift_minutes (negativo é mais cedo) ou new_arrival. Passe '
+        'requested_by, o usuário que pede, para que as outras pessoas a quem '
+        'o jantar está designado sejam avisadas na caixa de entrada do que '
+        'mudou. Devolve toda mudança que fez, notificações incluídas. Leia '
+        'os dados de novo antes de descrever o resultado.',
     inputSchema: const {
       'type': 'object',
       'properties': {
         'shift_minutes': {
           'type': 'integer',
           'description':
-              'Minutes to move the arrival by, negative for earlier.',
+              'Minutos para mover a chegada, negativo para mais cedo.',
         },
         'new_arrival': {
           'type': 'string',
           'description':
-              'The new arrival as HH:mm, 24 hour, for example 18:00.',
+              'A nova chegada como HH:mm, 24 horas, por exemplo 18:00.',
         },
         'requested_by': {
           'type': 'string',
-          'description': 'The user asking, for example "ana".',
+          'description': 'O usuário que pede, por exemplo "ana".',
         },
       },
     },
@@ -95,10 +96,11 @@ AgentTool scheduleOvenTool(ScenarioWorld world) {
   return AgentTool(
     name: 'schedule_oven',
     description:
-        'Sets when the oven preheats and when the roast goes in, as HH:mm in '
-        '24 hour time. The oven confirms the new schedule and reports the '
-        'time it had before. Leave a field out to keep it. Use it to move '
-        'only the oven; use reschedule_guest_arrival when the guests move.',
+        'Define quando o forno preaquece e quando o assado vai ao forno, '
+        'como HH:mm em 24 horas. O forno confirma a nova programação e '
+        'reporta a hora que tinha antes. Deixe um campo de fora para '
+        'mantê-lo. Use para mover só o forno; use reschedule_guest_arrival '
+        'quando as visitas se movem.',
     inputSchema: const {
       'type': 'object',
       'properties': {
@@ -122,15 +124,15 @@ AgentTool requestBakeryDeliveryTool(ScenarioWorld world) {
   return AgentTool(
     name: 'request_bakery_delivery',
     description:
-        'Asks the bakery to deliver the cake to the house instead of someone '
-        'picking it up. Only the person the cake pickup is assigned to (Marco) '
-        'can ask. The order starts pending and the bakery confirms it a '
-        "minute later. The courier leaves at one of the bakery's fixed slots "
-        "(`slot`, HH:mm, default the bakery's default slot) and the trip "
-        'always takes the same fixed duration, so the ETA is the slot plus '
-        'that duration. Once confirmed, the pickup leaves the '
-        "user's calendar and route, and their inbox items are marked read. "
-        'Read get_bakery_orders for the status.',
+        'Pede à padaria que entregue o bolo em casa em vez de alguém buscá-lo. '
+        'Só a pessoa a quem a retirada do bolo está designada (Marco) pode '
+        'pedir. O pedido começa pending e a padaria o confirma um minuto '
+        'depois. O entregador sai em um dos horários fixos da padaria '
+        '(`slot`, HH:mm, padrão o horário padrão da padaria) e a viagem leva '
+        'sempre a mesma duração fixa, então a previsão de chegada é o '
+        'horário mais essa duração. Depois de confirmado, a retirada sai do '
+        'calendário e da rota do usuário, e seus itens de caixa de entrada '
+        'são marcados como lidos. Leia get_bakery_orders para o status.',
     inputSchema: {
       'type': 'object',
       'properties': {
@@ -138,8 +140,9 @@ AgentTool requestBakeryDeliveryTool(ScenarioWorld world) {
         'slot': {
           'type': 'string',
           'description':
-              'The courier departure slot, HH:mm, 24 hour, one of the '
-              'delivery slots the bakery offers. Omit for the default.',
+              'O horário de saída do entregador, HH:mm, 24 horas, um dos '
+              'horários de entrega que a padaria oferece. Omita para o '
+              'padrão.',
         },
       },
       'required': ['user_id'],

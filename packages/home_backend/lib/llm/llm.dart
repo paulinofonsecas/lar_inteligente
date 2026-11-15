@@ -51,10 +51,10 @@ Generate genkitGenerate({
             content: [
               TextPart(
                 text:
-                    'There is no tool called "$name". The A2UI messages are '
-                    'not tools: write them as JSON inside `<a2ui-json>` tags '
-                    'in your reply, after reading the data with the tools you '
-                    'were given.',
+                    'Não existe a ferramenta "$name". As mensagens A2UI não '
+                    'são ferramentas: escreva-as como JSON dentro de tags '
+                    '`<a2ui-json>` na sua resposta, depois de ler os dados '
+                    'com as ferramentas que recebeu.',
               ),
             ],
           ),

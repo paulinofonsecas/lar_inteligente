@@ -21,8 +21,8 @@ void main() {
 
       expect(find.text('Dinner party scene'), findsOneWidget);
       expect(find.text('Pendants 40 %'), findsOneWidget);
-      expect(find.text('On'), findsNothing);
-      await tester.tap(find.text('Start'));
+      expect(find.text('Aceso'), findsNothing);
+      await tester.tap(find.text('Iniciar'));
       expect(ran, isTrue);
     });
 
@@ -31,8 +31,8 @@ void main() {
         const SceneCard(name: 'Quiet', state: SceneState.running),
       );
 
-      expect(find.text('Start'), findsNothing);
-      expect(find.text('On'), findsOneWidget);
+      expect(find.text('Iniciar'), findsNothing);
+      expect(find.text('Aceso'), findsOneWidget);
     });
 
     testWidgets('uses a custom action label and caps settings at four', (
@@ -122,7 +122,7 @@ void main() {
 
       expect(tester.takeException(), isNull);
       expect(find.text('Pendants 40%'), findsNothing);
-      expect(find.text('Start'), findsOneWidget);
+      expect(find.text('Iniciar'), findsOneWidget);
     });
 
     testWidgets('draws without a description or settings', (tester) async {

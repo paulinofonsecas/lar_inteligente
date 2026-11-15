@@ -20,10 +20,10 @@ Future<void> settle(WidgetTester tester) async {
   await tester.pump(const Duration(seconds: 1));
 }
 
-final Finder _askMicrophone = find.byTooltip('Tap to speak');
-final Finder _sendMicrophone = find.byTooltip('Tap to send');
-final Finder _cancel = find.text('Cancel');
-final Finder _card = find.text('Listening to Ana');
+final Finder _askMicrophone = find.byTooltip('Toque para falar');
+final Finder _sendMicrophone = find.byTooltip('Toque para enviar');
+final Finder _cancel = find.text('Cancelar');
+final Finder _card = find.text('Ouvindo Ana');
 
 void main() {
   group('VoiceLayer', () {
@@ -106,11 +106,11 @@ void main() {
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 600));
       // The same pill turns green and says so for a moment, then leaves.
-      expect(find.text('Completed'), findsOneWidget);
+      expect(find.text('Concluído'), findsOneWidget);
       expect(find.byKey(const ValueKey('success')), findsOneWidget);
       await tester.pump(const Duration(seconds: 2));
       await tester.pump(const Duration(seconds: 1));
-      expect(find.text('Completed'), findsNothing);
+      expect(find.text('Concluído'), findsNothing);
     });
 
     testWidgets('a command that fails shows the error on the same pill', (
@@ -131,7 +131,7 @@ void main() {
 
       expect(find.text('Delay dinner'), findsOneWidget);
       expect(find.byKey(const ValueKey('error')), findsOneWidget);
-      expect(find.text('Something went wrong. Try again.'), findsOneWidget);
+      expect(find.text('Algo deu errado. Tente novamente.'), findsOneWidget);
       await tester.pump(const Duration(seconds: 4));
       await tester.pump(const Duration(seconds: 1));
       expect(find.text('Delay dinner'), findsNothing);
@@ -283,7 +283,7 @@ void main() {
       expect(find.byType(MicrophonePermissionDialog), findsOneWidget);
       expect(microphone.requests, 0);
 
-      await tester.tap(find.text('Continue'));
+      await tester.tap(find.text('Continuar'));
       await settle(tester);
       expect(find.byType(MicrophonePermissionDialog), findsNothing);
       expect(microphone.requests, 1);
@@ -309,8 +309,8 @@ void main() {
 
     group('says the microphone is unavailable', () {
       final message = find.text(
-        "The microphone isn't available. Allow it in your browser's site "
-        'settings and try again.',
+        'O microfone não está disponível. Autorize-o nas configurações do site '
+        'no seu navegador e tente novamente.',
       );
 
       testWidgets('when the browser prompt is refused', (tester) async {
@@ -319,7 +319,7 @@ void main() {
 
         await tester.tap(_askMicrophone);
         await settle(tester);
-        await tester.tap(find.text('Continue'));
+        await tester.tap(find.text('Continuar'));
         await tester.pump();
 
         expect(message, findsOneWidget);
@@ -346,7 +346,7 @@ void main() {
       await tester.pump();
 
       expect(
-        find.text("Couldn't turn that into text. Try again."),
+        find.text('Não consegui transformar isso em texto. Tente de novo.'),
         findsOneWidget,
       );
     });

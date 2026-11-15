@@ -24,7 +24,7 @@ void main() {
       // The id is part of the public contract between the API server and any
       // frontend that consumes this catalog. Bumping it is a breaking change
       // for already-generated surfaces.
-      expect(genUiCatalogId, 'verygood.ventures/catalogs/home/v1');
+      expect(genUiCatalogId, 'lar.inteligente/catalogs/home/v1');
     });
 
     test('ships the layout primitives and the home components', () {

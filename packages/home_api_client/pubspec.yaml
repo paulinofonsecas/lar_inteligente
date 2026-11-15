@@ -1,6 +1,6 @@
 name: home_api_client
 description: >-
-  The data layer of the A2UI VGV Smart Home panel: talks to the backend over HTTP and
+  The data layer of the Lar Inteligente panel: talks to the backend over HTTP and
   the /live socket for one visitor's demo world. Pure Dart.
 version: 0.1.0
 publish_to: none

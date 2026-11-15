@@ -16,7 +16,7 @@ class SceneCardComponentDefinition extends GenUiComponent {
   CardFit get fit => const CardFit(
     best: GridCell(5, 1),
     also: [GridCell(4, 1)],
-    note: 'Ready (with its Start button) is drawn 5 columns wide, running 4.',
+    note: 'Pronta (com o botão Iniciar) desenha 5 colunas; rodando, 4.',
   );
 
   @override

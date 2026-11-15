@@ -19,7 +19,7 @@ class OvenService {
 
   Map<String, dynamic> get _traits {
     final oven = _database.deviceOrNull('oven');
-    if (oven == null) throw const MockDataNotFound('There is no oven.');
+    if (oven == null) throw const MockDataNotFound('Não há forno.');
     return oven['traits'] as Map<String, dynamic>;
   }
 

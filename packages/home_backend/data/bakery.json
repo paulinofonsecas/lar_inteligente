@@ -1,6 +1,6 @@
 {
-  "source": "Mocked bakery order desk. A delivery order is confirmed one minute after it is requested. The courier leaves the bakery at one of the fixed departure slots and the trip always takes the same time, so the cake arrives at the slot plus the delivery duration.",
-  "name": "Maple & Crumb Bakery",
+  "source": "Balcão de pedidos de padaria simulado. Um pedido de entrega é confirmado um minuto depois de pedido. O entregador sai da padaria em um dos horários fixos de saída e a viagem leva sempre o mesmo tempo, então o bolo chega no horário escolhido mais a duração da entrega.",
+  "name": "Padaria Maple & Crumb",
   "confirmMinutes": 1,
   "deliveryMinutes": 25,
   "deliverySlots": ["17:20"],

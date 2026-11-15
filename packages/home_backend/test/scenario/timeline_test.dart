@@ -49,16 +49,16 @@ void main() {
       expect(trait('oven', 'OperationalState')['state'], 'stopped');
       expect(
         trait('oven', 'OperationalState')['statusLabel'],
-        'Off · preheats at 6:30 PM',
+        'Desligado · preaquece às 6:30 PM',
       );
-      expect(trait('oven', 'TemperatureControl')['temperatureSetpointF'], 400);
+      expect(trait('oven', 'TemperatureControl')['temperatureSetpoint'], 200);
       expect(trait('oven', 'CookSchedule')['cookMinutes'], 25);
     });
 
-    test('the fridge is 37 °F with the door closed', () {
+    test('the fridge is 3 °C with the door closed', () {
       expect(
-        trait('fridge', 'TemperatureMeasurement')['cabinetTemperatureF'],
-        37,
+        trait('fridge', 'TemperatureMeasurement')['cabinetTemperature'],
+        3,
       );
       expect(trait('fridge', 'BooleanState')['doorOpen'], isFalse);
     });
@@ -86,11 +86,11 @@ void main() {
       final items = (database.todoLists.single['items'] as List<dynamic>)
           .cast<Map<String, dynamic>>();
       expect(items.map((i) => i['label']), [
-        'Rack of lamb',
-        'Red wine',
-        'Fresh thyme',
-        'Shallots',
-        'Sparkling water',
+        'Costela de cordeiro',
+        'Vinho tinto',
+        'Tomilho fresco',
+        'Chalotas',
+        'Água com gás',
       ]);
       expect(
         [
@@ -103,14 +103,14 @@ void main() {
 
     test("Marco's route leaves at 4:55 with enough range for both stops", () {
       expect(stopTimes(), [
-        'Piano lesson pickup 5:15 PM',
-        'Bakery 5:45 PM',
-        'Home 6:30 PM',
+        'Aula de piano (buscar) 5:15 PM',
+        'Padaria 5:45 PM',
+        'Casa 6:30 PM',
       ]);
       expect(trip()['leaveBy'], '2026-10-10T16:55:00');
       expect(
         (trip()['rangeCheck'] as Map)['summary'],
-        'Enough range for both stops',
+        'Autonomia suficiente para as duas paradas',
       );
       expect(trip()['homeAfterGuestsArrive'], isFalse);
     });
@@ -118,7 +118,7 @@ void main() {
     test('the car, the front door and thermostat match', () {
       expect(trait('car', 'Battery'), {'levelPercent': 82, 'rangeMiles': 190});
       expect(trait('front_door', 'DoorLock')['lockState'], 'locked');
-      expect(trait('thermostat', 'Thermostat')['currentTemperatureF'], 67);
+      expect(trait('thermostat', 'Thermostat')['currentTemperature'], 19);
     });
   });
 
@@ -136,7 +136,7 @@ void main() {
     machine.execute('car', DeviceCommand.start);
 
     expect(trait('car', 'Climate')['startAt'], '16:50');
-    expect(trait('car', 'Climate')['statusLabel'], 'Climate on at 4:50 PM');
+    expect(trait('car', 'Climate')['statusLabel'], 'Clima liga às 4:50 PM');
 
     at('16:50');
     expect(trait('car', 'Climate')['state'], 'on');
@@ -192,14 +192,14 @@ void main() {
       final messages = database.bakery['messages'] as List<dynamic>;
       expect(
         (messages.single as Map)['text'],
-        contains('6:00 PM (was 7:00 PM)'),
+        contains('6:00 PM (era 7:00 PM)'),
       );
     });
 
     test("flags Marco's home time as after the guests arrive", () {
       expect(trip()['homeAfterGuestsArrive'], isTrue);
       expect(trip()['notes'], [
-        'Home at 6:30–6:45 PM is after the guests arrive at 6:00 PM.',
+        'Casa às 6:30–6:45 PM é depois da chegada das visitas às 6:00 PM.',
       ]);
       expect(trip()['leaveBy'], '2026-10-10T16:55:00');
     });
@@ -240,7 +240,7 @@ void main() {
       expect(order()['progressPercent'], 0);
       expect(
         order()['statusLabel'],
-        'Pending · courier leaves the bakery at 5:20 PM',
+        'Pendente · entregador sai da padaria às 5:20 PM',
       );
 
       at('17:30');
@@ -248,23 +248,23 @@ void main() {
       expect(order()['progressPercent'], 40);
       expect(
         order()['statusLabel'],
-        'In progress · 15 min left, arrives 5:45 PM',
+        'Em andamento · faltam 15 min, chega às 5:45 PM',
       );
 
       at('17:45');
       expect(order()['status'], 'delivered');
       expect(order()['progressPercent'], 100);
-      expect(order()['statusLabel'], 'Delivered · 5:45 PM');
+      expect(order()['statusLabel'], 'Entregue · 5:45 PM');
     });
 
     test('drops the bakery stop: home by 5:30–5:45, enough for the trip', () {
       world.bakery.requestDelivery('marco');
       at('16:41');
 
-      expect(stopTimes(), ['Piano lesson pickup 5:15 PM', 'Home 5:30 PM']);
+      expect(stopTimes(), ['Aula de piano (buscar) 5:15 PM', 'Casa 5:30 PM']);
       expect(
         (trip()['rangeCheck'] as Map)['summary'],
-        'Enough range for the trip',
+        'Autonomia suficiente para a viagem',
       );
       expect(trip()['homeArrivalRange'], '5:30–5:45 PM');
       expect(trip()['homeAfterGuestsArrive'], isFalse);
@@ -308,7 +308,7 @@ void main() {
       expect((order.single as Map)['status'], 'delivered');
       expect(trait('doorbell', 'DoorbellEvent'), {
         'kind': 'delivery',
-        'label': 'Delivery · cake',
+        'label': 'Entrega · bolo',
         'at': '2026-10-10T17:45:00',
         'handledBy': 'marco',
       });
@@ -359,25 +359,25 @@ void main() {
       expect(plan().first, '17:00 prep ✓');
     });
 
-    test('the oven climbs from 5:30 and is ready at 400 °F at 5:44', () {
+    test('the oven climbs from 5:30 and is ready at 200 °C at 5:44', () {
       at('17:35');
       expect(trait('oven', 'OperationalState')['state'], 'preheating');
       expect(
-        trait('oven', 'TemperatureControl')['currentTemperatureF'],
-        inInclusiveRange(150, 230),
+        trait('oven', 'TemperatureControl')['currentTemperature'],
+        inInclusiveRange(60, 110),
       );
 
       at('17:40');
       expect(
-        trait('oven', 'TemperatureControl')['currentTemperatureF'],
-        inInclusiveRange(280, 330),
+        trait('oven', 'TemperatureControl')['currentTemperature'],
+        inInclusiveRange(120, 170),
       );
 
       at('17:44');
       expect(trait('oven', 'OperationalState')['state'], 'ready');
       expect(
         trait('oven', 'OperationalState')['statusLabel'],
-        'Ready · 400 °F',
+        'Pronto · 200 °C',
       );
     });
 
@@ -386,7 +386,7 @@ void main() {
       expect(trait('oven', 'OperationalState')['state'], 'roasting');
       expect(
         trait('oven', 'OperationalState')['statusLabel'],
-        'Roasting · done 6:10 PM',
+        'Assando · pronto às 6:10 PM',
       );
       expect(plan(), contains('17:45 roast_in ✓'));
 
@@ -403,7 +403,7 @@ void main() {
 
       expect(trait('table_lights', 'LevelControl')['currentLevel'], 40);
       expect(trait('dining_speaker', 'MediaPlayback')['state'], 'playing');
-      expect(trait('thermostat', 'Thermostat')['heatSetpointF'], 70);
+      expect(trait('thermostat', 'Thermostat')['heatSetpoint'], 21);
       expect(plan(), contains('17:45 scene ✓'));
     });
 
@@ -419,7 +419,7 @@ void main() {
       expect(trait('doorbell', 'DoorbellEvent')['kind'], 'guests');
       expect(
         trait('doorbell', 'DoorbellEvent')['label'],
-        'Guests at the front door',
+        'Visitas na porta da frente',
       );
     });
 
@@ -451,7 +451,7 @@ void main() {
 
         machine.execute('oven', DeviceCommand.off);
         expect(trait('oven', 'TemperatureControl')['scheduledStart'], isNull);
-        expect(trait('oven', 'OperationalState')['statusLabel'], 'Off');
+        expect(trait('oven', 'OperationalState')['statusLabel'], 'Desligado');
       },
     );
 

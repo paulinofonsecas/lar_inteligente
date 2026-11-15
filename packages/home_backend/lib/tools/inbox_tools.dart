@@ -8,14 +8,15 @@ AgentTool inboxTool(MockDatabase database) {
   return AgentTool(
     name: 'get_inbox',
     description:
-        "Returns a user's household inbox, newest first, with the count of "
-        'unread items. An item is a change somebody else made that concerns '
-        'this user, such as "Ana moved the dinner party": it has the title, '
-        'the body, who sent it, when, whether it is read and, when one option '
-        'is clearly best for this user, a `suggestion` ({tool, label, '
-        'reason}) naming the tool that would fix their plan. Call it before '
-        'you compose a screen: an unread item leads the screen, and its '
-        'suggestion becomes the heads-up card or chip the user can tap.',
+        'Devolve a caixa de entrada da família de um usuário, da mais nova '
+        'para a mais velha, com a contagem de itens não lidos. Um item é uma '
+        'mudança que outra pessoa fez e que concerne este usuário, como "Ana '
+        'mudou o jantar": traz o título, o corpo, quem enviou, quando, se '
+        'está lido e, quando uma opção é claramente a melhor para este '
+        'usuário, uma `suggestion` ({tool, label, reason}) nomeando a '
+        'ferramenta que resolveria o plano dele. Chame antes de montar uma '
+        'tela: um item não lido abre a tela, e a sugestão dele vira o card '
+        'de alerta ou chip que o usuário pode tocar.',
     inputSchema: userIdInputSchema,
     onCall: (args) => database.inboxFor(requiredUserId(args)),
   );
@@ -26,20 +27,20 @@ AgentTool markInboxReadTool(ScenarioWorld world) {
   return AgentTool(
     name: 'mark_inbox_read',
     description:
-        "Marks a user's unread inbox items as read, or only the one named by "
-        'item_id. Use it when the user dismisses or has dealt with a '
-        'notification. Acting on its suggestion (for example asking the '
-        'bakery to deliver) marks it read by itself.',
+        'Marca como lidos os itens não lidos da caixa de entrada de um '
+        'usuário, ou apenas o nomeado por item_id. Use quando o usuário '
+        'dispensa ou já tratou uma notificação. Agir sobre a sugestão dela '
+        '(por exemplo pedir à padaria que entregue) a marca como lida por si.',
     inputSchema: const {
       'type': 'object',
       'properties': {
         'user_id': {
           'type': 'string',
-          'description': 'The user whose inbox it is, for example "marco".',
+          'description': 'A caixa de entrada de quem, por exemplo "marco".',
         },
         'item_id': {
           'type': 'string',
-          'description': 'One item to mark, for example "inbox_1".',
+          'description': 'Um item a marcar, por exemplo "inbox_1".',
         },
       },
       'required': ['user_id'],

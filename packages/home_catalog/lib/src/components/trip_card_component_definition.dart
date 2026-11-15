@@ -15,7 +15,7 @@ class TripCardComponentDefinition extends GenUiComponent {
   @override
   CardFit get fit => const CardFit(
     best: GridCell(7, 1),
-    note: 'Always half tall. It shows up to 3 stops across its width.',
+    note: 'Sempre meia altura. Mostra até 3 paradas na sua largura.',
   );
 
   @override

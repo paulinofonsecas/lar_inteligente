@@ -52,7 +52,7 @@ String createReply({
     'version': '1.0',
     'createSurface': {
       'surfaceId': surfaceId,
-      'catalogId': 'verygood.ventures/catalogs/home/v1',
+      'catalogId': 'lar.inteligente/catalogs/home/v1',
       'sendDataModel': true,
     },
   },

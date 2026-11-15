@@ -17,8 +17,8 @@ class PlanTimelineComponentDefinition extends GenUiComponent {
     best: GridCell(4, 2),
     also: [GridCell(4, 1), GridCell(5, 1)],
     note:
-        '`density: detailed` takes the full height cell; `density: compact` '
-        'takes a half tall one.',
+        '`density: detailed` toma a célula de altura total; `density: compact` '
+        'toma uma de meia altura.',
   );
 
   @override

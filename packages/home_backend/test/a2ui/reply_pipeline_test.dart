@@ -61,7 +61,7 @@ void main() {
       expect(message['version'], '1.0');
       final create = _body(message, 'createSurface');
       expect(create['surfaceId'], 'dashboard');
-      expect(create['catalogId'], 'verygood.ventures/catalogs/home/v1');
+      expect(create['catalogId'], 'lar.inteligente/catalogs/home/v1');
       expect(create['sendDataModel'], isTrue);
     });
 

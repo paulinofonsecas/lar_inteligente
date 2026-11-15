@@ -20,8 +20,8 @@ class HeadsUpCardComponentDefinition extends GenUiComponent {
     best: GridCell(7, 1),
     also: [GridCell(5, 1)],
     note:
-        'Always half tall, whatever the `variant`: 7 or 5 columns. Two '
-        'actions need 7 columns, at 5 give it one.',
+        'Sempre meia altura, seja qual for o `variant`: 7 ou 5 colunas. Duas '
+        'ações precisam de 7 colunas; com 5, dê-lhe uma.',
   );
 
   @override

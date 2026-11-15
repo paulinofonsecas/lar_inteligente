@@ -28,7 +28,7 @@ void main() {
         ),
       );
 
-      expect(find.text('Suggested'), findsOneWidget);
+      expect(find.text('Sugestões'), findsOneWidget);
       expect(find.text('Chill wine'), findsOneWidget);
       await tester.tap(find.text('Preheat now'));
       expect(tapped, 'preheat');
@@ -37,7 +37,7 @@ void main() {
     testWidgets('keeps its height without suggestions', (tester) async {
       await tester.pumpComponent(const ActionChips(chips: []));
 
-      expect(find.text('Suggested'), findsNothing);
+      expect(find.text('Sugestões'), findsNothing);
       expect(
         tester.getSize(find.byType(SizedBox).last).height,
         ActionPill.height,

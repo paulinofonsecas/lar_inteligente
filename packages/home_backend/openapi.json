@@ -1,14 +1,14 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "A2UI VGV Smart Home API",
+    "title": "Lar Inteligente API",
     "version": "1.0.0",
     "description": "Backend API for generating validated A2UI responses. Download this document and use any OpenAPI 3.1-compatible generator to create a client or an alternative server implementation."
   },
   "servers": [
     {
       "url": "/",
-      "description": "The A2UI VGV Smart Home backend"
+      "description": "O backend do Lar Inteligente"
     }
   ],
   "paths": {

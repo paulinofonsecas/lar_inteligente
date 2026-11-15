@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:app_ui/app_ui.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 /// {@template app_bloc_observer}
 /// Logs the changes and errors of every bloc and cubit.
@@ -37,6 +38,8 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   // Add app-wide configuration here
 
   WidgetsFlutterBinding.ensureInitialized();
+  // The clock formats its date with intl, and the pt tables load lazily.
+  await initializeDateFormatting('pt');
   // Held back by the page's own loading screen, so the first frame already has
   // its kitchen.
   await KitchenLight.preload();

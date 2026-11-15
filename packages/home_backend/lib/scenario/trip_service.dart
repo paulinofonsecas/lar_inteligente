@@ -61,7 +61,7 @@ class TripService {
     );
     miles += home['miles'] as int;
     stops.add({
-      'name': 'Home',
+      'name': 'Casa',
       'arriveBy': wallIso(homeArrival),
       'arriveByRange': homeRange(homeArrival, homeLatest),
       'driveMinutes': home['driveMinutes'],
@@ -101,7 +101,7 @@ class TripService {
     final entries = <(DateTime, Map<String, Object?>)>[
       (
         leaves,
-        {'time': clock12(leaves), 'title': 'Leave home', 'detail': null},
+        {'time': clock12(leaves), 'title': 'Sair de casa', 'detail': null},
       ),
     ];
     final stops = (trip['stops'] as List<dynamic>).cast<Map<String, dynamic>>();
@@ -111,7 +111,7 @@ class TripService {
     };
     for (final stop in stops) {
       final at = parseWall(stop['arriveBy']! as String);
-      final home = stop['name'] == 'Home';
+      final home = stop['name'] == 'Casa';
       final queue = planned[stop['name']]?['note'];
       entries.add((
         at,
@@ -119,9 +119,9 @@ class TripService {
           'time': home ? stop['arriveByRange'] : clock12(at),
           'title': stop['name'],
           'detail': home
-              ? '${stop['driveMinutes']} min drive'
+              ? '${stop['driveMinutes']} min de carro'
               : [
-                  '${stop['driveMinutes']} min drive',
+                  '${stop['driveMinutes']} min de carro',
                   ?queue,
                 ].join(' · '),
         },
@@ -145,7 +145,7 @@ class TripService {
               ? clock12(start)
               : homeRange(start, parseWall(event['end'] as String)),
           'title': event['kind'] == 'guests_arrive'
-              ? 'Guests arrive'
+              ? 'As visitas chegam'
               : event['title'],
           'detail': event['detail'],
         },
@@ -177,9 +177,9 @@ class TripService {
       'enough': enough,
       'summary': enough
           ? (stopCount > 1
-                ? 'Enough range for both stops'
-                : 'Enough range for the trip')
-          : 'Not enough range for the trip',
+                ? 'Autonomia suficiente para as duas paradas'
+                : 'Autonomia suficiente para a viagem')
+          : 'Autonomia insuficiente para a viagem',
     };
   }
 
@@ -206,8 +206,8 @@ class TripService {
     DateTime homeLatest,
     DateTime guests,
   ) =>
-      'Home at ${homeRange(homeArrival, homeLatest)} is after the guests '
-      'arrive at ${clock12(guests)}.';
+      'Casa às ${homeRange(homeArrival, homeLatest)} é depois da chegada '
+      'das visitas às ${clock12(guests)}.';
 
   /// "6:30–6:45 PM" for a window, or "6:30 PM" when there is none.
   static String homeRange(DateTime earliest, DateTime latest) {

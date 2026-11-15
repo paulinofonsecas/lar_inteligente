@@ -22,13 +22,13 @@ void main() {
     });
 
     test('Now within the last minute', () {
-      expect(at(DateTime(2026, 10, 2, 18, 59, 30)), 'Now');
-      expect(at(start), 'Now');
+      expect(at(DateTime(2026, 10, 2, 18, 59, 30)), 'Agora');
+      expect(at(start), 'Agora');
     });
 
     test('Started after the start', () {
-      expect(at(DateTime(2026, 10, 2, 19, 0, 1)), 'Started');
-      expect(at(DateTime(2026, 10, 2, 20)), 'Started');
+      expect(at(DateTime(2026, 10, 2, 19, 0, 1)), 'Começou');
+      expect(at(DateTime(2026, 10, 2, 20)), 'Começou');
     });
 
     test('counts in local minutes for a UTC start', () {
@@ -104,11 +104,11 @@ void main() {
 
       now = DateTime(2026, 10, 2, 18, 59, 30);
       await tester.pump(const Duration(seconds: 30));
-      expect(find.text('Now'), findsOneWidget);
+      expect(find.text('Agora'), findsOneWidget);
 
       now = DateTime(2026, 10, 2, 19, 1);
       await tester.pump(const Duration(seconds: 30));
-      expect(find.text('Started'), findsOneWidget);
+      expect(find.text('Começou'), findsOneWidget);
     });
 
     testWidgets('recomputes at once when startsAt changes', (tester) async {

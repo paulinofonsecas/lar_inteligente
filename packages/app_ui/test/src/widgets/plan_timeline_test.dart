@@ -191,9 +191,9 @@ void main() {
         ),
       );
 
-      expect(find.text('was 6:00 · Ana'), findsOneWidget);
-      expect(find.text('Unchanged'), findsOneWidget);
-      expect(find.text('was 7'), findsOneWidget);
+      expect(find.text('era 6:00 · Ana'), findsOneWidget);
+      expect(find.text('Sem mudança'), findsOneWidget);
+      expect(find.text('era 7'), findsOneWidget);
     });
 
     testWidgets('shows only changed by without a previous time', (

@@ -20,7 +20,7 @@ class DeviceCardComponentDefinition extends GenUiComponent {
   CardFit get fit => const CardFit(
     best: GridCell(4, 1),
     also: [GridCell(3, 1), GridCell(5, 1)],
-    note: 'Always half tall, never a full height cell.',
+    note: 'Sempre meia altura, nunca uma célula de altura total.',
   );
 
   @override

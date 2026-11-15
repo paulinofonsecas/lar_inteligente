@@ -51,7 +51,7 @@ void main() {
         AppColors.ink;
 
     List<String> selectedLabels(WidgetTester tester) => [
-      for (final label in ['Morning', 'Day', 'Sunset', 'Evening'])
+      for (final label in ['Manhã', 'Dia', 'Pôr do sol', 'Noite'])
         if (selected(tester, label)) label,
     ];
 
@@ -66,7 +66,7 @@ void main() {
     ) async {
       await pump(tester);
 
-      for (final label in ['Morning', 'Day', 'Sunset', 'Evening']) {
+      for (final label in ['Manhã', 'Dia', 'Pôr do sol', 'Noite']) {
         expect(button(label), findsOneWidget);
       }
       expect(find.text('Night'), findsNothing);
@@ -87,19 +87,19 @@ void main() {
       await cubit.reset();
       await pump(tester);
 
-      expect(selectedLabels(tester), ['Morning']);
+      expect(selectedLabels(tester), ['Manhã']);
 
       cubit.emit(
         cubit.state.copyWith(now: DayPhase.sunset.on(cubit.state.now)),
       );
       await tester.pump();
-      expect(selectedLabels(tester), ['Sunset']);
+      expect(selectedLabels(tester), ['Pôr do sol']);
 
       cubit.emit(
         cubit.state.copyWith(now: DayPhase.evening.on(cubit.state.now)),
       );
       await tester.pump();
-      expect(selectedLabels(tester), ['Evening']);
+      expect(selectedLabels(tester), ['Noite']);
     });
 
     testWidgets('fills nothing while the clock cannot be reached', (
@@ -114,10 +114,10 @@ void main() {
     testWidgets('nothing works while it loads', (tester) async {
       await pump(tester);
 
-      for (final label in ['Morning', 'Day', 'Sunset', 'Evening']) {
+      for (final label in ['Manhã', 'Dia', 'Pôr do sol', 'Noite']) {
         expect(enabled(tester, label), isFalse);
       }
-      expect(selected(tester, 'Morning'), isTrue);
+      expect(selected(tester, 'Manhã'), isTrue);
     });
 
     testWidgets('choosing a part of the day takes the time there', (
@@ -127,20 +127,20 @@ void main() {
       await cubit.reset();
       await pump(tester);
 
-      await tester.tap(button('Sunset'));
+      await tester.tap(button('Pôr do sol'));
       await tester.pump();
 
       // Locked until the backend has the clock there, but the part of the day
       // is already the one chosen.
-      expect(enabled(tester, 'Day'), isFalse);
-      expect(selectedLabels(tester), ['Sunset']);
+      expect(enabled(tester, 'Dia'), isFalse);
+      expect(selectedLabels(tester), ['Pôr do sol']);
 
       await settle(tester);
 
       expect(cubit.state.now, DateTime.utc(2026, 10, 10, 17, 40));
       expect(live.moves.last, DateTime.utc(2026, 10, 10, 17, 40));
-      expect(selectedLabels(tester), ['Sunset']);
-      expect(enabled(tester, 'Day'), isTrue);
+      expect(selectedLabels(tester), ['Pôr do sol']);
+      expect(enabled(tester, 'Dia'), isTrue);
     });
 
     testWidgets('goes through every part of the day, and back', (
@@ -149,9 +149,9 @@ void main() {
       await cubit.reset();
       await pump(tester);
       final expected = {
-        'Day': DateTime.utc(2026, 10, 10, 16, 30),
-        'Evening': DateTime.utc(2026, 10, 10, 20, 40),
-        'Morning': DateTime.utc(2026, 10, 10, 7, 30),
+        'Dia': DateTime.utc(2026, 10, 10, 16, 30),
+        'Noite': DateTime.utc(2026, 10, 10, 20, 40),
+        'Manhã': DateTime.utc(2026, 10, 10, 7, 30),
       };
 
       for (final entry in expected.entries) {
@@ -169,10 +169,10 @@ void main() {
       cubit.emit(cubit.state.copyWith(status: TimelineStatus.failure));
       await pump(tester);
 
-      expect(find.text("Can't reach the demo clock"), findsOneWidget);
-      expect(enabled(tester, 'Day'), isTrue);
+      expect(find.text('Não é possível alcançar o relógio da demo'), findsOneWidget);
+      expect(enabled(tester, 'Dia'), isTrue);
 
-      await tester.tap(button('Day'));
+      await tester.tap(button('Dia'));
       await tester.pump();
       await tester.pump();
 
@@ -193,7 +193,7 @@ void main() {
         tester.getRect(find.byType(TimelineBar)).width,
         lessThanOrEqualTo(420),
       );
-      for (final label in ['Morning', 'Day', 'Sunset', 'Evening']) {
+      for (final label in ['Manhã', 'Dia', 'Pôr do sol', 'Noite']) {
         expect(
           tester.getRect(button(label)).right,
           lessThanOrEqualTo(420),
@@ -206,7 +206,7 @@ void main() {
       final semantics = tester.ensureSemantics();
       await pump(tester);
 
-      expect(find.bySemanticsLabel('Demo time'), findsOneWidget);
+      expect(find.bySemanticsLabel('Horário da demo'), findsOneWidget);
       semantics.dispose();
     });
   });

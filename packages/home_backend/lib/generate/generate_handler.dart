@@ -13,18 +13,18 @@ import 'package:home_catalog/home_catalog.dart' show dashboardSurfaceId;
 import 'package:logging/logging.dart';
 
 const _retryInstruction =
-    'Reissue your response, fixing every error above: use only components '
-    'from the catalog and only the ids and commands listed as valid.';
+    'Reenvie sua resposta corrigindo todos os erros acima: use apenas '
+    'componentes do catálogo e apenas os ids e comandos listados como válidos.';
 
 const _createNote =
-    'The surface "$dashboardSurfaceId" does not exist yet: send a '
-    '`createSurface` for it, then an `updateComponents` with every component '
-    'of the dashboard.';
+    'A superfície "$dashboardSurfaceId" ainda não existe: envie um '
+    '`createSurface` para ela, depois um `updateComponents` com todos os '
+    'componentes do painel.';
 
 const _updateNote =
-    'The surface "$dashboardSurfaceId" is already on screen: do not send '
-    '`createSurface`. Send one `updateComponents` for it with every component '
-    'of the new dashboard, `root` included.';
+    'A superfície "$dashboardSurfaceId" já está na tela: não envie '
+    '`createSurface`. Envie um `updateComponents` para ela com todos os '
+    'componentes do novo painel, `root` incluído.';
 
 /// Runs the generation shared by `POST /generate` and `POST /action`: the
 /// system prompt, the conversation, the model, the reply pipeline and one

@@ -295,7 +295,7 @@ class _Sub extends StatelessWidget {
     final detail = entry.detail;
     if (previous != null || changedBy != null) {
       final text = [
-        if (previous != null) 'was $previous',
+        if (previous != null) 'era $previous',
         ?changedBy,
       ].join(' · ');
       return Text(
@@ -309,7 +309,7 @@ class _Sub extends StatelessWidget {
       );
     }
     final text = entry.status == PlanEntryStatus.unchanged
-        ? 'Unchanged'
+        ? 'Sem mudança'
         : detail;
     if (text == null) return const SizedBox.shrink();
     return Text(

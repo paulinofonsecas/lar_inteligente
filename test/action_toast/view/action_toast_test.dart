@@ -90,7 +90,7 @@ void main() {
       await pump(tester, loading);
       expect(find.text('Turn off oven'), findsOneWidget);
       expect(find.byKey(const ValueKey('loading')), findsOneWidget);
-      expect(find.text('Cancel'), findsNothing);
+      expect(find.text('Cancelar'), findsNothing);
     });
 
     testWidgets('a cancellable command offers a way out', (tester) async {
@@ -102,7 +102,7 @@ void main() {
           cancellable: true,
         ),
       );
-      await tester.tap(find.text('Cancel'));
+      await tester.tap(find.text('Cancelar'));
       expect(cancelled, 1);
     });
 
@@ -110,7 +110,7 @@ void main() {
       await pump(tester, loading);
       await pump(tester, success);
       await tester.pump(const Duration(milliseconds: 100));
-      expect(find.text('Completed'), findsOneWidget);
+      expect(find.text('Concluído'), findsOneWidget);
       expect(find.text('Turn off oven'), findsNothing);
       await tester.pump(const Duration(seconds: 1));
       expect(find.byKey(const ValueKey('success')), findsOneWidget);
@@ -128,7 +128,7 @@ void main() {
 
       expect(shaken, isNot(still));
       expect(find.byKey(const ValueKey('error')), findsOneWidget);
-      expect(find.text('Something went wrong. Try again.'), findsOneWidget);
+      expect(find.text('Algo deu errado. Tente novamente.'), findsOneWidget);
     });
 
     testWidgets('error shows the backend reason when there is one', (
@@ -144,7 +144,7 @@ void main() {
       );
       await tester.pump(const Duration(seconds: 1));
       expect(find.text('The oven is offline'), findsOneWidget);
-      expect(find.text('Something went wrong. Try again.'), findsNothing);
+      expect(find.text('Algo deu errado. Tente novamente.'), findsNothing);
     });
 
     testWidgets('reduced motion skips the shake', (tester) async {

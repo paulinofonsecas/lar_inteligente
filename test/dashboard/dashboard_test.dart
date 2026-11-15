@@ -62,7 +62,7 @@ void main() {
 
       final lockup = find.byType(BrandLockup);
       expect(
-        find.bySemanticsLabel('Very Good Ventures, A2UI Smart Home'),
+        find.bySemanticsLabel('Lar Inteligente'),
         findsOneWidget,
       );
       expect(

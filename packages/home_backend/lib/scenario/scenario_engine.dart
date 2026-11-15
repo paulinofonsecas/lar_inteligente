@@ -26,7 +26,7 @@ class ScenarioEngine {
     this._onOrderChanged,
   });
 
-  static const _ambientF = 72;
+  static const _ambientC = 22;
   static const _doorbellWindow = ActivityFeed.arrivalWindow;
   static const _preconditionLead = Duration(minutes: 5);
 
@@ -108,12 +108,12 @@ class ScenarioEngine {
     final departs = clock12(parseWall(order['departsAt'] as String));
     final eta = parseWall(order['eta'] as String);
     return switch (status) {
-      'pending' => 'Waiting for the bakery to confirm',
-      'confirmed' => 'Pending · courier leaves the bakery at $departs',
+      'pending' => 'Aguardando a padaria confirmar',
+      'confirmed' => 'Pendente · entregador sai da padaria às $departs',
       'out_for_delivery' =>
-        'In progress · ${eta.difference(now).inMinutes} min left, '
-            'arrives ${clock12(eta)}',
-      _ => 'Delivered · ${clock12(eta)}',
+        'Em andamento · faltam ${eta.difference(now).inMinutes} min, '
+            'chega às ${clock12(eta)}',
+      _ => 'Entregue · ${clock12(eta)}',
     };
   }
 
@@ -198,10 +198,10 @@ class ScenarioEngine {
     final control = traits['TemperatureControl'] as Map<String, dynamic>;
     final op = traits['OperationalState'] as Map<String, dynamic>;
     final cook = traits['CookSchedule'] as Map<String, dynamic>;
-    final target = control['temperatureSetpointF'] as int;
+    final target = control['temperatureSetpoint'] as int;
     final start = control['scheduledStart'] as String?;
     if (start == null) {
-      _ovenIs(op, control, cook, 'stopped', 'Off', _ambientF);
+      _ovenIs(op, control, cook, 'stopped', 'Desligado', _ambientC);
       return;
     }
     final preheat = atHhmm(now, start);
@@ -223,24 +223,25 @@ class ScenarioEngine {
         control,
         cook,
         'stopped',
-        'Off · preheats at ${clock12(preheat)}',
-        _ambientF,
+        'Desligado · preaquece às ${clock12(preheat)}',
+        _ambientC,
       );
     } else if (now.isBefore(ready)) {
       final fraction =
           now.difference(preheat).inSeconds /
           ready.difference(preheat).inSeconds;
-      final degrees = (_ambientF + (target - _ambientF) * fraction).round();
+      final degrees =
+          (_ambientC + (target - _ambientC) * fraction).round();
       _ovenIs(
         op,
         control,
         cook,
         'preheating',
-        'Preheating · $degrees °F',
+        'Preaquecendo · $degrees °C',
         degrees,
       );
     } else if (done == null || now.isBefore(cookStart)) {
-      _ovenIs(op, control, cook, 'ready', 'Ready · $target °F', target);
+      _ovenIs(op, control, cook, 'ready', 'Pronto · $target °C', target);
     } else if (now.isBefore(done)) {
       cook['remainingMinutes'] = done.difference(now).inMinutes;
       _ovenIs(
@@ -248,11 +249,11 @@ class ScenarioEngine {
         control,
         cook,
         'roasting',
-        'Roasting · done ${clock12(done)}',
+        'Assando · pronto às ${clock12(done)}',
         target,
       );
     } else {
-      _ovenIs(op, control, cook, 'done', 'Done · roast is ready', target);
+      _ovenIs(op, control, cook, 'done', 'Pronto · o assado está no ponto', target);
     }
   }
 
@@ -266,7 +267,7 @@ class ScenarioEngine {
   ) {
     op['state'] = state;
     op['statusLabel'] = label;
-    control['currentTemperatureF'] = degrees;
+    control['currentTemperature'] = degrees;
   }
 
   // ---- car climate --------------------------------------------------------
@@ -281,13 +282,15 @@ class ScenarioEngine {
     final startAt = climate['startAt'] as String?;
     if (startAt == null) {
       climate['state'] = 'off';
-      climate['statusLabel'] = 'Climate off';
+      climate['statusLabel'] = 'Clima desligado';
       return;
     }
     final at = atHhmm(now, startAt);
     final on = !now.isBefore(at);
     climate['state'] = on ? 'on' : 'scheduled';
-    climate['statusLabel'] = on ? 'Climate on' : 'Climate on at ${clock12(at)}';
+    climate['statusLabel'] = on
+        ? 'Clima ligado'
+        : 'Clima liga às ${clock12(at)}';
   }
 
   // ---- doorbell -----------------------------------------------------------
@@ -327,7 +330,7 @@ class ScenarioEngine {
       rings.add({
         'at': eta,
         'kind': 'delivery',
-        'label': 'Delivery · cake',
+        'label': 'Entrega · bolo',
         'handledBy': _homeBy(order['userId'] as String, eta),
       });
     }
@@ -336,7 +339,7 @@ class ScenarioEngine {
       rings.add({
         'at': parseWall(event['start'] as String),
         'kind': 'guests',
-        'label': 'Guests at the front door',
+        'label': 'Visitas na porta da frente',
         'handledBy': null,
       });
     }

@@ -44,11 +44,11 @@ class DeviceFiller {
   };
 
   static const _units = {
-    'oven': '°F',
-    'fridge': '°F',
+    'oven': '°C',
+    'fridge': '°C',
     'table_lights': '%',
     'dining_speaker': '%',
-    'thermostat': '°F',
+    'thermostat': '°C',
   };
 
   /// The cards to add, best first, for devices not in [shown].

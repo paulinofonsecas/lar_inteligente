@@ -40,7 +40,7 @@ class ActionChips extends StatelessWidget {
   /// {@macro action_chips}
   const ActionChips({
     required this.chips,
-    this.label = 'Suggested',
+    this.label = 'Sugestões',
     super.key,
   });
 

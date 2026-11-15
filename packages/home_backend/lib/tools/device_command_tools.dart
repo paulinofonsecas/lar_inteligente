@@ -13,28 +13,27 @@ AgentTool runDeviceCommandTool(DeviceStateMachine machine) {
   return AgentTool(
     name: 'run_device_command',
     description:
-        'Changes one home device and returns what changed. Use it when the '
-        'user asks you to do something to a device, then read the data again '
-        'before you describe the result. Commands: on and off (run or stop, '
-        'light, arm, open or lock, by the device), start, stop, open, close, '
-        'lock, unlock, add_time '
-        '(timer, value is minutes, default 5), set_level (value 0 to 100), '
-        'set_temperature (value in F), up and down (one step on the main '
-        'setting). A command that finds the device already there changes '
-        'nothing.',
+        'Muda um dispositivo de casa e devolve o que mudou. Use quando o '
+        'usuário pedir algo num dispositivo, e leia os dados de novo antes '
+        'de descrever o resultado. Comandos: on e off (ligar ou desligar, '
+        'acender, armar, abrir ou trancar, conforme o dispositivo), start, '
+        'stop, open, close, lock, unlock, add_time '
+        '(timer, value em minutos, padrão 5), set_level (value de 0 a 100), '
+        'set_temperature (value em °C), up e down (um passo no ajuste '
+        'principal). Um comando que encontra o dispositivo já nesse estado '
+        'não muda nada.',
     inputSchema: {
       'type': 'object',
       'properties': {
         'device_id': {
           'type': 'string',
-          'description': 'The device id, for example "oven" or "garage_door".',
+          'description': 'O id do dispositivo, por exemplo "oven".',
         },
         'command': {'type': 'string', 'enum': DeviceCommand.wireNames},
         'value': {
           'type': 'number',
           'description':
-              'The number set_level, set_temperature and add_time '
-              'take.',
+              'O número que set_level, set_temperature e add_time recebem.',
         },
       },
       'required': ['device_id', 'command'],
@@ -43,7 +42,8 @@ AgentTool runDeviceCommandTool(DeviceStateMachine machine) {
       final command = DeviceCommand.tryParse(args['command']);
       if (command == null) {
         throw CommandRejected(
-          'Unknown command. Use one of: ${DeviceCommand.wireNames.join(', ')}.',
+          'Comando desconhecido. Use um de: '
+          '${DeviceCommand.wireNames.join(', ')}.',
         );
       }
       return machine
@@ -62,15 +62,15 @@ AgentTool runSceneTool(DeviceStateMachine machine) {
   return AgentTool(
     name: 'run_scene',
     description:
-        'Starts a scene, a named group of device settings such as the dinner '
-        'party scene, and returns what changed. Scenes are the automations '
-        'marked kind "scene" in the Google Home data.',
+        'Inicia uma cena, um grupo nomeado de ajustes de dispositivos como a '
+        'cena de jantar, e devolve o que mudou. Cenas são as automations '
+        'marcadas kind "scene" nos dados do Google Home.',
     inputSchema: const {
       'type': 'object',
       'properties': {
         'scene_id': {
           'type': 'string',
-          'description': 'The scene id, for example "dinner_party".',
+          'description': 'O id da cena, por exemplo "dinner_party".',
         },
       },
       'required': ['scene_id'],
@@ -84,15 +84,16 @@ AgentTool setTodoItemTool(DeviceStateMachine machine) {
   return AgentTool(
     name: 'set_todo_item',
     description:
-        'Ticks or unticks an item on a to-do list and returns what changed.',
+        'Marca ou desmarca um item de uma lista de tarefas e devolve o que '
+        'mudou.',
     inputSchema: const {
       'type': 'object',
       'properties': {
-        'item_id': {'type': 'string', 'description': 'The item id.'},
+        'item_id': {'type': 'string', 'description': 'O id do item.'},
         'checked': {'type': 'boolean'},
         'list_id': {
           'type': 'string',
-          'description': 'Optional list id, for example "shopping".',
+          'description': 'Id opcional da lista, por exemplo "shopping".',
         },
       },
       'required': ['item_id', 'checked'],
@@ -100,7 +101,7 @@ AgentTool setTodoItemTool(DeviceStateMachine machine) {
     onCall: (args) {
       final checked = args['checked'];
       if (checked is! bool) {
-        throw const CommandRejected('checked must be true or false.');
+        throw const CommandRejected('checked deve ser true ou false.');
       }
       return machine
           .toggleTodo(
@@ -116,7 +117,7 @@ AgentTool setTodoItemTool(DeviceStateMachine machine) {
 String _text(Map<String, dynamic> args, String key) {
   final value = args[key];
   if (value is! String || value.isEmpty) {
-    throw CommandRejected('$key is required.');
+    throw CommandRejected('$key é obrigatório.');
   }
   return value;
 }

@@ -16,7 +16,7 @@ class ChangeSummaryComponentDefinition extends GenUiComponent {
   @override
   CardFit get fit => const CardFit(
     best: GridCell(8, 1),
-    note: 'Always half tall. It shows 4 changes.',
+    note: 'Sempre meia altura. Mostra 4 mudanças.',
   );
 
   @override

@@ -1,10 +1,10 @@
 {
-  "source": "Synthetic to-do lists. Not Google Home data.",
+  "source": "Listas de tarefas sintéticas. Não são dados do Google Home.",
   "lists": [
     {
       "id": "shopping",
-      "title": "Shopping",
-      "subtitle": "Missing from the fridge \u00b7 dinner for 6",
+      "title": "Compras",
+      "subtitle": "Faltam na geladeira · jantar para 6",
       "dueBeforeStep": "prep",
       "owners": [
         "ana"
@@ -14,32 +14,32 @@
       "items": [
         {
           "id": "lamb",
-          "label": "Rack of lamb",
-          "detail": "2 racks",
+          "label": "Costela de cordeiro",
+          "detail": "2 peças",
           "checked": true
         },
         {
           "id": "wine",
-          "label": "Red wine",
-          "detail": "2 bottles",
+          "label": "Vinho tinto",
+          "detail": "2 garrafas",
           "checked": true
         },
         {
           "id": "thyme",
-          "label": "Fresh thyme",
-          "detail": "1 bunch",
+          "label": "Tomilho fresco",
+          "detail": "1 maço",
           "checked": false
         },
         {
           "id": "shallots",
-          "label": "Shallots",
+          "label": "Chalotas",
           "detail": "6",
           "checked": true
         },
         {
           "id": "water",
-          "label": "Sparkling water",
-          "detail": "2 bottles",
+          "label": "Água com gás",
+          "detail": "2 garrafas",
           "checked": true
         }
       ]

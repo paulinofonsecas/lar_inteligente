@@ -65,16 +65,16 @@ void main() {
       final factory = FakeAgentFactory();
       await tester.pumpApp(factory, usersRepository: repository);
 
-      expect(find.text('Could not load the household.'), findsOneWidget);
+      expect(find.text('Não foi possível carregar a família.'), findsOneWidget);
       expect(find.text('Ana'), findsNothing);
       expect(factory.agents, isEmpty);
 
-      await tester.tap(find.text('Try again'));
+      await tester.tap(find.text('Tentar novamente'));
       await tester.pump();
       await tester.pump();
 
       expect(repository.calls, 2);
-      expect(find.text('Could not load the household.'), findsNothing);
+      expect(find.text('Não foi possível carregar a família.'), findsNothing);
       expect(find.text('Marco'), findsOneWidget);
       expect(factory.agents, hasLength(1));
     });
@@ -84,7 +84,7 @@ void main() {
         FakeAgentFactory(),
         usersRepository: FakeUsersRepository(users: const []),
       );
-      expect(find.text('Could not load the household.'), findsOneWidget);
+      expect(find.text('Não foi possível carregar a família.'), findsOneWidget);
     });
 
     testWidgets('the first request carries the selected user prompt', (

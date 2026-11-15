@@ -9,10 +9,10 @@ import 'package:home_backend/validation/layout_validator.dart';
 import 'package:home_catalog/home_catalog.dart';
 
 const _noMessageError =
-    'Your response contained no A2UI message. Every response must include '
-    'the dashboard as A2UI messages inside `<a2ui-json>` tags. Present all '
-    'information, including tool results, as A2UI components rather than '
-    'plain text.';
+    'Sua resposta não continha mensagem A2UI. Toda resposta deve incluir '
+    'o painel como mensagens A2UI dentro de tags `<a2ui-json>`. Apresente '
+    'toda informação, incluindo resultados de ferramentas, como componentes '
+    'A2UI e não como texto simples.';
 
 /// {@template reply_pipeline}
 /// Turns the model's reply into the A2UI 1.0 messages the panel applies, or

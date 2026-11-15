@@ -4,42 +4,42 @@
   "now": "2026-10-10T16:30:00",
   "structure": {
     "id": "structure-rivera-home",
-    "name": "Rivera Home"
+    "name": "Casa Rivera"
   },
   "rooms": [
     {
       "id": "kitchen",
-      "name": "Kitchen"
+      "name": "Cozinha"
     },
     {
       "id": "dining_room",
-      "name": "Dining Room"
+      "name": "Sala de jantar"
     },
     {
       "id": "living_room",
-      "name": "Living Room"
+      "name": "Sala de estar"
     },
     {
       "id": "garage",
-      "name": "Garage"
+      "name": "Garagem"
     },
     {
       "id": "entry",
-      "name": "Entry"
+      "name": "Entrada"
     },
     {
       "id": "utility",
-      "name": "Utility"
+      "name": "Lavanderia"
     },
     {
       "id": "upstairs_office",
-      "name": "Upstairs Office"
+      "name": "Escritório de cima"
     }
   ],
   "devices": [
     {
       "id": "oven",
-      "name": "Oven",
+      "name": "Forno",
       "room": "kitchen",
       "type": "OvenDevice",
       "usedBy": [
@@ -47,7 +47,7 @@
       ],
       "traits": {
         "TemperatureControl": {
-          "temperatureSetpointF": 400,
+          "temperatureSetpoint": 200,
           "scheduledStart": "18:00"
         },
         "OperationalState": {
@@ -60,7 +60,7 @@
     },
     {
       "id": "fridge",
-      "name": "Fridge",
+      "name": "Geladeira",
       "room": "kitchen",
       "type": "RefrigeratorDevice",
       "usedBy": [
@@ -68,7 +68,7 @@
       ],
       "traits": {
         "TemperatureMeasurement": {
-          "cabinetTemperatureF": 37
+          "cabinetTemperature": 3
         },
         "BooleanState": {
           "doorOpen": false
@@ -83,7 +83,7 @@
     },
     {
       "id": "kitchen_pendants",
-      "name": "Pendant lights",
+      "name": "Luzes de pendente",
       "room": "kitchen",
       "type": "DimmableLightDevice",
       "usedBy": [
@@ -104,7 +104,7 @@
     },
     {
       "id": "range_hood",
-      "name": "Range hood",
+      "name": "Coifa",
       "room": "kitchen",
       "type": "ExtractorHoodDevice",
       "usedBy": [
@@ -122,7 +122,7 @@
     },
     {
       "id": "dishwasher",
-      "name": "Dishwasher",
+      "name": "Lava-louças",
       "room": "kitchen",
       "type": "DishwasherDevice",
       "usedBy": [
@@ -139,7 +139,7 @@
     },
     {
       "id": "table_lights",
-      "name": "Table lights",
+      "name": "Luzes da mesa",
       "room": "dining_room",
       "type": "ColorTemperatureLightDevice",
       "usedBy": [
@@ -164,7 +164,7 @@
     },
     {
       "id": "dining_speaker",
-      "name": "Speaker",
+      "name": "Caixa de som",
       "room": "dining_room",
       "type": "SpeakerDevice",
       "usedBy": [
@@ -190,7 +190,7 @@
     },
     {
       "id": "thermostat",
-      "name": "Thermostat",
+      "name": "Termostato",
       "room": "living_room",
       "type": "Thermostat",
       "usedBy": [
@@ -200,8 +200,8 @@
       "traits": {
         "Thermostat": {
           "mode": "heat",
-          "heatSetpointF": 68,
-          "currentTemperatureF": 67
+          "heatSetpoint": 20,
+          "currentTemperature": 19
         }
       },
       "aliases": [
@@ -210,7 +210,7 @@
     },
     {
       "id": "living_blinds",
-      "name": "Blinds",
+      "name": "Persianas",
       "room": "living_room",
       "type": "WindowCovering",
       "usedBy": [
@@ -227,7 +227,7 @@
     },
     {
       "id": "ev_charger",
-      "name": "EV charger",
+      "name": "Carregador de EV",
       "room": "garage",
       "type": "EnergyEvseDevice",
       "usedBy": [
@@ -248,7 +248,7 @@
     },
     {
       "id": "car",
-      "name": "Car",
+      "name": "Carro",
       "room": "garage",
       "type": "GoogleAutoDevice",
       "usedBy": [
@@ -269,7 +269,7 @@
     },
     {
       "id": "garage_door",
-      "name": "Garage door",
+      "name": "Porta da garagem",
       "room": "garage",
       "type": "GoogleGarageDevice",
       "usedBy": [
@@ -290,7 +290,7 @@
     },
     {
       "id": "front_door",
-      "name": "Front door lock",
+      "name": "Fechadura da porta da frente",
       "room": "entry",
       "type": "DoorLockDevice",
       "usedBy": [
@@ -310,7 +310,7 @@
     },
     {
       "id": "doorbell",
-      "name": "Doorbell",
+      "name": "Campainha",
       "room": "entry",
       "type": "GoogleDoorbellDevice",
       "usedBy": [
@@ -331,7 +331,7 @@
     },
     {
       "id": "energy_meter",
-      "name": "Energy meter",
+      "name": "Medidor de energia",
       "room": "utility",
       "type": "ElectricalMeterDevice",
       "usedBy": [
@@ -356,7 +356,7 @@
     },
     {
       "id": "desk_lamp",
-      "name": "Desk lamp",
+      "name": "Luminária de mesa",
       "room": "upstairs_office",
       "type": "DimmableLightDevice",
       "usedBy": [
@@ -377,7 +377,7 @@
     },
     {
       "id": "coffee_maker",
-      "name": "Coffee maker",
+      "name": "Cafeteira",
       "room": "kitchen",
       "type": "CoffeeMakerDevice",
       "aliases": [
@@ -427,7 +427,7 @@
       ],
       "traits": {
         "TemperatureMeasurement": {
-          "cabinetTemperatureF": 55
+          "cabinetTemperature": 13
         },
         "QuickChill": {
           "state": "idle",
@@ -450,8 +450,8 @@
       "traits": {
         "Thermostat": {
           "mode": "heat",
-          "heatSetpointF": 70,
-          "currentTemperatureF": 68
+          "heatSetpoint": 21,
+          "currentTemperature": 20
         }
       }
     }
@@ -489,7 +489,7 @@
         {
           "deviceId": "oven",
           "command": "setTemperature",
-          "temperatureF": 400
+          "temperature": 200
         }
       ]
     },
@@ -515,12 +515,12 @@
         {
           "deviceId": "thermostat",
           "command": "setHeatSetpoint",
-          "temperatureF": 70
+          "temperature": 21
         },
         {
           "deviceId": "dining_speaker",
           "command": "startPlaylist",
-          "playlist": "Dinner party"
+          "playlist": "Jantar"
         }
       ]
     },
@@ -555,7 +555,7 @@
     },
     {
       "id": "dinner_party",
-      "name": "Dinner party scene",
+      "name": "Cena de jantar",
       "kind": "scene",
       "state": "ready",
       "aliases": [
@@ -581,7 +581,7 @@
         {
           "deviceId": "thermostat",
           "command": "setHeatSetpoint",
-          "temperatureF": 70
+          "temperature": 21
         },
         {
           "deviceId": "dining_speaker",

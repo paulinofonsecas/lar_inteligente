@@ -15,7 +15,7 @@ class ShoppingListComponentDefinition extends GenUiComponent {
   @override
   CardFit get fit => const CardFit(
     best: GridCell(5, 2),
-    note: 'Always the full height cell.',
+    note: 'Sempre a célula de altura total.',
   );
 
   @override

@@ -6,7 +6,7 @@
       "source": "oven",
       "at": "preheat",
       "kind": "oven",
-      "summary": "Oven starts preheating to {target} °F",
+      "summary": "O forno começa a preaquecer a {target} °F",
       "subject": "ana",
       "deviceId": "oven"
     },
@@ -14,7 +14,7 @@
       "source": "oven",
       "at": "ready",
       "kind": "oven",
-      "summary": "Oven reaches {target} °F",
+      "summary": "O forno chega a {target} °F",
       "subject": "ana",
       "deviceId": "oven"
     },
@@ -22,7 +22,7 @@
       "source": "oven",
       "at": "roastIn",
       "kind": "oven",
-      "summary": "The roast goes in",
+      "summary": "O assado vai ao forno",
       "subject": "ana",
       "deviceId": "oven"
     },
@@ -30,7 +30,7 @@
       "source": "oven",
       "at": "done",
       "kind": "oven",
-      "summary": "The roast is done",
+      "summary": "O assado está pronto",
       "subject": "ana",
       "deviceId": "oven"
     },
@@ -49,9 +49,9 @@
       "at": "dueAt",
       "kind": "todo",
       "summary": [
-        "Urgent: finish \"{title}\" before {stepName}, {left} of {total} ",
-        "items still to get: {itemsLeft}. Show every item of the list, ticked ",
-        "or not"
+        "Urgente: terminar \"{title}\" antes de {stepName}, faltam {left} de ",
+        "{total} itens: {itemsLeft}. Mostre todos os itens da lista, marcados ",
+        "ou não"
       ],
       "subject": "{owner}",
       "listId": "{listId}",
@@ -64,7 +64,7 @@
       "source": "bakeryOrder",
       "at": "requestedAt",
       "kind": "bakery",
-      "summary": "Asked the bakery to deliver the {item}",
+      "summary": "Pediu à padaria que entregue o {item}",
       "subject": "{userId}",
       "by": "{userId}",
       "pastOnly": true
@@ -74,22 +74,22 @@
       "at": "confirmsAt",
       "kind": "bakery",
       "summary": [
-        "Bakery confirmed the {item} delivery: the courier leaves at ",
-        "{departsAt} and it takes {minutes} minutes, ETA {eta}"
+        "A padaria confirmou a entrega do {item}: o entregador sai às ",
+        "{departsAt} e leva {minutes} minutos, chega às {eta}"
       ]
     },
     {
       "source": "bakeryOrder",
       "at": "departsAt",
       "kind": "bakery",
-      "summary": "The {item} left the bakery, out for delivery, ETA {eta}"
+      "summary": "O {item} saiu da padaria, a caminho, chega às {eta}"
     },
     {
       "source": "bakeryOrder",
       "at": "eta",
       "when": "!atTheDoor",
       "kind": "bakery",
-      "summary": "The {item} is delivered"
+      "summary": "O {item} foi entregue"
     },
     {
       "source": "bakeryOrder",
@@ -97,12 +97,12 @@
       "when": "atTheDoor",
       "kind": "bakery",
       "summary": [
-        "The {item} is delivered: the courier is at the front door. Lead the ",
-        "screen with a HeadsUpCard, variant headsUp, source \"Doorbell\", title ",
-        "\"The {item} is at the front door\", message \"Delivered {eta} ",
-        "from the bakery\", timestamp \"Just now\" and one action, a command ",
-        "that unlocks the front door (deviceId front_door, command unlock) ",
-        "labelled \"Open the door\". Drop the en route card: the order is done"
+        "O {item} foi entregue: o entregador está na porta da frente. Abra a ",
+        "tela com um HeadsUpCard, variante headsUp, fonte \"Campainha\", título ",
+        "\"O {item} está na porta da frente\", mensagem \"Entregue às {eta} ",
+        "pela padaria\", timestamp \"Agora\" e uma ação, um comando ",
+        "que destranca a porta da frente (deviceId front_door, comando unlock) ",
+        "rotulado \"Abrir a porta\". Tire o card em trânsito: o pedido acabou"
       ],
       "urgent": true
     },
@@ -112,12 +112,12 @@
       "when": "waiting",
       "kind": "bakery",
       "summary": [
-        "The {item} delivery is {status}: {statusLabel}. Show it as one ",
-        "TripCard on every screen: label \"{itemName} from {bakeryName}\", ",
-        "leaveBy {eta} (the arrival time itself, not a word), tag ",
-        "\"Pending\", the order's statusLabel ",
-        "as the footer, and its two stops ({bakeryName} at {departsAtLabel}, ",
-        "home at {etaLabel})"
+        "A entrega do {item} está {status}: {statusLabel}. Mostre-a como um ",
+        "TripCard em todas as telas: label \"{itemName} da {bakeryName}\", ",
+        "leaveBy {eta} (o horário de chegada em si, não uma palavra), tag ",
+        "\"Pendente\", o statusLabel do pedido ",
+        "no rodapé, e suas duas paradas ({bakeryName} às {departsAtLabel}, ",
+        "casa às {etaLabel})"
       ],
       "urgent": true
     },
@@ -127,12 +127,12 @@
       "when": "onTheRoad",
       "kind": "bakery",
       "summary": [
-        "The {item} is on its way, {progress}% there, {minutesLeft} min left, ",
-        "arrives {eta}. Show it as one TripCard: label ",
-        "\"{itemName} from {bakeryName}\", leaveBy {eta} (the arrival ",
-        "time itself, not a word), tag \"In progress\", the order's ",
-        "statusLabel as the footer, and its ",
-        "two stops ({bakeryName} at {departsAtLabel}, home at {etaLabel})"
+        "O {item} está a caminho, {progress}% do trajeto, faltam {minutesLeft} min, ",
+        "chega às {eta}. Mostre-o como um TripCard: label ",
+        "\"{itemName} da {bakeryName}\", leaveBy {eta} (o horário de chegada ",
+        "em si, não uma palavra), tag \"Em andamento\", o statusLabel do ",
+        "pedido no rodapé, e suas ",
+        "duas paradas ({bakeryName} às {departsAtLabel}, casa às {etaLabel})"
       ],
       "urgent": true
     },
@@ -141,7 +141,7 @@
       "source": "trip",
       "at": "itineraryAt",
       "kind": "trip",
-      "summary": "{name}'s itinerary: leave by {leaveBy}, {route}",
+      "summary": "Itinerário de {name}: sair às {leaveBy}, {route}",
       "subject": "{userId}",
       "tripId": "{tripId}",
       "itinerary": "itinerary",
@@ -153,7 +153,7 @@
       "when": "homeAfterGuests",
       "kind": "trip",
       "summary": [
-        "{name}'s route gets them home after the guests arrive. {notes}",
+        "A rota de {name} chega em casa depois da chegada das visitas. {notes}",
         "{droppedStops}"
       ],
       "subject": "{userId}",

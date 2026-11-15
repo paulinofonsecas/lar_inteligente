@@ -18,27 +18,28 @@
 #              from the components' own `fit`
 ---
 
-## The grid
+## A grade
 
-The card area is a grid of 12 columns and 2 rows. Think in proportions of it,
-never in sizes: 4 of 12 columns is a third of the width, 6 is a half, 8 is two
-thirds and 12 is all of it. A card is half tall (one row) or full height (both
-rows). The `ActionChips` row sits below the area and is not part of the grid.
+A área de cards é uma grade de 12 colunas e 2 linhas. Pense em proporções dela,
+nunca em tamanhos: 4 de 12 colunas é um terço da largura, 6 é uma metade, 8 são
+dois terços e 12 é tudo. Um card é meia altura (uma linha) ou altura total (as
+duas). A linha de `ActionChips` fica abaixo da área e não faz parte da grade.
 
-A card's width is its `weight`: the number of the 12 columns it spans. Every
-card is built for particular proportions and for no others. Never give a card a
-`weight` it does not list, and never stretch a card to fill a gap: pick other
-cards, or other spans of the cards you have, that fill the row.
+A largura de um card é o seu `weight`: o número das 12 colunas que ele ocupa.
+Cada card é feito para proporções particulares e para nenhuma outra. Nunca dê a
+um card um `weight` que ele não lista, e nunca estique um card para preencher um
+vão: escolha outros cards, ou outros tamanhos dos cards que você tem, que
+fechem a linha.
 
 {{{cardFits}}}
 
-## Putting a screen together
+## Montando uma tela
 
-A screen is a root `Column` that holds the cards and ends with the
-`ActionChips`. The cards are laid out in one of two ways.
+Uma tela é uma `Column` raiz que guarda os cards e termina com o `ActionChips`.
+Os cards ficam dispostos de um dos dois modos.
 
-**Two rows.** The root holds two `Row`s, one for each row of the grid. Each `Row`
-holds one to three cards, and the `weight`s in it add up to exactly 12.
+**Duas linhas.** A raiz guarda duas `Row`s, uma para cada linha da grade. Cada
+`Row` guarda de um a três cards, e os `weight`s dela somam exatamente 12.
 
 ```
 root (Column)  children: ["row1", "row2", "chips"]
@@ -47,14 +48,14 @@ row2 (Row)     children: ["a", "b", "c"]          weights 4, 4, 4
 chips          ActionChips
 ```
 
-**A full height card.** When the screen has a full height card (a `PlanTimeline`
-with `density: detailed` or a `ShoppingList`), the
-root holds a single `Row` with the whole area. It has two children: the full
-height card, with its `weight`, and one `Column` beside it. That `Column` has the
-`weight` of the columns the card leaves (12 less its own), and holds one or two
-`Row`s of half tall cards. The `weight`s in each of those `Row`s add up to the
-`Column`'s `weight`, in the same way the `weight`s of a `Row` of the whole grid
-add up to 12.
+**Um card de altura total.** Quando a tela tem um card de altura total (um
+`PlanTimeline` com `density: detailed` ou um `ShoppingList`), a raiz guarda uma
+única `Row` com a área inteira. Ela tem dois filhos: o card de altura total,
+com o seu `weight`, e uma `Column` ao lado. Essa `Column` tem o `weight` das
+colunas que o card deixa (12 menos o dele), e guarda uma ou duas `Row`s de
+cards de meia altura. Os `weight`s de cada uma dessas `Row`s somam o `weight`
+da `Column`, do mesmo modo que os `weight`s de uma `Row` da grade inteira
+somam 12.
 
 ```
 root (Column)  children: ["body", "chips"]
@@ -66,41 +67,43 @@ rest2 (Row)    children: ["lights", "scene"]      weights 3, 4
 chips          ActionChips
 ```
 
-Spans that add up to 12 with the cards of the catalog: 7 and 5, 8 and 4, 4 and
-8, 5 and 7, three of 4, or a 3, a 4 and a 5 in any order. Beside a full height
-card the rows add up to what it leaves: 7 is a 7, or a 4 and a 3; 8 is an 8, or
-two of 4, or a 3 and a 5; 4 is a single card of 4. A `DeviceCard` is the card
-that fits most sums, because it is built for 3, 4 or 5. A row of two cards
-never adds up to 12 unless one of them is a 7 or an 8, so two cards of 4 or 5
-need a third.
+Tamanhos que fecham em 12 com os cards do catálogo: 7 e 5, 8 e 4, 4 e 8, 5 e 7,
+três de 4, ou um 3, um 4 e um 5 em qualquer ordem. Ao lado de um card de altura
+total, as linhas somam o que ele deixa: 7 é um 7, ou um 4 e um 3; 8 é um 8, ou
+dois de 4, ou um 3 e um 5; 4 é um único card de 4. Um `DeviceCard` é o card que
+cabe em mais somas, porque é feito para 3, 4 ou 5. Uma linha de dois cards
+nunca soma 12 a menos que um deles seja um 7 ou um 8, então dois cards de 4 ou
+5 precisam de um terceiro.
 
-Rules for every screen:
+Regras para toda tela:
 
-- Every component `id` is an identifier: letters, digits and underscores, starting
-  with a letter (`shopping_list`, `trip_card`). Never a hyphen or a space
-  (`shopping-list-card` is rejected).
-- End the root with exactly one `ActionChips`, below the cards, with 1 to 3
-  suggested next steps. It is the root's last child; defining it without listing it in
-  `root.children` means it is never shown. Do not forget it.
-- Fill the grid. Every row adds up to its columns, with no gap and no card
-  stretched. A screen is usually four or five cards, at most six, counting the
-  `HeadsUpCard` and the `ChangeSummary`; the `ActionChips` row is not one. Send
-  the cards that matter to this person, most important first. If they leave
-  the grid short, the panel adds devices to fill it after your cards, so do not
-  add a device only to fill space, and do not leave one of your cards out to
-  make the sums work.
-- The `HeadsUpCard` and the `ChangeSummary` lead: they go in the top row. At most
-  one of each.
-- A `HeadsUpCard` is always half tall, urgent or not: never give it both rows.
-- A full height card is the only one on the screen: never two. When the screen
-  wants both the `ShoppingList` and a `PlanTimeline`, the list is the full
-  height card and the plan is `density: compact`, in a half tall cell beside
-  it.
-- Set a `weight` on every card in a `Row`, and on the `Column` beside the full
-  height card. A card with none is drawn at the span it is best built for.
-- Rank the cards first, then place them: the higher a card ranks, the bigger
-  the cell it gets, among the cells it is built for. When the ranked cards do
-  not fit the grid, the lowest ranked are left out.
-- Every id a `Column` or `Row` lists must be defined, and every component you
-  define must be listed by exactly one parent.
-- Give every component a stable id and reuse it when you re-send it.
+- Todo `id` de componente é um identificador: letras, dígitos e underscores,
+  começando com letra (`shopping_list`, `trip_card`). Nunca um hífen ou um
+  espaço (`shopping-list-card` é rejeitado).
+- Termine a raiz com exatamente um `ActionChips`, abaixo dos cards, com 1 a 3
+  próximos passos sugeridos. Ele é o último filho da raiz; defini-lo sem
+  listá-lo em `root.children` significa que ele nunca é mostrado. Não o esqueça.
+- Feche a grade. Toda linha soma suas colunas, sem vão e sem card esticado. Uma
+  tela costuma ter quatro ou cinco cards, no máximo seis, contando o
+  `HeadsUpCard` e o `ChangeSummary`; a linha de `ActionChips` não é um. Envie
+  os cards que importam para esta pessoa, os mais importantes primeiro. Se eles
+  deixarem a grade curta, o painel acrescenta dispositivos para preencher depois
+  dos seus cards, então não acrescente um dispositivo só para preencher espaço,
+  e não deixe um dos seus cards de fora para as somas fecharem.
+- O `HeadsUpCard` e o `ChangeSummary` abrem: ficam na linha de cima. No máximo
+  um de cada.
+- Um `HeadsUpCard` é sempre meia altura, urgente ou não: nunca lhe dê as duas
+  linhas.
+- Há um único card de altura total na tela: nunca dois. Quando a tela quiser o
+  `ShoppingList` e um `PlanTimeline` ao mesmo tempo, a lista é o card de altura
+  total e o plano vai `density: compact`, numa célula de meia altura ao lado.
+- Dê um `weight` a todo card numa `Row`, e à `Column` ao lado do card de altura
+  total. Um card sem peso é desenhado no tamanho para o qual foi melhor
+  construído.
+- Ordene os cards primeiro, depois posicione-os: quanto maior a posição de um
+  card na ordem, maior a célula que ele ganha, entre as células para as quais
+  foi construído. Quando os cards ordenados não couberem na grade, os últimos
+  da ordem ficam de fora.
+- Todo id que uma `Column` ou `Row` lista precisa estar definido, e todo
+  componente que você definir precisa ser listado por exatamente um pai.
+- Dê a todo componente um id estável e reutilize-o quando o reenviar.

@@ -37,10 +37,10 @@ class DeviceNotFound extends DeviceCommandException {
   factory DeviceNotFound.forId(String id, {String kind = ''}) {
     final plain = id.replaceAll(RegExp('[_-]+'), ' ').trim();
     final safe = RegExp(r'^[A-Za-z0-9 ]{1,30}$').hasMatch(plain);
-    final what = safe ? plain.toLowerCase() : 'that';
-    final suffix = kind.isEmpty ? '' : ' $kind';
+    final what = safe ? plain.toLowerCase() : 'isso';
+    final suffix = kind.isEmpty ? '' : ' ($kind)';
     return DeviceNotFound(
-      safe ? "Couldn't find the $what$suffix." : "Couldn't find that$suffix.",
+      safe ? 'Não encontrei "$what"$suffix.' : 'Não encontrei isso$suffix.',
     );
   }
 }
@@ -59,16 +59,45 @@ class CommandRejected extends DeviceCommandException {
   ///
   /// "The oven can't do that right now."
   factory CommandRejected.cannot(String deviceName) =>
-      CommandRejected("${_the(deviceName)} can't do that right now.");
+      CommandRejected('${_the(deviceName)} não pode fazer isso agora.');
 
   /// {@macro command_rejected}
   ///
   /// "The oven is offline."
   factory CommandRejected.offline(String deviceName) =>
-      CommandRejected('${_the(deviceName)} is offline.');
+      CommandRejected('${_the(deviceName)} está offline.');
 }
 
 String _the(String name) {
   final lower = name.toLowerCase();
-  return 'The $lower';
+  const articles = {
+    'forno': 'o',
+    'geladeira': 'a',
+    'termostato': 'o',
+    'carro': 'o',
+    'fechadura': 'a',
+    'luzes': 'as',
+    'caixa de som': 'a',
+    'campainha': 'a',
+    'cena': 'a',
+    'garagem': 'a',
+    'cafeteira': 'a',
+    'coifa': 'a',
+    'lava-louças': 'a',
+    'persianas': 'as',
+    'carregador de ev': 'o',
+    'porta da garagem': 'a',
+    'fechadura da porta da frente': 'a',
+    'medidor de energia': 'o',
+    'luminária de mesa': 'a',
+    'luzes de pendente': 'as',
+    'luzes da mesa': 'as',
+  };
+  final article = articles[lower] ?? 'o';
+  final capitalized =
+      article[0].toUpperCase() + article.substring(1);
+  return '$capitalized $lower';
 }
+
+/// "$deviceName" com o artigo certo, para as mensagens do estado.
+String artigo(String name) => _the(name);

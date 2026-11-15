@@ -196,7 +196,8 @@ class MockDatabase {
     if (deviceType != null &&
         !types.any((t) => t.toLowerCase() == deviceType.toLowerCase())) {
       throw MockDataNotFound(
-        'No device type "$deviceType". Available: ${types.join(', ')}.',
+        'Sem o tipo de dispositivo "$deviceType". Disponíveis: '
+        '${types.join(', ')}.',
       );
     }
 
@@ -210,7 +211,8 @@ class MockDatabase {
     ];
     if (devices.isEmpty) {
       throw MockDataNotFound(
-        'No devices in room "$room" with device type "$deviceType".',
+        'Nenhum dispositivo no cômodo "$room" com o tipo de dispositivo '
+        '"$deviceType".',
       );
     }
 
@@ -393,11 +395,12 @@ class MockDatabase {
       }
     }
     throw MockDataNotFound(
-      'No room "$room". Available: '
+      'Não há cômodo "$room". Disponíveis: '
       '${rooms.map((r) => r['name']).join(', ')}.',
     );
   }
 
   String _unknownUser(String id) =>
-      'No user "$id". Available: ${_users.map((u) => u['id']).join(', ')}.';
+      'Sem o usuário "$id". Disponíveis: '
+      '${_users.map((u) => u['id']).join(', ')}.';
 }

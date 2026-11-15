@@ -1,5 +1,5 @@
 name: home_frontend
-description: VGV GenUI layer for Flutter applications.
+description: The GenUI layer of the Lar Inteligente panel for Flutter applications.
 version: 0.1.0+1
 publish_to: none
 

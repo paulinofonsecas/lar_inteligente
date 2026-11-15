@@ -1,5 +1,5 @@
 name: a2ui_vgv_smart_home
-description: A wall-mounted smart home panel where GenUI composes an A2UI dashboard for each family member.
+description: Um painel de casa inteligente montado na parede, onde o GenUI compõe um dashboard A2UI para cada membro da família.
 version: 1.0.0+1
 publish_to: none
 

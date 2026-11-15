@@ -5,10 +5,10 @@
     {
       "id": "trip_pickup",
       "userId": "marco",
-      "title": "Piano lesson pickup, then bakery",
+      "title": "Buscar na aula de piano, depois padaria",
       "plannedStops": [
         {
-          "name": "Piano lesson pickup",
+          "name": "Aula de piano (buscar)",
           "calendarEventId": "cal_piano",
           "driveMinutes": 20,
           "miles": 9,
@@ -16,12 +16,12 @@
           "homeAfterMaxMinutes": 30
         },
         {
-          "name": "Bakery",
+          "name": "Padaria",
           "calendarEventId": "cal_cake",
           "driveMinutes": 15,
           "miles": 6,
           "droppedWhenDelivered": true,
-          "note": "Saturday queue at the bakery",
+          "note": "Fila de sábado na padaria",
           "homeAfterMinutes": 45,
           "homeAfterMaxMinutes": 60
         }
@@ -36,8 +36,8 @@
       "rangeCheck": {},
       "homeAfterGuestsArrive": false,
       "notes": [],
-      "plannedTitle": "Piano lesson pickup, then bakery",
-      "deliveredTitle": "Piano lesson pickup, then home (the bakery delivers the cake)"
+      "plannedTitle": "Buscar na aula de piano, depois padaria",
+      "deliveredTitle": "Buscar na aula de piano, depois casa (a padaria entrega o bolo)"
     }
   ]
 }

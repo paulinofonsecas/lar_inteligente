@@ -12,13 +12,13 @@ class InvalidActionException implements Exception {
   ///
   /// An action name outside the vocabulary.
   const InvalidActionException.unsupported()
-    : message = "That action isn't supported.";
+    : message = 'Essa ação não é suportada.';
 
   /// {@macro invalid_action_exception}
   ///
   /// A known action with a missing or mistyped field, or an unreadable body.
   const InvalidActionException.malformed()
-    : message = "That action couldn't be understood.";
+    : message = 'Não foi possível entender essa ação.';
 
   /// {@macro user_safe_reason}
   final String message;

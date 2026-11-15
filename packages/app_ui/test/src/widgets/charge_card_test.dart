@@ -24,7 +24,7 @@ void main() {
         ),
       );
 
-      expect(find.text('Car · Plugged in'), findsOneWidget);
+      expect(find.text('Carro · Plugged in'), findsOneWidget);
       expect(find.text('82%'), findsOneWidget);
       expect(find.text('190 mi range'), findsOneWidget);
       expect(find.text('Enough for both stops'), findsOneWidget);
@@ -42,7 +42,7 @@ void main() {
         ),
       );
 
-      expect(find.text('Car'), findsOneWidget);
+      expect(find.text('Carro'), findsOneWidget);
       expect(find.byIcon(AppIcons.byName('savings')), findsOneWidget);
     });
 

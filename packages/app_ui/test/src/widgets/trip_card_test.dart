@@ -21,14 +21,14 @@ void main() {
         ),
       );
 
-      expect(find.text('Leave by'), findsOneWidget);
+      expect(find.text('Sair às'), findsOneWidget);
       expect(find.text('5:00'), findsOneWidget);
       expect(find.text('14 min · light traffic'), findsOneWidget);
       expect(find.text('School pickup'), findsOneWidget);
       expect(find.text('Lincoln Elementary'), findsOneWidget);
       expect(find.text('5:15'), findsOneWidget);
       expect(find.text('PM'), findsNWidgets(2));
-      expect(find.textContaining('was '), findsNothing);
+      expect(find.textContaining('era '), findsNothing);
       expect(find.byType(StatusTag), findsNothing);
     });
 
@@ -49,7 +49,7 @@ void main() {
         ),
       );
 
-      expect(find.text('was 5:00 PM'), findsOneWidget);
+      expect(find.text('era 5:00 PM'), findsOneWidget);
       expect(find.text('Updated just now'), findsOneWidget);
       expect(find.byIcon(AppIcons.byName('traffic')), findsOneWidget);
     });

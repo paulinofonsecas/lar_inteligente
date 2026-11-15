@@ -1,55 +1,55 @@
 {
   "timeZone": "America/Chicago",
   "recipe": {
-    "name": "Rack of lamb",
+    "name": "Costela de cordeiro",
     "cookMinutes": 25,
-    "temperatureF": 400
+    "temperature": 200
   },
   "steps": [
     {
       "id": "prep",
       "userId": "ana",
       "at": "18:00",
-      "step": "Prep the rack",
+      "step": "Preparar a peça",
       "done": false,
       "icon": "restaurant",
-      "detail": "Rack of lamb · 25 min at 400 °F"
+      "detail": "Costela de cordeiro · 25 min a 200 °C"
     },
     {
       "id": "preheat",
       "userId": "ana",
       "at": "18:30",
-      "step": "Preheat the oven to 400 °F",
+      "step": "Preaquecer o forno a 400 °F",
       "done": false,
       "icon": "oven",
-      "detail": "Oven · 400 °F for the roast"
+      "detail": "Forno · 200 °C para o assado"
     },
     {
       "id": "roast_in",
       "userId": "ana",
       "at": "18:45",
-      "step": "Roast goes in (25 min)",
+      "step": "Assado vai ao forno (25 min)",
       "done": false,
       "icon": "flame",
-      "detail": "25 minutes in the oven"
+      "detail": "25 minutos no forno"
     },
     {
       "id": "scene",
       "userId": "ana",
       "at": "18:45",
-      "step": "Start the dining scene",
+      "step": "Começar a cena da sala de jantar",
       "done": false,
       "icon": "scene",
-      "detail": "Dining Room lights and music"
+      "detail": "Luzes e música da sala de jantar"
     },
     {
       "id": "serve",
       "userId": "ana",
       "at": "19:15",
-      "step": "Serve",
+      "step": "Servir",
       "done": false,
       "icon": "guests",
-      "detail": "6 confirmed"
+      "detail": "6 confirmadas"
     }
   ]
 }

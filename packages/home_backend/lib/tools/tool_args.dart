@@ -6,7 +6,7 @@ const userIdInputSchema = <String, dynamic>{
   'properties': {
     'user_id': {
       'type': 'string',
-      'description': 'The user id, for example "ana" or "marco".',
+      'description': 'O id do usuário, por exemplo "ana" ou "marco".',
     },
   },
   'required': ['user_id'],

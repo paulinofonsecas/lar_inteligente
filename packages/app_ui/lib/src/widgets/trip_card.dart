@@ -97,7 +97,7 @@ class TripCard extends StatelessWidget {
   /// {@macro trip_card}
   const TripCard({
     required this.leaveBy,
-    this.label = 'Leave by',
+    this.label = 'Sair às',
     this.previousLeaveBy,
     this.footer,
     this.tag,
@@ -337,7 +337,7 @@ class _Hero extends StatelessWidget {
                   ),
                 time,
                 if (previous != null)
-                  Text('was $previous', style: AppTypography.label),
+                  Text('era $previous', style: AppTypography.label),
               ],
             ),
           ),

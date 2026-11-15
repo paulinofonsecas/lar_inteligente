@@ -12,29 +12,31 @@ AgentTool googleHomeTool(MockDatabase database) {
   return AgentTool(
     name: 'get_google_home_data',
     description:
-        'Returns the Google Home data model of the Rivera household as one '
-        'user sees it: structure, rooms, devices with trait values, groups '
-        "and that user's automations. Every device and automation has an `id`; "
-        'scenes are the automations with `"kind": "scene"`. These are the ids '
-        'a screen may point at (a DeviceCard `deviceId`, a SceneCard '
-        '`sceneId`, a command target). Optionally narrow the devices by room '
-        'or device type. Calendar and trips are not part '
-        'of it, use their own tools.',
+        'Devolve o modelo de dados do Google Home da família Rivera como um '
+        'usuário o vê: estrutura, cômodos, dispositivos com os valores de '
+        'traits, grupos e as automações desse usuário. Todo dispositivo e '
+        'automação tem um `id`; cenas são as automations com '
+        '`"kind": "scene"`. Esses são os ids que uma tela pode apontar '
+        '(o `deviceId` de um DeviceCard, o `sceneId` de um SceneCard, um '
+        'alvo de comando). Opcionalmente filtre os dispositivos por cômodo '
+        'ou tipo. Calendário e viagens não fazem parte, use as ferramentas '
+        'próprias deles.',
     inputSchema: const {
       'type': 'object',
       'properties': {
         'user_id': {
           'type': 'string',
-          'description': 'The user id, for example "ana" or "marco".',
+          'description': 'O id do usuário, por exemplo "ana" ou "marco".',
         },
         'room': {
           'type': 'string',
-          'description': 'Optional room id or name, for example "Kitchen".',
+          'description': 'Id ou nome opcional do cômodo, por exemplo "Cozinha".',
         },
         'device_type': {
           'type': 'string',
           'description':
-              'Optional Home APIs device type, for example "OvenDevice".',
+              'Tipo opcional de dispositivo das Home APIs, por exemplo '
+              '"OvenDevice".',
         },
       },
       'required': ['user_id'],

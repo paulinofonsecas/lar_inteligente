@@ -261,7 +261,7 @@ class HeadsUpCard extends StatelessWidget {
                   const SizedBox(width: 6),
                   Flexible(
                     child: Text(
-                      source == null ? 'Heads up' : 'Heads up · $source',
+                      source == null ? 'Atenção' : 'Atenção · $source',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTypography.labelMedium.copyWith(
@@ -294,7 +294,7 @@ class HeadsUpCard extends StatelessWidget {
             TextSpan(
               children: [
                 TextSpan(
-                  text: 'Heads up',
+                  text: 'Atenção',
                   style: AppTypography.labelMediumEmphasized.copyWith(
                     color: AppColors.brandYellow300,
                   ),

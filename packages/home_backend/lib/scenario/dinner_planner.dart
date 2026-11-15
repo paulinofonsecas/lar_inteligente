@@ -59,7 +59,7 @@ class DinnerPlanner {
   }) {
     if ((arrival == null) == (shiftMinutes == null)) {
       throw const MockDataNotFound(
-        'Give exactly one of new_arrival (HH:mm) or shift_minutes.',
+        'Dê exatamente um de new_arrival (HH:mm) ou shift_minutes.',
       );
     }
     final event = _calendar.guestsEvent();
@@ -72,14 +72,14 @@ class DinnerPlanner {
         : _parseArrival(arrival!, now);
     if (!after.isAfter(now)) {
       throw MockDataNotFound(
-        'Guests cannot arrive at ${clock12(after)}, it is ${clock12(now)} '
-        'now.',
+        'As visitas não podem chegar às ${clock12(after)}, são '
+        '${clock12(now)} agora.',
       );
     }
     final delta = after.difference(before);
     if (delta == Duration.zero) {
       return {
-        'summary': 'The guests already arrive at ${clock12(after)}.',
+        'summary': 'As visitas já chegam às ${clock12(after)}.',
         'changed': false,
         'effects': <Object?>[],
       };
@@ -98,9 +98,9 @@ class DinnerPlanner {
     ]);
     return {
       'summary':
-          'Guests now arrive at ${clock12(after)} (was ${clock12(before)}). '
-          'The calendar, the recipe plan and the oven were moved by '
-          '${delta.inMinutes} minutes.',
+          'As visitas agora chegam às ${clock12(after)} (era '
+          '${clock12(before)}). O calendário, o plano da receita e o forno '
+          'foram movidos em ${delta.inMinutes} minutos.',
       'changed': true,
       'effects': effects,
       'trips': [
@@ -129,7 +129,7 @@ class DinnerPlanner {
   }) {
     final name = _database.requireUser(requester)['name'] as String;
     final moved =
-        '$name moved the dinner party from ${clock12(before)} to '
+        '$name mudou o jantar de ${clock12(before)} para '
         '${clock12(after)}.';
     final trip = _lateTrip(person);
     final canDeliver = trip != null && _canDeliver(person, trip);
@@ -141,18 +141,18 @@ class DinnerPlanner {
       to: person,
       from: requester,
       kind: 'plan_change',
-      title: 'Dinner moved to ${clock12(after)}',
+      title: 'Jantar movido para ${clock12(after)}',
       body: trip == null
           ? moved
-          : '$moved Your route now gets you home at $arrival, after the '
-                'guests arrive.',
+          : '$moved Sua rota agora chega em casa às $arrival, depois das '
+                'visitas.',
       suggestion: canDeliver && slots.isNotEmpty
           ? {
               'tool': 'request_bakery_delivery',
-              'label': 'Have the bakery deliver the cake',
+              'label': 'Pedir à padaria que entregue o bolo',
               'reason':
-                  'The pickup would put you home at $arrival, after the '
-                  'guests. A delivery drops the bakery stop from your route.',
+                  'A retirada deixaria você em casa às $arrival, depois das '
+                  'visitas. A entrega tira a parada na padaria da sua rota.',
               'deliveryMinutes': options['durationMinutes'],
               'defaultSlot': options['defaultSlot'],
               'slots': slots,

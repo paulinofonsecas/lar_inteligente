@@ -62,7 +62,7 @@ void main() {
       final result = machine.setPower('oven', on: false);
 
       expect(result.changed, isFalse);
-      expect(result.summary, contains('nothing changed'));
+      expect(result.summary, contains('nada mudou'));
     });
 
     test('flips a light through OnOff', () {
@@ -144,7 +144,7 @@ void main() {
     test('rejects a device with nothing to switch', () {
       expect(
         () => machine.setPower('coffee_maker', on: true),
-        rejected("The coffee maker can't do that right now."),
+        rejected('A cafeteira não pode fazer isso agora.'),
       );
     });
   });
@@ -160,7 +160,7 @@ void main() {
     test('rejects open on a device that cannot', () {
       expect(
         () => machine.execute('oven', DeviceCommand.open),
-        rejected("The oven can't do that right now."),
+        rejected('O forno não pode fazer isso agora.'),
       );
     });
 
@@ -175,7 +175,7 @@ void main() {
       machine.execute('garage_door', DeviceCommand.open);
       expect(
         () => machine.execute('garage_door', DeviceCommand.lock),
-        rejected('The garage door has to close first.'),
+        rejected('A porta da garagem precisa fechar primeiro.'),
       );
     });
 
@@ -209,11 +209,11 @@ void main() {
     test('rejects bad minutes and the wrong device', () {
       expect(
         () => machine.execute('timer', DeviceCommand.addTime, value: 0),
-        rejected('Add between 1 and 120 minutes.'),
+        rejected('Escolha entre 1 e 120 minutos.'),
       );
       expect(
         () => machine.execute('timer', DeviceCommand.addTime, value: 500),
-        rejected('Add between 1 and 120 minutes.'),
+        rejected('Escolha entre 1 e 120 minutos.'),
       );
       expect(
         () => machine.execute('oven', DeviceCommand.addTime),
@@ -236,7 +236,7 @@ void main() {
             DeviceCommand.setLevel,
             value: value,
           ),
-          rejected('Pick a level from 0 to 100.'),
+          rejected('Escolha um nível de 0 a 100.'),
         );
       }
     });
@@ -250,10 +250,10 @@ void main() {
 
     test('sets the thermostat and the oven', () {
       machine
-        ..execute('thermostat', DeviceCommand.setTemperature, value: 71)
-        ..execute('oven', DeviceCommand.setTemperature, value: 350);
-      expect(trait('thermostat', 'Thermostat')['heatSetpointF'], 71);
-      expect(trait('oven', 'TemperatureControl')['temperatureSetpointF'], 350);
+        ..execute('thermostat', DeviceCommand.setTemperature, value: 22)
+        ..execute('oven', DeviceCommand.setTemperature, value: 180);
+      expect(trait('thermostat', 'Thermostat')['heatSetpoint'], 22);
+      expect(trait('oven', 'TemperatureControl')['temperatureSetpoint'], 180);
     });
 
     test('rejects out of range temperatures', () {
@@ -261,13 +261,13 @@ void main() {
         () => machine.execute(
           'thermostat',
           DeviceCommand.setTemperature,
-          value: 99,
+          value: 40,
         ),
-        rejected('Pick a temperature from 50 to 90.'),
+        rejected('Escolha uma temperatura de 10 a 30.'),
       );
       expect(
         () => machine.execute('oven', DeviceCommand.setTemperature),
-        rejected('Pick a temperature from 150 to 500.'),
+        rejected('Escolha uma temperatura de 100 a 250.'),
       );
       expect(
         () => machine.execute(
@@ -285,8 +285,8 @@ void main() {
         ..adjust('oven', up: false)
         ..adjust('kitchen_pendants', up: false)
         ..adjust('blinds', up: false);
-      expect(trait('thermostat', 'Thermostat')['heatSetpointF'], 69);
-      expect(trait('oven', 'TemperatureControl')['temperatureSetpointF'], 375);
+      expect(trait('thermostat', 'Thermostat')['heatSetpoint'], 21);
+      expect(trait('oven', 'TemperatureControl')['temperatureSetpoint'], 195);
       expect(trait('kitchen_pendants', 'LevelControl')['currentLevel'], 70);
       expect(
         trait('living_blinds', 'WindowCovering')['positionPercentOpen'],
@@ -302,7 +302,7 @@ void main() {
     test('rejects a step on a device without a setting', () {
       expect(
         () => machine.adjust('fridge', up: true),
-        rejected("The fridge can't do that right now."),
+        rejected('A geladeira não pode fazer isso agora.'),
       );
     });
   });
@@ -337,11 +337,11 @@ void main() {
     test('an unknown device is not found', () {
       expect(
         () => machine.setPower('ovenn', on: true),
-        notFound("Couldn't find the ovenn."),
+        notFound('Não encontrei "ovenn".'),
       );
       expect(
         () => machine.setPower('rm -rf /', on: true),
-        notFound("Couldn't find that."),
+        notFound('Não encontrei isso.'),
       );
     });
 
@@ -349,7 +349,7 @@ void main() {
       device('oven')['online'] = false;
       expect(
         () => machine.setPower('oven', on: true),
-        rejected('The oven is offline.'),
+        rejected('O forno está offline.'),
       );
     });
 
@@ -360,13 +360,13 @@ void main() {
 
   group('scenes', () {
     test('runs the dinner party scene across devices', () {
-      final result = machine.runScene('Dinner party scene');
+      final result = machine.runScene('Cena de jantar');
 
       expect(result.changes.first.trait, 'Scene');
       expect(database.scenes.single['state'], 'running');
       expect(trait('kitchen_pendants', 'LevelControl')['currentLevel'], 40);
       expect(trait('table_lights', 'LevelControl')['currentLevel'], 40);
-      expect(trait('thermostat', 'Thermostat')['heatSetpointF'], 70);
+      expect(trait('thermostat', 'Thermostat')['heatSetpoint'], 21);
       expect(trait('dining_speaker', 'OnOff')['onOff'], isTrue);
       expect(trait('dining_speaker', 'MediaPlayback'), {
         'state': 'playing',
@@ -382,7 +382,7 @@ void main() {
     test('an unknown scene is not found', () {
       expect(
         () => machine.runScene('movie_night'),
-        notFound("Couldn't find the movie night scene."),
+        notFound('Não encontrei "movie night" (cena).'),
       );
     });
 
@@ -400,11 +400,11 @@ void main() {
 
     test('runs the other action kinds a scene may carry', () {
       database.scenes.single['actions'] = [
-        {'deviceId': 'oven', 'command': 'setTemperature', 'temperatureF': 300},
+        {'deviceId': 'oven', 'command': 'setTemperature', 'temperature': 200},
         {'deviceId': 'ev_charger', 'command': 'startCharging'},
       ];
       machine.runScene('dinner_party');
-      expect(trait('oven', 'TemperatureControl')['temperatureSetpointF'], 300);
+      expect(trait('oven', 'TemperatureControl')['temperatureSetpoint'], 200);
       expect(trait('ev_charger', 'EnergyEvse')['state'], 'charging');
     });
 
@@ -414,7 +414,7 @@ void main() {
       ];
       expect(
         () => machine.runScene('dinner_party'),
-        rejected("That scene can't run right now."),
+        rejected('Essa cena não pode rodar agora.'),
       );
       expect(database.scenes.single['state'], 'ready');
     });
@@ -468,12 +468,12 @@ void main() {
     test('an unknown item or list is not found', () {
       expect(
         () => machine.toggleTodo(itemId: 'nope', checked: true),
-        notFound("Couldn't find that item on the list."),
+        notFound('Não encontrei esse item na lista.'),
       );
       expect(
         () =>
             machine.toggleTodo(listId: 'chores', itemId: 'ribs', checked: true),
-        notFound("Couldn't find the chores list."),
+        notFound('Não encontrei "chores" (lista).'),
       );
     });
 
@@ -489,7 +489,7 @@ void main() {
       database.todoLists.single.remove('shareTarget');
       expect(
         () => machine.shareList('shopping'),
-        rejected("That list can't be shared."),
+        rejected('Essa lista não pode ser compartilhada.'),
       );
     });
 
@@ -502,7 +502,7 @@ void main() {
     test('has nothing to undo at first', () {
       final result = machine.undoLast();
       expect(result.changed, isFalse);
-      expect(result.summary, 'There was nothing to undo.');
+      expect(result.summary, 'Não havia nada para desfazer.');
     });
 
     test('reverts the last command that changed something', () {
@@ -513,7 +513,7 @@ void main() {
       final result = machine.undoLast();
 
       expect(trait('oven', 'OperationalState')['state'], 'stopped');
-      expect(result.summary, startsWith('Undid the last change'));
+      expect(result.summary, startsWith('Desfez a última mudança'));
       expect(result.changes.single.to, 'stopped');
       expect(machine.undoLast().changed, isFalse);
     });
@@ -523,7 +523,7 @@ void main() {
         ..runScene('dinner_party')
         ..undoLast();
       expect(database.scenes.single['state'], 'ready');
-      expect(trait('thermostat', 'Thermostat')['heatSetpointF'], 68);
+      expect(trait('thermostat', 'Thermostat')['heatSetpoint'], 20);
     });
 
     test('remembers only the last twenty commands', () {
@@ -548,7 +548,7 @@ void main() {
 
     test('resolves an id, a name or an alias the way commands do', () {
       expect(machine.hasDevice('oven'), isTrue);
-      expect(machine.hasDevice('Front door lock'), isTrue);
+      expect(machine.hasDevice('Fechadura da porta da frente'), isTrue);
       expect(machine.hasDevice('front-door'), isTrue);
       expect(machine.hasDevice('ovn'), isFalse);
       expect(machine.hasScene('dinner_party'), isTrue);

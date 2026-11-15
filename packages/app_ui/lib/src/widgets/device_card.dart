@@ -476,7 +476,7 @@ class _LoadingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Semantics(
-      label: 'Updating',
+      label: 'Atualizando',
       child: ExcludeSemantics(
         child: LayoutBuilder(
           builder: (context, constraints) {
@@ -498,10 +498,14 @@ class _LoadingCard extends StatelessWidget {
                       const Spacer(),
                       const _LiveDot(),
                       const SizedBox(width: AppSpacing.s2),
-                      Text(
-                        'Updating…',
-                        style: AppTypography.labelStrong.copyWith(
-                          color: AppColors.ink2,
+                      Flexible(
+                        child: Text(
+                          'Atualizando…',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTypography.labelStrong.copyWith(
+                            color: AppColors.ink2,
+                          ),
                         ),
                       ),
                     ],

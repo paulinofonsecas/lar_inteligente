@@ -28,7 +28,7 @@ typedef GenUiComponentCatalog = Catalog<GenUiComponent, FunctionApi>;
 /// Surface messages that reference this catalog (e.g. A2UI `createSurface`)
 /// must use this exact id so both the API server and the Flutter renderer
 /// resolve the same component set.
-const String genUiCatalogId = 'verygood.ventures/catalogs/home/v1';
+const String genUiCatalogId = 'lar.inteligente/catalogs/home/v1';
 
 /// The shared catalog of components used by A2UI VGV Smart Home.
 ///

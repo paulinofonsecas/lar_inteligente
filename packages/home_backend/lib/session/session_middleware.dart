@@ -32,7 +32,7 @@ Middleware provideSession(SessionStore store) {
       final id = _sessionId(context.request);
       if (id == null || !_validId.hasMatch(id)) {
         return const ApiError.badRequest(
-          message: 'Missing session id',
+          message: 'Faltando id de sessão',
         ).toResponse();
       }
       final DemoSession session;

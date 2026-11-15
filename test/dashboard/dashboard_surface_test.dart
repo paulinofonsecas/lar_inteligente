@@ -65,12 +65,12 @@ void main() {
 
       agent.emit(const UiInteractionCompleted());
       await tester.pump(const Duration(milliseconds: 600));
-      expect(find.text('Completed'), findsOneWidget);
+      expect(find.text('Concluído'), findsOneWidget);
       expect(find.byKey(const ValueKey('success')), findsOneWidget);
 
       await tester.pump(const Duration(seconds: 2));
       await tester.pump(const Duration(seconds: 1));
-      expect(find.text('Completed'), findsNothing);
+      expect(find.text('Concluído'), findsNothing);
     });
 
     testWidgets('a failed press shows the backend reason, then leaves', (
@@ -122,7 +122,7 @@ void main() {
       await tester.pumpApp(FakeAgentFactory(failWith: Exception('boom')));
       await settle(tester);
 
-      expect(find.text('Could not build the dashboard.'), findsOneWidget);
+      expect(find.text('Não foi possível gerar o painel.'), findsOneWidget);
       expect(find.byType(SkeletonSurface), findsNothing);
     });
   });

@@ -110,7 +110,7 @@ class _Screen {
   Map<String, Object?>? _defined(String id, String parent) {
     final component = _components[id];
     if (component == null) {
-      _errors.add('`$parent` lists the id "$id", which is not defined.');
+      _errors.add('`$parent` lista o id "$id", que não está definido.');
     }
     return component;
   }
@@ -124,12 +124,12 @@ class _Screen {
 
   void check(Map<String, Object?> root) {
     if (root['component'] != 'Column') {
-      _errors.add('The component with the id "root" must be a `Column`.');
+      _errors.add('O componente de id "root" deve ser uma `Column`.');
       return;
     }
     final children = _children(root);
     if (children == null) {
-      _errors.add('The root `Column` must list its children by id.');
+      _errors.add('A `Column` raiz deve listar os filhos por id.');
       return;
     }
     final footers = <String>[];
@@ -143,8 +143,8 @@ class _Screen {
         rows.add(id);
       } else {
         _errors.add(
-          'The root lists the ${child['component']} "$id" directly. Put every '
-          'card in a `Row`.',
+          'A raiz lista o ${child['component']} "$id" diretamente. Ponha cada '
+          'card numa `Row`.',
         );
       }
     }
@@ -160,13 +160,12 @@ class _Screen {
   ) {
     if (footers.length != 1) {
       _errors.add(
-        'The root must list exactly one `ActionChips`, as its last child. It '
-        'lists ${footers.length}.',
+        'A raiz deve listar exatamente um `ActionChips`, como último filho. '
+        'Lista ${footers.length}.',
       );
     } else if (children.last != footers.single) {
       _errors.add(
-        'The `ActionChips` "${footers.single}" must be the last child of the '
-        'root.',
+        'O `ActionChips` "${footers.single}" deve ser o último filho da raiz.',
       );
     }
   }
@@ -177,7 +176,7 @@ class _Screen {
     };
     for (final MapEntry(:key, :value) in rows.entries) {
       if (value == null || value.isEmpty) {
-        _errors.add('The `Row` "$key" must list its cards by id.');
+        _errors.add('A `Row` "$key" deve listar os cards por id.');
       }
     }
     final usable = {
@@ -185,15 +184,15 @@ class _Screen {
         if (value != null && value.isNotEmpty) key: value,
     };
     if (usable.isEmpty) {
-      _errors.add('The screen has no `Row` of cards.');
+      _errors.add('A tela não tem uma `Row` de cards.');
       return;
     }
     final tall = usable.entries.where((e) => _holdsTall(e.value)).toList();
     if (tall.isNotEmpty) {
       if (usable.length != 1) {
         _errors.add(
-          'A screen with a full height card has a single `Row` with the whole '
-          'area. It has ${usable.length} rows.',
+          'Uma tela com um card de altura total tem uma única `Row` com a '
+          'área inteira. Ela tem ${usable.length} linhas.',
         );
       }
       _checkTallRow(tall.first.key, tall.first.value);
@@ -201,8 +200,8 @@ class _Screen {
     }
     if (usable.length > gridRows) {
       _errors.add(
-        'A screen without a full height card has at most two `Row`s, one for '
-        'each row of the grid. It has ${usable.length}.',
+        'Uma tela sem card de altura total tem no máximo duas `Row`s, uma '
+        'para cada linha da grade. Ela tem ${usable.length}.',
       );
     }
     for (final MapEntry(:key, :value) in usable.entries) {
@@ -244,22 +243,23 @@ class _Screen {
             _checkCard(childId, child, rows: 2, weight: _weight(child)) ?? 0;
       } else {
         _errors.add(
-          'The ${child['component']} "$childId" is directly in the `Row` of a '
-          'screen with a full height card. Put it in a `Column`, and give that '
-          '`Column` the `weight` of the columns it spans.',
+          'O ${child['component']} "$childId" está diretamente na `Row` de '
+          'uma tela com card de altura total. Ponha-o numa `Column`, e dê a '
+          'essa `Column` o `weight` das colunas que ela ocupa.',
         );
         total += _weight(child) ?? 0;
       }
     }
     if (tall == 0) {
       _errors.add(
-        'The `Row` "$id" holds `Column`s but no full height card. `Column`s '
-        'are only for a screen with a full height card; otherwise put the '
-        'cards in two `Row`s.',
+        'A `Row` "$id" guarda `Column`s mas nenhum card de altura total. '
+        '`Column`s são só para tela com card de altura total; senão ponha os '
+        'cards em duas `Row`s.',
       );
     } else if (tall > 1) {
       _errors.add(
-        'The `Row` "$id" holds $tall full height cards. It holds exactly one.',
+        'A `Row` "$id" guarda $tall cards de altura total. Guarda exatamente '
+        'um.',
       );
     }
     _checkSum(id, ids.length, total);
@@ -280,8 +280,8 @@ class _Screen {
     final span = _weight(band) ?? first ?? 0;
     if (ids.isEmpty || ids.length > 2) {
       _errors.add(
-        'The `Column` "$id" holds ${ids.length} cards. It holds one or two, '
-        'one above the other.',
+        'A `Column` "$id" guarda ${ids.length} cards. Guarda um ou dois, '
+        'um sobre o outro.',
       );
     }
     for (final cardId in ids) {
@@ -303,8 +303,8 @@ class _Screen {
       final cards = child['component'] == 'Row' ? _children(child) : null;
       if (cards == null || cards.isEmpty) {
         _errors.add(
-          'The `Column` "$id" mixes rows and cards, or holds a `Row` with no '
-          'cards. It holds only `Row`s of cards here.',
+          'A `Column` "$id" mistura linhas e cards, ou guarda uma `Row` sem '
+          'cards. Aqui ela guarda apenas `Row`s de cards.',
         );
       } else {
         rows[childId] = cards;
@@ -312,8 +312,8 @@ class _Screen {
     }
     if (rows.length > gridRows) {
       _errors.add(
-        'The `Column` "$id" holds ${rows.length} rows. It holds at most two, '
-        'one for each row of the grid.',
+        'A `Column` "$id" guarda ${rows.length} linhas. Guarda no máximo '
+        'duas, uma para cada linha da grade.',
       );
     }
     final firstSum = rows.values.firstOrNull
@@ -352,23 +352,23 @@ class _Screen {
     final fit = _fit(card);
     if (fit == null) {
       _errors.add(
-        'The $name "$id" cannot be placed in a `Row`: only cards can. Use a '
-        'card of the catalog.',
+        'O $name "$id" não pode ser colocado numa `Row`: apenas cards podem. '
+        'Use um card do catálogo.',
       );
       return weight;
     }
     _placed.add(card);
     if (_isFullHeight(card) && rows != 2) {
       _errors.add(
-        'The $name "$id" is a full height card: it goes alone in the `Row` of '
-        'a screen with a full height card, not in a half tall cell.',
+        'O $name "$id" é um card de altura total: ele vai sozinho na `Row` de '
+        'uma tela com card de altura total, não numa célula de meia altura.',
       );
       return weight;
     }
     final span = weight ?? _defaultSpan(fit, rows);
     if (!fit.fits(span, rows)) {
       _errors.add(
-        'The $name "$id" has weight $span, but ${_built(name, fit, rows)}',
+        'O $name "$id" tem weight $span, mas ${_built(name, fit, rows)}',
       );
     }
     return span;
@@ -379,23 +379,23 @@ class _Screen {
       for (final cell in fit.cells)
         if (cell.rows == rows) cell.columns,
     ];
-    final height = rows == 2 ? 'full height' : 'half tall';
+    final height = rows == 2 ? 'altura total' : 'meia altura';
     return spans.isEmpty
-        ? '$name is not built for a $height cell.'
-        : '$name is built for ${spans.join(', ')} of 12 columns, $height.';
+        ? '$name não é feito para uma célula de $height.'
+        : '$name é feito para ${spans.join(', ')} de 12 colunas, $height.';
   }
 
   void _checkSum(String id, int count, int total, [int target = gridColumns]) {
     if (count > 3) {
-      _errors.add('The `Row` "$id" holds $count cards. It holds at most 3.');
+      _errors.add('A `Row` "$id" guarda $count cards. Guarda no máximo 3.');
     }
     if (total != target) {
       final example = target == gridColumns
-          ? ', for example ${LayoutValidator._rowSums}'
-          : ', the columns of the `Column` it is in';
+          ? ', por exemplo ${LayoutValidator._rowSums}'
+          : ', as colunas da `Column` em que está';
       _errors.add(
-        'The weights of the `Row` "$id" add up to $total. They must add up to '
-        'exactly $target$example.',
+        'Os weights da `Row` "$id" somam $total. Devem somar exatamente '
+        '$target$example.',
       );
     }
   }
@@ -404,11 +404,11 @@ class _Screen {
     int count(String name) =>
         _placed.where((c) => c['component'] == name).length;
     for (final name in ['HeadsUpCard', 'ChangeSummary']) {
-      if (count(name) > 1) _errors.add('There is at most one `$name`.');
+      if (count(name) > 1) _errors.add('Há no máximo um `$name`.');
     }
     if (_placed.length > LayoutValidator._maxCards) {
       _errors.add(
-        'The screen has ${_placed.length} cards. It holds at most '
+        'A tela tem ${_placed.length} cards. Guarda no máximo '
         '${LayoutValidator._maxCards}.',
       );
     }

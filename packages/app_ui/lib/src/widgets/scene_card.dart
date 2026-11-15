@@ -35,8 +35,8 @@ class SceneCard extends StatelessWidget {
     this.state = SceneState.ready,
     this.tone = AppTone.lighting,
     this.settings = const [],
-    this.actionLabel = 'Start',
-    this.runningLabel = 'On',
+    this.actionLabel = 'Iniciar',
+    this.runningLabel = 'Aceso',
     this.onRun,
     super.key,
   });

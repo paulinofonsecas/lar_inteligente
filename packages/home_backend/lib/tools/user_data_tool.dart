@@ -10,15 +10,16 @@ AgentTool userDataTool(MockDatabase database) {
   return AgentTool(
     name: 'get_user_data',
     description:
-        'Returns data about the people in the Rivera household. Pass user_id '
-        'for one profile (role, interests, what their dashboard leads with, '
-        'context signals). Omit it to list every user.',
+        'Devolve dados das pessoas da família Rivera. Passe user_id para o '
+        'perfil de uma (papel, interesses, o que o painel dela abre, sinais '
+        'de contexto). Omita para listar todos os usuários.',
     inputSchema: const {
       'type': 'object',
       'properties': {
         'user_id': {
           'type': 'string',
-          'description': 'The user id, for example "ana". Omit to list users.',
+          'description':
+              'O id do usuário, por exemplo "ana". Omita para listar.',
         },
       },
     },

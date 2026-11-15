@@ -1,11 +1,11 @@
 {
-    "name": "A2UI VGV Smart Home",
-    "short_name": "A2UI VGV Smart Home",
+    "name": "Lar Inteligente",
+    "short_name": "Lar Inteligente",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A wall-mounted smart home panel where GenUI composes an A2UI dashboard for each family member.",
+    "description": "Um painel de casa inteligente montado na parede, onde o GenUI compõe um dashboard A2UI para cada membro da família.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

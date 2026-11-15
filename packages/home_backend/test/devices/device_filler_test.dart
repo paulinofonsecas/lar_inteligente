@@ -71,15 +71,15 @@ void main() {
         'id': 'fill_thermostat',
         'component': 'DeviceCard',
         'deviceId': 'thermostat',
-        'name': 'Thermostat',
+        'name': 'Termostato',
         'room': 'Living room',
         'icon': 'thermostat',
         'tone': 'climate',
-        'unit': '°F',
+        'unit': '°C',
         'control': {'type': 'stepper'},
         'isActive': true,
-        'status': 'Heating to 68 °F · now 67 °F',
-        'value': '68',
+        'status': 'Aquecendo para 20 °C · agora 19 °C',
+        'value': '20',
       });
     });
 

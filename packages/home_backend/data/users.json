@@ -1,31 +1,31 @@
 {
-  "household": "Rivera Home",
+  "household": "Casa Rivera",
   "users": [
     {
       "id": "ana",
       "name": "Ana",
       "age": 41,
-      "role": "Host",
+      "role": "Anfitriã",
       "optional": false,
-      "story": "Planning and cooking tonight's rack of lamb for 6 guests.",
+      "story": "Planeja e cozinha o cordeiro de hoje para 6 visitas.",
       "caresAbout": [
-        "timing",
-        "food",
-        "ambience",
-        "guests feeling welcome"
+        "horários",
+        "comida",
+        "ambiente",
+        "visitas se sentindo bem-vindas"
       ],
       "dashboardLeadsWith": [
-        "Dinner countdown",
-        "Oven and fridge status",
-        "Dining room scene",
-        "Guest arrivals"
+        "Contagem do jantar",
+        "Status do forno e da geladeira",
+        "Cena da sala de jantar",
+        "Chegada das visitas"
       ],
       "contextSignals": [
-        "Calendar event \"Dinner party\"",
-        "Recipe timeline",
-        "Oven schedule",
-        "Fridge door state",
-        "Shopping list"
+        "Evento do calendário \"Jantar\"",
+        "Cronograma da receita",
+        "Programação do forno",
+        "Estado da porta da geladeira",
+        "Lista de compras"
       ],
       "deviceTypes": [
         "OvenDevice",
@@ -39,24 +39,24 @@
       "id": "marco",
       "name": "Marco",
       "age": 43,
-      "role": "Logistics",
+      "role": "Logística",
       "optional": false,
-      "story": "Picks up the piano lesson, grabs the cake from the bakery and works from the upstairs office. Where he has to be, and when, is what he needs to see first.",
+      "story": "Busca a aula de piano, pega o bolo na padaria e trabalha do escritório no andar de cima. Onde ele precisa estar, e quando, é o que ele precisa ver primeiro.",
       "caresAbout": [
-        "where he has to be and when",
-        "getting places on time",
-        "car charge"
+        "onde ele precisa estar e quando",
+        "chegar aos lugares na hora",
+        "carga do carro"
       ],
       "dashboardLeadsWith": [
-        "Itinerary: leave-by time, every stop with its time and his calendar",
-        "Cake delivery",
-        "Car charge and range"
+        "Itinerário: horário de saída, cada parada com o horário e o calendário dele",
+        "Entrega do bolo",
+        "Carga e autonomia do carro"
       ],
       "contextSignals": [
-        "Calendar pickup slots",
-        "Trip route",
-        "Car battery",
-        "Bakery order"
+        "Horários de retirada no calendário",
+        "Rota da viagem",
+        "Bateria do carro",
+        "Pedido da padaria"
       ],
       "deviceTypes": [
         "GoogleAutoDevice",

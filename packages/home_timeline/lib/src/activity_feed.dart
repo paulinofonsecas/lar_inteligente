@@ -123,7 +123,7 @@ class ActivityFeed {
     final done = cook['doneAt'] as String?;
     return [
       {
-        'target': control!['temperatureSetpointF'],
+        'target': control!['temperatureSetpoint'],
         'preheat': atHhmm(now, start),
         'ready': atHhmm(now, cook['readyAt'] as String? ?? start),
         'roastIn': roastIn == null ? null : atHhmm(now, roastIn),

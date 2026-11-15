@@ -92,7 +92,7 @@ void main() {
       await tester.pump();
       expect(find.byType(A2uiSurface), findsOneWidget);
 
-      await tester.tap(_button('Day'));
+      await tester.tap(_button('Dia'));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 500));
 
@@ -129,7 +129,7 @@ void main() {
       }
       expect(find.byType(SkeletonSurface), findsNothing);
 
-      await tester.tap(_button('Day'));
+      await tester.tap(_button('Dia'));
       await _play(tester);
 
       expect(factory.agents, hasLength(2));
@@ -146,11 +146,11 @@ void main() {
       await tester.pumpApp(factory);
       await tester.pump();
 
-      await tester.tap(_button('Day'));
+      await tester.tap(_button('Dia'));
       await _play(tester);
 
       expect(factory.agents, hasLength(2));
-      expect(find.text('Could not build the dashboard.'), findsOneWidget);
+      expect(find.text('Não foi possível gerar o painel.'), findsOneWidget);
       expect(find.byType(A2uiSurface), findsNothing);
     });
 
@@ -164,7 +164,7 @@ void main() {
       await tester.pumpApp(factory);
       await tester.pump();
 
-      await tester.tap(_button('Day'));
+      await tester.tap(_button('Dia'));
       await _play(tester);
 
       expect(factory.agents.last.disposed, isFalse);
@@ -186,7 +186,7 @@ void main() {
       expect(factory.agents.single.refreshed, [ana.prompt]);
 
       live.answers = false;
-      await tester.tap(_button('Day'));
+      await tester.tap(_button('Dia'));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 500));
       hold.complete();
@@ -258,7 +258,7 @@ void main() {
       await tester.pumpApp(factory, liveRepository: live);
       await tester.pump();
 
-      await tester.tap(_button('Day'));
+      await tester.tap(_button('Dia'));
       await tester.pump();
       live.emit(const DataChanged(users: ['ana']));
       await _drain(tester);
@@ -298,7 +298,7 @@ void main() {
       await tester.pumpApp(factory, liveRepository: live);
       await tester.pump();
 
-      await tester.tap(_button('Day'));
+      await tester.tap(_button('Dia'));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 50));
       expect(factory.agents.first.disposed, isFalse);
@@ -330,11 +330,11 @@ void main() {
     ) async {
       await tester.pumpApp(FakeAgentFactory(emitSurface: true));
 
-      await tester.tap(_button('Day'));
+      await tester.tap(_button('Dia'));
       await _play(tester);
 
       expect(find.text('4:30'), findsOneWidget);
-      expect(find.text('Sat, Oct 10'), findsOneWidget);
+      expect(find.text('sáb., out. 10'), findsOneWidget);
     });
 
     testWidgets('shows an error with retry when the demo cannot start', (
@@ -344,10 +344,10 @@ void main() {
       final factory = FakeAgentFactory();
       await tester.pumpApp(factory, scenarioRepository: repository);
 
-      expect(find.text('Try again'), findsOneWidget);
+      expect(find.text('Tentar novamente'), findsOneWidget);
       expect(factory.agents, isEmpty);
 
-      await tester.tap(find.text('Try again'));
+      await tester.tap(find.text('Tentar novamente'));
       await tester.pump();
       await tester.pump();
       await tester.pump();

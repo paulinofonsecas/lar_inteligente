@@ -1,41 +1,41 @@
 {
-  "source": "Synthetic data shaped after the Google Home APIs. Calendar, recipe timeline, trips, bakery and the energy tariff are not Home data and live in their own files. Values derived from the scenario clock (oven, car climate, doorbell) are recomputed by the scenario engine.",
+  "source": "Dados sintéticos moldados a partir das Google Home APIs. Calendário, cronograma da receita, viagens, padaria e a tarifa de energia não são dados de casa e moram em arquivos próprios. Valores derivados do relógio do cenário (forno, clima do carro, campainha) são recalculados pelo motor do cenário.",
   "timeZone": "America/Chicago",
   "now": "2026-10-10T07:30:00",
   "structure": {
     "id": "structure-rivera-home",
-    "name": "Rivera Home"
+    "name": "Casa Rivera"
   },
   "rooms": [
     {
       "id": "kitchen",
-      "name": "Kitchen"
+      "name": "Cozinha"
     },
     {
       "id": "dining_room",
-      "name": "Dining Room"
+      "name": "Sala de jantar"
     },
     {
       "id": "living_room",
-      "name": "Living Room"
+      "name": "Sala de estar"
     },
     {
       "id": "garage",
-      "name": "Garage"
+      "name": "Garagem"
     },
     {
       "id": "entry",
-      "name": "Entry"
+      "name": "Entrada"
     },
     {
       "id": "utility",
-      "name": "Utility"
+      "name": "Lavanderia"
     }
   ],
   "devices": [
     {
       "id": "oven",
-      "name": "Oven",
+      "name": "Forno",
       "room": "kitchen",
       "type": "OvenDevice",
       "usedBy": [
@@ -43,16 +43,16 @@
       ],
       "traits": {
         "TemperatureControl": {
-          "temperatureSetpointF": 400,
+          "temperatureSetpoint": 200,
           "scheduledStart": "18:30",
-          "currentTemperatureF": 72
+          "currentTemperature": 22
         },
         "OperationalState": {
           "state": "stopped",
-          "statusLabel": "Off"
+          "statusLabel": "Desligado"
         },
         "CookSchedule": {
-          "recipe": "Rack of lamb",
+          "recipe": "Costela de cordeiro",
           "preheatMinutes": 14,
           "roastInAt": "18:45",
           "cookMinutes": 25,
@@ -63,12 +63,14 @@
         }
       },
       "aliases": [
-        "kitchen oven"
+        "kitchen oven",
+        "forno",
+        "forno da cozinha"
       ]
     },
     {
       "id": "fridge",
-      "name": "Fridge",
+      "name": "Geladeira",
       "room": "kitchen",
       "type": "RefrigeratorDevice",
       "usedBy": [
@@ -76,7 +78,7 @@
       ],
       "traits": {
         "TemperatureMeasurement": {
-          "cabinetTemperatureF": 37
+          "cabinetTemperature": 3
         },
         "BooleanState": {
           "doorOpen": false
@@ -86,12 +88,13 @@
         }
       },
       "aliases": [
-        "refrigerator"
+        "refrigerator",
+        "geladeira"
       ]
     },
     {
       "id": "table_lights",
-      "name": "Dining Room lights",
+      "name": "Luzes da sala de jantar",
       "room": "dining_room",
       "type": "ColorTemperatureLightDevice",
       "usedBy": [
@@ -112,12 +115,14 @@
         "dining lights",
         "dining room lights",
         "lights",
-        "table"
+        "table",
+        "luzes",
+        "luzes da mesa"
       ]
     },
     {
       "id": "dining_speaker",
-      "name": "Speaker",
+      "name": "Caixa de som",
       "room": "dining_room",
       "type": "SpeakerDevice",
       "usedBy": [
@@ -137,12 +142,14 @@
       },
       "aliases": [
         "music",
-        "speaker"
+        "speaker",
+        "som",
+        "caixa de som"
       ]
     },
     {
       "id": "thermostat",
-      "name": "Thermostat",
+      "name": "Termostato",
       "room": "living_room",
       "type": "Thermostat",
       "usedBy": [
@@ -152,17 +159,18 @@
       "traits": {
         "Thermostat": {
           "mode": "heat",
-          "heatSetpointF": 68,
-          "currentTemperatureF": 67
+          "heatSetpoint": 20,
+          "currentTemperature": 19
         }
       },
       "aliases": [
-        "living room"
+        "living room",
+        "sala de estar"
       ]
     },
     {
       "id": "car",
-      "name": "Car",
+      "name": "Carro",
       "room": "garage",
       "type": "GoogleAutoDevice",
       "usedBy": [
@@ -182,12 +190,13 @@
         }
       },
       "aliases": [
-        "vehicle"
+        "vehicle",
+        "veículo"
       ]
     },
     {
       "id": "front_door",
-      "name": "Front door lock",
+      "name": "Fechadura da porta da frente",
       "room": "entry",
       "type": "DoorLockDevice",
       "usedBy": [
@@ -202,12 +211,15 @@
         "door",
         "door lock",
         "front door",
-        "lock"
+        "lock",
+        "porta",
+        "fechadura",
+        "porta da frente"
       ]
     },
     {
       "id": "doorbell",
-      "name": "Doorbell",
+      "name": "Campainha",
       "room": "entry",
       "type": "GoogleDoorbellDevice",
       "usedBy": [
@@ -237,12 +249,14 @@
   "automations": [
     {
       "id": "dinner_party",
-      "name": "Dinner party scene",
+      "name": "Cena de jantar",
       "kind": "scene",
       "state": "ready",
       "aliases": [
         "dining scene",
-        "dinner party"
+        "dinner party",
+        "cena da sala",
+        "cena de jantar"
       ],
       "room": "dining_room",
       "owners": [
@@ -263,12 +277,12 @@
         {
           "deviceId": "thermostat",
           "command": "setHeatSetpoint",
-          "temperatureF": 70
+          "temperature": 21
         },
         {
           "deviceId": "dining_speaker",
           "command": "startPlaylist",
-          "playlist": "Dinner party"
+          "playlist": "Jantar"
         }
       ]
     }

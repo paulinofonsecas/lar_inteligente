@@ -19,8 +19,8 @@ import 'package:flutter/material.dart';
 String formatCountdown(
   DateTime startsAt,
   DateTime now, {
-  String nowLabel = 'Now',
-  String startedLabel = 'Started',
+  String nowLabel = 'Agora',
+  String startedLabel = 'Começou',
 }) {
   final remaining = startsAt.difference(now);
   final start = startsAt.toLocal();
@@ -50,8 +50,8 @@ class CountdownCard extends StatefulWidget {
     this.subtitle,
     this.tone = AppTone.lighting,
     this.now,
-    this.nowLabel = 'Now',
-    this.startedLabel = 'Started',
+    this.nowLabel = 'Agora',
+    this.startedLabel = 'Começou',
     super.key,
   });
 

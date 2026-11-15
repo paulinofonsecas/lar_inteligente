@@ -1,0 +1,125 @@
+{
+    "@@locale": "pt",
+    "appTitle": "Lar Inteligente",
+    "@appTitle": {
+        "description": "Título da aba do navegador da demo"
+    },
+    "brandLabel": "Lar Inteligente",
+    "@brandLabel": {
+        "description": "O que um leitor de tela anuncia para o lockup da marca no cabeçalho"
+    },
+    "askHint": "Como posso ajudar, {name}?",
+    "@askHint": {
+        "description": "A dica do campo de pergunta, citando o usuário",
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "dashboardFailed": "Não foi possível gerar o painel.",
+    "@dashboardFailed": {
+        "description": "Mostrado quando nenhum painel pôde ser gerado"
+    },
+    "apiKeyTitle": "Adicione sua chave da API Gemini",
+    "@apiKeyTitle": {
+        "description": "Título do diálogo que pede a chave própria da API Gemini"
+    },
+    "apiKeyBody": "A demo roda com a sua própria chave. Ela fica nesta aba do navegador, é enviada com cada requisição para chamar o Gemini, e o servidor nunca a armazena.",
+    "@apiKeyBody": {
+        "description": "Corpo do diálogo que pede a chave da API Gemini"
+    },
+    "apiKeyLink": "Obtenha uma chave em aistudio.google.com/apikey",
+    "@apiKeyLink": {
+        "description": "Link no diálogo da chave da API Gemini que abre o Google AI Studio"
+    },
+    "apiKeyLabel": "Chave da API Gemini",
+    "@apiKeyLabel": {
+        "description": "Rótulo do campo da chave da API Gemini"
+    },
+    "changeKeyTooltip": "Alterar chave da API Gemini",
+    "@changeKeyTooltip": {
+        "description": "Tooltip do botão de configurações, que reabre o diálogo da chave"
+    },
+    "usersLoadFailed": "Não foi possível carregar a família.",
+    "@usersLoadFailed": {
+        "description": "Mostrado quando a lista de usuários falha ao carregar"
+    },
+    "retryButton": "Tentar novamente",
+    "@retryButton": {
+        "description": "Texto do botão que tenta carregar os usuários de novo"
+    },
+    "voiceStartTooltip": "Toque para falar",
+    "@voiceStartTooltip": {
+        "description": "Tooltip do botão do microfone"
+    },
+    "voiceSendTooltip": "Toque para enviar",
+    "@voiceSendTooltip": {
+        "description": "Tooltip do botão do microfone enquanto ele escuta"
+    },
+    "voiceListeningTo": "Ouvindo {name}",
+    "@voiceListeningTo": {
+        "description": "O rótulo do card mostrado enquanto o usuário fala, citando-o",
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "microphonePermissionTitle": "Usar o microfone",
+    "@microphonePermissionTitle": {
+        "description": "Título do diálogo mostrado antes do navegador pedir o microfone"
+    },
+    "microphonePermissionBody": "Seu navegador vai pedir permissão para usar o microfone. Autorize, depois toque no botão e fale.",
+    "@microphonePermissionBody": {
+        "description": "Corpo do diálogo mostrado antes do navegador pedir o microfone"
+    },
+    "continueButton": "Continuar",
+    "@continueButton": {
+        "description": "Texto do botão que segue para o prompt do microfone do navegador"
+    },
+    "cancelButton": "Cancelar",
+    "@cancelButton": {
+        "description": "Texto do botão que fecha um diálogo sem continuar"
+    },
+    "microphoneUnavailable": "O microfone não está disponível. Autorize-o nas configurações do site no seu navegador e tente novamente.",
+    "@microphoneUnavailable": {
+        "description": "Mostrado quando o navegador recusa o microfone"
+    },
+    "transcriptionFailed": "Não consegui transformar isso em texto. Tente de novo.",
+    "@transcriptionFailed": {
+        "description": "Mostrado quando o comando falado não pode ser transcrito"
+    },
+    "actionCompleted": "Concluído",
+    "@actionCompleted": {
+        "description": "O rótulo que o toast mostra depois que uma requisição teve sucesso"
+    },
+    "actionFailed": "Algo deu errado. Tente novamente.",
+    "@actionFailed": {
+        "description": "Mostrado sob o rótulo de uma requisição que falhou, quando o servidor não deu motivo"
+    },
+    "timelineMorning": "Manhã",
+    "@timelineMorning": {
+        "description": "O rótulo do botão da linha do tempo que vai para a manhã"
+    },
+    "timelineDay": "Dia",
+    "@timelineDay": {
+        "description": "O rótulo do botão da linha do tempo que vai para o dia"
+    },
+    "timelineSunset": "Pôr do sol",
+    "@timelineSunset": {
+        "description": "O rótulo do botão da linha do tempo que vai para o pôr do sol"
+    },
+    "timelineEvening": "Noite",
+    "@timelineEvening": {
+        "description": "O rótulo do botão da linha do tempo que vai para a noite"
+    },
+    "timelineFailed": "Não é possível alcançar o relógio da demo",
+    "@timelineFailed": {
+        "description": "Mostrado pela linha do tempo quando o backend não responde"
+    },
+    "timelineLabel": "Horário da demo",
+    "@timelineLabel": {
+        "description": "O que um leitor de tela anuncia para o controle da linha do tempo"
+    }
+}

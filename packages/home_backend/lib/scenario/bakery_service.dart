@@ -72,8 +72,8 @@ class BakeryService {
     final owner = _calendar.event('cal_cake')['userId'];
     if (owner != userId) {
       throw MockDataNotFound(
-        'The cake pickup is assigned to $owner, so only $owner can ask the '
-        'bakery to deliver it.',
+        'A retirada do bolo está designada a $owner, então só $owner pode '
+        'pedir à padaria que entregue.',
       );
     }
     final bakery = _database.bakery;
@@ -95,7 +95,7 @@ class BakeryService {
     final match = offered.where((o) => o['slot'] == chosen);
     if (match.isEmpty) {
       throw MockDataNotFound(
-        'The bakery has no "$chosen" slot. Available: '
+        'A padaria não tem o horário "$chosen". Disponíveis: '
         '${offered.map((o) => o['slot']).join(', ')}.',
       );
     }
@@ -106,10 +106,10 @@ class BakeryService {
     final order = <String, dynamic>{
       'id': 'order_cake',
       'userId': userId,
-      'item': 'Cake',
+      'item': 'Bolo',
       'bakeryName': bakery['name'],
       'method': 'delivery',
-      'address': 'Rivera Home',
+      'address': 'Casa Rivera',
       'replacesEventId': 'cal_cake',
       'requestedAt': wallIso(now),
       'confirmsAt': wallIso(confirmsAt),
@@ -127,7 +127,8 @@ class BakeryService {
   /// Tells the bakery when the guests arrive and notes it in its message log.
   Map<String, Object?> notifyGuestsArrival(DateTime arrival, DateTime before) {
     final message =
-        'Guests now arrive at ${clock12(arrival)} (was ${clock12(before)}).';
+        'As visitas agora chegam às ${clock12(arrival)} (era '
+        '${clock12(before)}).';
     (_database.bakery['messages'] as List<dynamic>).add({
       'at': _database.clock.nowIso,
       'text': message,

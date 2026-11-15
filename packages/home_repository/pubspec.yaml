@@ -1,6 +1,6 @@
 name: home_repository
 description: >-
-  The repository layer of the A2UI VGV Smart Home panel: users, the scenario clock
+  The repository layer of the Lar Inteligente panel: users, the scenario clock
   and the live socket, read from the backend. Pure Dart.
 version: 0.1.0
 publish_to: none

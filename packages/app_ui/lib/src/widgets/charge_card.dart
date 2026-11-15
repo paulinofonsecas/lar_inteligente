@@ -14,7 +14,7 @@ class ChargeCard extends StatelessWidget {
   /// {@macro charge_card}
   const ChargeCard({
     required this.percent,
-    this.title = 'Car',
+    this.title = 'Carro',
     this.status,
     this.range,
     this.summary,

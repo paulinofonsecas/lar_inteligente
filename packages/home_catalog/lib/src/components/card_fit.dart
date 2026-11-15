@@ -55,11 +55,11 @@ class GridCell {
   static double widthOf(int columns) =>
       (gridAreaWidth + gridGutter) * columns / gridColumns - gridGutter;
 
-  /// The cell as the prompt says it, in proportions: "5 of 12 columns, half
-  /// tall" or "8 of 12 columns, full height".
+  /// The cell as the prompt says it, in proportions: "5 de 12 colunas, meia
+  /// altura" or "8 de 12 colunas, altura total".
   String get label =>
-      '$columns of $gridColumns columns, '
-      '${isFullHeight ? 'full height' : 'half tall'}';
+      '$columns de $gridColumns colunas, '
+      '${isFullHeight ? 'altura total' : 'meia altura'}';
 
   @override
   bool operator ==(Object other) =>
@@ -106,9 +106,9 @@ class CardFit {
 
   /// The fit as one line of the prompt.
   String describe() {
-    final buffer = StringBuffer('best ${best.label}');
+    final buffer = StringBuffer('melhor ${best.label}');
     if (also.isNotEmpty) {
-      buffer.write('; also ${also.map((cell) => cell.label).join('; ')}');
+      buffer.write('; também ${also.map((cell) => cell.label).join('; ')}');
     }
     if (note != null) buffer.write('. $note');
     return buffer.toString();

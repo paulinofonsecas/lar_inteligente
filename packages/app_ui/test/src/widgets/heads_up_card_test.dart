@@ -32,7 +32,7 @@ void main() {
         ),
       );
 
-      expect(find.textContaining('Heads up'), findsOneWidget);
+      expect(find.textContaining('Atenção'), findsOneWidget);
       expect(find.textContaining('Weather'), findsOneWidget);
       expect(find.text('Just now'), findsOneWidget);
       expect(find.text('Garage door is open'), findsOneWidget);
@@ -49,7 +49,7 @@ void main() {
         );
 
         expect(find.text('Fridge door open'), findsOneWidget);
-        expect(find.textContaining('Heads up'), findsOneWidget);
+        expect(find.textContaining('Atenção'), findsOneWidget);
         expect(
           tester.widget<GlowSurface>(find.byType(GlowSurface)).border?.width,
           2,

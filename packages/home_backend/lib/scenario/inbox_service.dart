@@ -72,8 +72,8 @@ class InboxService {
     ];
     if (itemId != null && !mine.any((item) => item['id'] == itemId)) {
       throw MockDataNotFound(
-        'No inbox item "$itemId" for $userId. Available: '
-        '${mine.map((item) => item['id']).join(', ')}.',
+        'Não há item "$itemId" na caixa de entrada de $userId. '
+        'Disponíveis: ${mine.map((item) => item['id']).join(', ')}.',
       );
     }
     var changed = 0;

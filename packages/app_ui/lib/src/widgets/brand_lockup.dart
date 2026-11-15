@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:material_symbols_icons/symbols.dart';
+
+import '../theme/app_colors.dart';
+import '../theme/app_typography.dart';
 
 /// {@template brand_lockup}
-/// The Very Good Ventures lockup: the unicorn with "Very Good Ventures" and
-/// "A2UI Smart Home." beside it.
+/// The app's lockup: the house glyph with "Lar Inteligente" beside it.
 ///
-/// The words are part of the artwork, so it is drawn as designed, in its own
-/// colours, and [semanticLabel] says it to assistive tech.
+/// Drawn in Flutter, in its own colours, so [semanticLabel] says it to
+/// assistive tech.
 /// {@endtemplate}
 class BrandLockup extends StatelessWidget {
   /// {@macro brand_lockup}
   const BrandLockup({required this.semanticLabel, super.key});
 
-  /// What a screen reader announces, for example
-  /// `Very Good Ventures, A2UI Smart Home`.
+  /// What a screen reader announces, for example `Lar Inteligente`.
   final String semanticLabel;
 
   static const double _width = 305;
@@ -21,12 +22,41 @@ class BrandLockup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SvgPicture.asset(
-      'assets/images/vgv_lockup.svg',
-      package: 'app_ui',
-      width: _width,
-      height: _height,
-      semanticsLabel: semanticLabel,
+    return Semantics(
+      label: semanticLabel,
+      container: true,
+      child: ExcludeSemantics(
+        child: SizedBox(
+          width: _width,
+          height: _height,
+          child: Row(
+            children: [
+              Icon(
+                Symbols.house_rounded,
+                size: 38,
+                color: AppColors.onPrimary,
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Lar Inteligente',
+                    style: AppTypography.ui(
+                      size: 28,
+                      lineHeight: 32,
+                      weight: FontWeight.w600,
+                      letterSpacing: -0.5,
+                      color: AppColors.onPrimary,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

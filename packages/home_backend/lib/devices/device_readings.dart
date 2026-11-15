@@ -70,21 +70,21 @@ class DeviceReadings {
     final start = control['scheduledStart'] as String?;
     final status = state == 'stopped' && start != null
         // It is off until its programme starts: say when that is.
-        ? 'Preheats at ${clock12(atHhmm(_database.clock.now, start))}'
-        : operational['statusLabel'] as String? ?? 'Off';
+        ? 'Preaquece às ${clock12(atHhmm(_database.clock.now, start))}'
+        : operational['statusLabel'] as String? ?? 'Desligado';
     return {
       'isActive': state != 'stopped',
       'status': status,
-      'value': _number(control['currentTemperatureF']),
+      'value': _number(control['currentTemperature']),
     };
   }
 
   Map<String, Object?> _fridge(Map<String, dynamic> traits) {
     final open = _trait(traits, 'BooleanState')['doorOpen'] == true;
     return {
-      'status': open ? 'Door open' : 'Door closed',
+      'status': open ? 'Porta aberta' : 'Porta fechada',
       'value': _number(
-        _trait(traits, 'TemperatureMeasurement')['cabinetTemperatureF'],
+        _trait(traits, 'TemperatureMeasurement')['cabinetTemperature'],
       ),
     };
   }
@@ -94,7 +94,7 @@ class DeviceReadings {
     final level = _number(_trait(traits, 'LevelControl')['currentLevel']);
     return {
       'isActive': on,
-      'status': on ? 'On · $level%' : 'Off',
+      'status': on ? 'Acesa · $level%' : 'Desligada',
       'value': on ? level : '0',
     };
   }
@@ -104,10 +104,10 @@ class DeviceReadings {
     final playback = _trait(traits, 'MediaPlayback');
     final playlist = playback['playlist'] as String?;
     final status = !on
-        ? 'Off'
+        ? 'Desligada'
         : playback['state'] == 'playing' && playlist != null
-        ? 'Playing $playlist'
-        : 'On';
+        ? 'Tocando $playlist'
+        : 'Ligada';
     return {
       'isActive': on,
       'status': status,
@@ -118,12 +118,12 @@ class DeviceReadings {
   Map<String, Object?> _thermostat(Map<String, dynamic> traits) {
     final thermostat = _trait(traits, 'Thermostat');
     final mode = thermostat['mode'] as String? ?? 'off';
-    final setpoint = _number(thermostat['heatSetpointF']);
-    final now = _number(thermostat['currentTemperatureF']);
+    final setpoint = _number(thermostat['heatSetpoint']);
+    final now = _number(thermostat['currentTemperature']);
     final status = switch (mode) {
-      'heat' => 'Heating to $setpoint °F · now $now °F',
-      'cool' => 'Cooling to $setpoint °F · now $now °F',
-      _ => 'Off · now $now °F',
+      'heat' => 'Aquecendo para $setpoint °C · agora $now °C',
+      'cool' => 'Resfriando para $setpoint °C · agora $now °C',
+      _ => 'Desligado · agora $now °C',
     };
     return {
       'isActive': mode != 'off',
@@ -135,7 +135,7 @@ class DeviceReadings {
 
   Map<String, Object?> _lock(Map<String, dynamic> traits) {
     final locked = _trait(traits, 'DoorLock')['lockState'] == 'locked';
-    final word = locked ? 'Locked' : 'Unlocked';
+    final word = locked ? 'Trancada' : 'Destrancada';
     return {'isActive': locked, 'status': word, 'value': word};
   }
 }

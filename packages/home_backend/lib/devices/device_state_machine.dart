@@ -109,7 +109,7 @@ class DeviceStateMachine {
         }
       }
     }
-    throw const DeviceNotFound("Couldn't find that item on the list.");
+    throw const DeviceNotFound('Não encontrei esse item na lista.');
   });
 
   /// Shares the list [listId] with its `shareTarget`, the household member the
@@ -121,7 +121,7 @@ class DeviceStateMachine {
     final list = _findList(listId);
     final target = list['shareTarget'] as String?;
     if (target == null) {
-      throw const CommandRejected("That list can't be shared.");
+      throw const CommandRejected('Essa lista não pode ser compartilhada.');
     }
     final shared = list['sharedWith'] as List<dynamic>;
     if (shared.contains(target)) return;
@@ -134,7 +134,7 @@ class DeviceStateMachine {
   /// Reverts the most recent command that changed something.
   CommandResult undoLast() {
     if (_undoStack.isEmpty) {
-      return const CommandResult(summary: 'There was nothing to undo.');
+      return const CommandResult(summary: 'Não havia nada para desfazer.');
     }
     final reverts = _undoStack.removeLast();
     final changes = <StateChange>[];
@@ -152,7 +152,7 @@ class DeviceStateMachine {
     }
     _onChanged();
     return CommandResult(
-      summary: 'Undid the last change: ${_describe(changes)}.',
+      summary: 'Desfez a última mudança: ${_describe(changes)}.',
       changes: changes,
     );
   }
@@ -168,7 +168,7 @@ class DeviceStateMachine {
     }
     if (!txn.changed) {
       return const CommandResult(
-        summary: 'Already in that state, so nothing changed.',
+        summary: 'Já estava nesse estado, então nada mudou.',
       );
     }
     _undoStack.add(txn.reverts);
@@ -248,11 +248,11 @@ class DeviceStateMachine {
 
   Map<String, dynamic> _findScene(String id) =>
       _match(_database.scenes, id) ??
-      (throw DeviceNotFound.forId(id, kind: 'scene'));
+      (throw DeviceNotFound.forId(id, kind: 'cena'));
 
   Map<String, dynamic> _findList(String id) =>
       _match(_database.todoLists, id, nameKey: 'title') ??
-      (throw DeviceNotFound.forId(id, kind: 'list'));
+      (throw DeviceNotFound.forId(id, kind: 'lista'));
 
   // ---- commands -----------------------------------------------------------
 
@@ -286,7 +286,7 @@ class DeviceStateMachine {
         final openState = trait('OpenClose')?['openState'];
         if (openState != null && openState != 'closed') {
           throw CommandRejected(
-            'The ${name.toLowerCase()} has to close first.',
+            '${artigo(name)} precisa fechar primeiro.',
           );
         }
         set('DoorLock', 'lockState', 'locked');
@@ -297,7 +297,7 @@ class DeviceStateMachine {
         final timer = trait('Timer') ?? (throw cannot);
         final minutes = (value ?? 5).round();
         if (minutes < 1 || minutes > 120) {
-          throw const CommandRejected('Add between 1 and 120 minutes.');
+          throw const CommandRejected('Escolha entre 1 e 120 minutos.');
         }
         set(
           'Timer',
@@ -309,21 +309,23 @@ class DeviceStateMachine {
         if (trait('LevelControl') == null) throw cannot;
         final level = value?.round();
         if (level == null || level < 0 || level > 100) {
-          throw const CommandRejected('Pick a level from 0 to 100.');
+          throw const CommandRejected('Escolha um nível de 0 a 100.');
         }
         set('LevelControl', 'currentLevel', level);
       case DeviceCommand.setTemperature:
         final degrees = value?.round();
         if (trait('Thermostat') != null) {
-          if (degrees == null || degrees < 50 || degrees > 90) {
-            throw const CommandRejected('Pick a temperature from 50 to 90.');
+          if (degrees == null || degrees < 10 || degrees > 30) {
+            throw const CommandRejected('Escolha uma temperatura de 10 a 30.');
           }
-          set('Thermostat', 'heatSetpointF', degrees);
+          set('Thermostat', 'heatSetpoint', degrees);
         } else if (trait('TemperatureControl') != null) {
-          if (degrees == null || degrees < 150 || degrees > 500) {
-            throw const CommandRejected('Pick a temperature from 150 to 500.');
+          if (degrees == null || degrees < 100 || degrees > 250) {
+            throw const CommandRejected(
+              'Escolha uma temperatura de 100 a 250.',
+            );
           }
-          set('TemperatureControl', 'temperatureSetpointF', degrees);
+          set('TemperatureControl', 'temperatureSetpoint', degrees);
         } else {
           throw cannot;
         }
@@ -334,14 +336,14 @@ class DeviceStateMachine {
         if (trait('Thermostat') != null) {
           set(
             'Thermostat',
-            'heatSetpointF',
-            step('Thermostat', 'heatSetpointF', 1, 50, 90),
+            'heatSetpoint',
+            step('Thermostat', 'heatSetpoint', 1, 10, 30),
           );
         } else if (trait('TemperatureControl') != null) {
           set(
             'TemperatureControl',
-            'temperatureSetpointF',
-            step('TemperatureControl', 'temperatureSetpointF', 25, 150, 500),
+            'temperatureSetpoint',
+            step('TemperatureControl', 'temperatureSetpoint', 5, 100, 250),
           );
         } else if (trait('LevelControl') != null) {
           set(
@@ -435,7 +437,7 @@ class DeviceStateMachine {
       final trips = _database.tripRows;
       if (trips.isEmpty) {
         throw const CommandRejected(
-          'There is no trip to get the car ready for.',
+          'Não há viagem para preparar o carro.',
         );
       }
       final leaveBy = parseWall(trips.first['leaveBy'] as String);
@@ -488,7 +490,7 @@ class DeviceStateMachine {
             txn,
             id,
             DeviceCommand.setTemperature,
-            action['temperatureF'] as num,
+            action['temperature'] as num,
           );
         case 'startCharging':
           _command(txn, id, DeviceCommand.on, null);
@@ -503,7 +505,7 @@ class DeviceStateMachine {
           txn.set(id, media, 'MediaPlayback', 'state', 'playing');
           txn.set(id, media, 'MediaPlayback', 'playlist', action['playlist']);
         default:
-          throw const CommandRejected("That scene can't run right now.");
+          throw const CommandRejected('Essa cena não pode rodar agora.');
       }
     }
   }

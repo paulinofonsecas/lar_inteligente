@@ -33,15 +33,15 @@ void main() {
     test('is off until its programme starts, and says when that is', () {
       expect(readings.of('oven'), {
         'isActive': false,
-        'status': 'Preheats at 6:30 PM',
-        'value': '72',
+        'status': 'Preaquece às 6:30 PM',
+        'value': '22',
       });
     });
 
     test('is off with nothing scheduled once it is stopped', () {
       machine.execute('oven', DeviceCommand.off);
 
-      expect(readings.of('oven')!['status'], 'Off');
+      expect(readings.of('oven')!['status'], 'Desligado');
       expect(readings.of('oven')!['isActive'], isFalse);
     });
 
@@ -50,7 +50,7 @@ void main() {
 
       final oven = readings.of('oven')!;
       expect(oven['isActive'], isTrue);
-      expect(oven['status'], startsWith('Preheating'));
+      expect(oven['status'], startsWith('Preaquecendo'));
     });
 
     test('follows the clock to the temperature it reaches', () {
@@ -58,8 +58,8 @@ void main() {
       world.moveTo(database.clock.now.add(const Duration(minutes: 20)));
 
       final oven = readings.of('oven')!;
-      expect(oven['status'], startsWith('Ready'));
-      expect(oven['value'], '400');
+      expect(oven['status'], startsWith('Pronto'));
+      expect(oven['value'], '200');
     });
   });
 
@@ -67,7 +67,7 @@ void main() {
     test('are on at their level', () {
       expect(readings.of('table_lights'), {
         'isActive': true,
-        'status': 'On · 100%',
+        'status': 'Acesa · 100%',
         'value': '100',
       });
     });
@@ -77,7 +77,7 @@ void main() {
 
       expect(readings.of('table_lights'), {
         'isActive': false,
-        'status': 'Off',
+        'status': 'Desligada',
         'value': '0',
       });
     });
@@ -87,7 +87,7 @@ void main() {
     test('is off', () {
       expect(readings.of('dining_speaker'), {
         'isActive': false,
-        'status': 'Off',
+        'status': 'Desligada',
         'value': '30',
       });
     });
@@ -95,7 +95,7 @@ void main() {
     test('is on once started, and says so', () {
       machine.execute('dining_speaker', DeviceCommand.on);
 
-      expect(readings.of('dining_speaker')!['status'], 'On');
+      expect(readings.of('dining_speaker')!['status'], 'Ligada');
       expect(readings.of('dining_speaker')!['isActive'], isTrue);
     });
 
@@ -108,7 +108,7 @@ void main() {
         ..['state'] = 'playing'
         ..['playlist'] = 'Dinner jazz';
 
-      expect(readings.of('dining_speaker')!['status'], 'Playing Dinner jazz');
+      expect(readings.of('dining_speaker')!['status'], 'Tocando Dinner jazz');
     });
   });
 
@@ -116,18 +116,18 @@ void main() {
     test('heats to its setpoint, which is its hero value', () {
       expect(readings.of('thermostat'), {
         'isActive': true,
-        'status': 'Heating to 68 °F · now 67 °F',
-        'value': '68',
+        'status': 'Aquecendo para 20 °C · agora 19 °C',
+        'value': '20',
       });
     });
 
     test('moves with the stepper', () {
       machine.execute('thermostat', DeviceCommand.up);
 
-      expect(readings.of('thermostat')!['value'], '69');
+      expect(readings.of('thermostat')!['value'], '21');
       expect(
         readings.of('thermostat')!['status'],
-        'Heating to 69 °F · now 67 °F',
+        'Aquecendo para 21 °C · agora 19 °C',
       );
     });
 
@@ -138,10 +138,10 @@ void main() {
               as Map<String, dynamic>;
 
       thermostat['mode'] = 'cool';
-      expect(readings.of('thermostat')!['status'], startsWith('Cooling to'));
+      expect(readings.of('thermostat')!['status'], startsWith('Resfriando'));
 
       thermostat['mode'] = 'off';
-      expect(readings.of('thermostat')!['status'], 'Off · now 67 °F');
+      expect(readings.of('thermostat')!['status'], 'Desligado · agora 19 °C');
       expect(readings.of('thermostat')!['isActive'], isFalse);
     });
   });
@@ -150,16 +150,16 @@ void main() {
     test('is locked, and then unlocked', () {
       expect(readings.of('front_door'), {
         'isActive': true,
-        'status': 'Locked',
-        'value': 'Locked',
+        'status': 'Trancada',
+        'value': 'Trancada',
       });
 
       machine.execute('front_door', DeviceCommand.unlock);
 
       expect(readings.of('front_door'), {
         'isActive': false,
-        'status': 'Unlocked',
-        'value': 'Unlocked',
+        'status': 'Destrancada',
+        'value': 'Destrancada',
       });
     });
   });
@@ -167,8 +167,8 @@ void main() {
   group('the fridge', () {
     test('has no switch: it says its door and its temperature', () {
       expect(readings.of('fridge'), {
-        'status': 'Door closed',
-        'value': '37',
+        'status': 'Porta fechada',
+        'value': '3',
       });
     });
 
@@ -177,7 +177,7 @@ void main() {
           database.deviceOrNull('fridge')!['traits'] as Map<String, dynamic>;
       (traits['BooleanState'] as Map<String, dynamic>)['doorOpen'] = true;
 
-      expect(readings.of('fridge')!['status'], 'Door open');
+      expect(readings.of('fridge')!['status'], 'Porta aberta');
     });
   });
 

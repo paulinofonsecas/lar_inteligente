@@ -39,11 +39,11 @@ void main() {
     });
 
     test('says itself for the prompt', () {
-      expect(five.label, '5 of 12 columns, half tall');
+      expect(five.label, '5 de 12 colunas, meia altura');
       expect(five.toString(), five.label);
       expect(
         const GridCell(8, 2).label,
-        '8 of 12 columns, full height',
+        '8 de 12 colunas, altura total',
       );
     });
 
@@ -62,16 +62,17 @@ void main() {
       expect(fit.cells, [five, const GridCell(4, 1)]);
       expect(
         fit.describe(),
-        'best 5 of 12 columns, half tall; also 4 of 12 columns, half tall',
+        'melhor 5 de 12 colunas, meia altura; '
+        'também 4 de 12 colunas, meia altura',
       );
     });
 
     test('adds its note', () {
-      const fit = CardFit(best: five, note: 'Drops the hero.');
+      const fit = CardFit(best: five, note: 'Corta o herói.');
 
       expect(
         fit.describe(),
-        'best 5 of 12 columns, half tall. Drops the hero.',
+        'melhor 5 de 12 colunas, meia altura. Corta o herói.',
       );
     });
 
@@ -158,9 +159,9 @@ void main() {
       expect(
         rendered,
         contains(
-          '- `DeviceCard`: best 4 of 12 columns, half tall; '
-          'also 3 of 12 columns, half tall; 5 of 12 columns, half tall. '
-          'Always half tall',
+          '- `DeviceCard`: melhor 4 de 12 colunas, meia altura; '
+          'também 3 de 12 colunas, meia altura; 5 de 12 colunas, meia altura. '
+          'Sempre meia altura, nunca uma célula de altura total.',
         ),
       );
       expect(rendered, isNot(contains('`Row`')));

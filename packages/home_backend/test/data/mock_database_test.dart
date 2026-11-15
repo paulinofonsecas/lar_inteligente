@@ -135,7 +135,7 @@ void main() {
           isA<MockDataNotFound>().having(
             (e) => e.toString(),
             'message',
-            'No user "nobody". Available: ana, marco.',
+            'Sem o usuário "nobody". Disponíveis: ana, marco.',
           ),
         ),
       );
@@ -211,7 +211,7 @@ void main() {
             isA<MockDataNotFound>().having(
               (e) => e.message,
               'message',
-              'No room "Attic". Available: Kitchen, Garage.',
+              'Não há cômodo "Attic". Disponíveis: Kitchen, Garage.',
             ),
           ),
         );
@@ -224,7 +224,7 @@ void main() {
             isA<MockDataNotFound>().having(
               (e) => e.message,
               'message',
-              contains('Available: OvenDevice, RefrigeratorDevice'),
+              contains('Disponíveis: OvenDevice, RefrigeratorDevice'),
             ),
           ),
         );
@@ -241,7 +241,8 @@ void main() {
             isA<MockDataNotFound>().having(
               (e) => e.message,
               'message',
-              'No devices in room "Garage" with device type "OvenDevice".',
+              'Nenhum dispositivo no cômodo "Garage" com o tipo de dispositivo '
+              '"OvenDevice".',
             ),
           ),
         );
@@ -379,7 +380,7 @@ void main() {
         final home = shipped.homeFor(user['id']! as String);
         expect(
           (home['structure']! as Map)['name'],
-          'Rivera Home',
+          'Casa Rivera',
         );
         expect(home['devices'], isNotEmpty);
       }
@@ -408,7 +409,7 @@ void main() {
 
     test('has the dinner party scene, ready to start', () {
       expect(shipped.scenes.single, containsPair('state', 'ready'));
-      expect(shipped.scenes.single['name'], 'Dinner party scene');
+      expect(shipped.scenes.single['name'], 'Cena de jantar');
     });
 
     test(

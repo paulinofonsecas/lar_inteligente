@@ -143,7 +143,7 @@ void main() {
       expect(trait('oven', 'TemperatureControl')['scheduledStart'], '16:30');
       expect(trait('front_door', 'DoorLock')['lockState'], 'locked');
       expect(trait('car', 'Climate')['startAt'], '16:50');
-      expect(trait('thermostat', 'Thermostat')['heatSetpointF'], 70);
+      expect(trait('thermostat', 'Thermostat')['heatSetpoint'], 21);
       expect(database.scenes.single['state'], 'running');
       expect(database.todoLists.single['sharedWith'], ['marco']);
     });

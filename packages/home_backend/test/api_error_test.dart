@@ -26,7 +26,7 @@ void main() {
     test('internalServerError defaults to a generic message and 500', () {
       const error = ApiError.internalServerError();
       expect(error.statusCode, HttpStatus.internalServerError);
-      expect(error.toJson(), {'message': 'Internal server error'});
+      expect(error.toJson(), {'message': 'Erro interno do servidor'});
     });
 
     test(

@@ -83,7 +83,7 @@ void main() {
         ((read['orders']! as List<dynamic>).single as Map)['status'],
         'pending',
       );
-      expect(read['bakery'], 'Maple & Crumb Bakery');
+      expect(read['bakery'], 'Padaria Maple & Crumb');
     });
 
     test(

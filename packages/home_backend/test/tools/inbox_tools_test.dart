@@ -41,7 +41,7 @@ void main() {
 
       expect(result['unread'], 1);
       final item = (result['items']! as List<dynamic>).single as Map;
-      expect(item['title'], 'Dinner moved to 6:00 PM');
+      expect(item['title'], 'Jantar movido para 6:00 PM');
       expect(
         (item['suggestion'] as Map)['tool'],
         'request_bakery_delivery',

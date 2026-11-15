@@ -6,7 +6,7 @@
       "source": "oven",
       "at": "preheat",
       "kind": "oven",
-      "summary": "O forno começa a preaquecer a {target} °F",
+      "summary": "O forno começa a preaquecer a {target} °C",
       "subject": "ana",
       "deviceId": "oven"
     },
@@ -14,7 +14,7 @@
       "source": "oven",
       "at": "ready",
       "kind": "oven",
-      "summary": "O forno chega a {target} °F",
+      "summary": "O forno chega a {target} °C",
       "subject": "ana",
       "deviceId": "oven"
     },

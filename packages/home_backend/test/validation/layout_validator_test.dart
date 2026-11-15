@@ -285,11 +285,11 @@ void main() {
     ];
 
     test('a root that is not a Column', () {
-      rejects([_c('root', 'Row', {})], contains('must be a `Column`'));
+      rejects([_c('root', 'Row', {})], contains('deve ser uma `Column`'));
     });
 
     test('a root with no list of children', () {
-      rejects([_c('root', 'Column', {})], contains('list its children'));
+      rejects([_c('root', 'Column', {})], contains('listar os filhos'));
     });
 
     test('an id that is not defined', () {
@@ -311,7 +311,7 @@ void main() {
           _device('a', 4),
           _chips(),
         ],
-        contains('Put every card in a `Row`'),
+        contains('Ponha cada card numa `Row`'),
       );
     });
 
@@ -321,7 +321,7 @@ void main() {
           _root(['r1', 'r2']),
           ...twoRows,
         ],
-        contains('exactly one `ActionChips`'),
+        contains('exatamente um `ActionChips`'),
       );
     });
 
@@ -333,7 +333,7 @@ void main() {
           _chips(),
           _chips('more'),
         ],
-        contains('lists 2'),
+        contains('Lista 2'),
       );
     });
 
@@ -344,7 +344,7 @@ void main() {
           ...twoRows,
           _chips(),
         ],
-        contains('must be the last child'),
+        contains('deve ser o último filho'),
       );
     });
 
@@ -369,7 +369,7 @@ void main() {
           _root(['chips']),
           _chips(),
         ],
-        contains('no `Row` of cards'),
+        contains('não tem uma `Row` de cards'),
       );
       rejects(
         [
@@ -377,7 +377,7 @@ void main() {
           _c('r1', 'Row', {}),
           _chips(),
         ],
-        allOf(contains('must list its cards'), contains('no `Row` of cards')),
+        allOf(contains('deve listar os cards'), contains('não tem uma `Row` de cards')),
       );
     });
 
@@ -392,7 +392,7 @@ void main() {
           _device('g', 12),
           _chips(),
         ],
-        contains('at most two `Row`s'),
+        contains('no máximo duas `Row`s'),
       );
     });
 
@@ -407,7 +407,7 @@ void main() {
           for (final id in ['c', 'd', 'e']) _device(id, 4),
           _chips(),
         ],
-        allOf(contains('"r1" add up to 8'), contains('exactly 12')),
+        allOf(contains('"r1" somam 8'), contains('exatamente 12')),
       );
     });
 
@@ -423,8 +423,8 @@ void main() {
           _chips(),
         ],
         allOf(
-          contains('TripCard "trip" has weight 12'),
-          contains('built for 7 of 12 columns, half tall'),
+          contains('TripCard "trip" tem weight 12'),
+          contains('feito para 7 de 12 colunas, meia altura'),
         ),
       );
     });
@@ -442,7 +442,7 @@ void main() {
           _c('fridge', 'DeviceCard'),
           _chips(),
         ],
-        contains('add up to 9'),
+        contains('somam 9'),
       );
     });
 
@@ -456,7 +456,7 @@ void main() {
           for (final id in ['e', 'f', 'g']) _device(id, 4),
           _chips(),
         ],
-        contains('holds 4 cards. It holds at most 3'),
+        contains('guarda 4 cards. Guarda no máximo 3'),
       );
     });
 
@@ -472,7 +472,7 @@ void main() {
           for (final id in ['c', 'd', 'e']) _device(id, 4),
           _chips(),
         ],
-        contains('Row "nested" cannot be placed'),
+        contains('Row "nested" não pode ser colocado'),
       );
     });
 
@@ -489,7 +489,7 @@ void main() {
           _card('d', 'TripCard', null),
           _chips(),
         ],
-        contains('holds `Column`s but no full height card'),
+        contains('guarda `Column`s mas nenhum card de altura total'),
       );
     });
 
@@ -503,7 +503,7 @@ void main() {
           _device('b', 4),
           _chips(),
         ],
-        contains('DeviceCard "a" is directly in the `Row`'),
+        contains('DeviceCard "a" está diretamente na `Row`'),
       );
     });
 
@@ -518,7 +518,7 @@ void main() {
           _device('a', null),
           _chips(),
         ],
-        contains('holds 2 full height cards'),
+        contains('guarda 2 cards de altura total'),
       );
     });
 
@@ -533,7 +533,7 @@ void main() {
           _chips(),
         ],
         anyOf(
-          contains('A screen with a full height card has a single `Row`'),
+          contains('Uma tela com um card de altura total tem uma única `Row`'),
           contains('full height card'),
         ),
       );
@@ -549,7 +549,7 @@ void main() {
           _card('list', 'ShoppingList', null),
           _chips(),
         ],
-        contains('ShoppingList "list" is a full height card'),
+        contains('ShoppingList "list" é um card de altura total'),
       );
     });
 
@@ -569,9 +569,9 @@ void main() {
           _chips(),
         ],
         allOf(
-          contains('"top" add up to 8'),
-          contains('exactly 7'),
-          contains('columns of the `Column`'),
+          contains('"top" somam 8'),
+          contains('exatamente 7'),
+          contains('as colunas da `Column`'),
         ),
       );
     });
@@ -588,7 +588,7 @@ void main() {
           for (final id in ['r1b', 'r2b', 'r3b']) _device(id, 3),
           _chips(),
         ],
-        contains('holds 3 rows. It holds at most two'),
+        contains('guarda 3 linhas. Guarda no máximo duas'),
       );
     });
 
@@ -605,7 +605,7 @@ void main() {
           _device('card', 4),
           _chips(),
         ],
-        contains('mixes rows and cards'),
+        contains('mistura linhas e cards'),
       );
       rejects(
         [
@@ -616,7 +616,7 @@ void main() {
           _c('top', 'Row', {}),
           _chips(),
         ],
-        contains('mixes rows and cards'),
+        contains('mistura linhas e cards'),
       );
     });
 
@@ -630,7 +630,7 @@ void main() {
           for (final id in ['a', 'b', 'c']) _device(id, null),
           _chips(),
         ],
-        contains('holds 3 cards. It holds one or two'),
+        contains('guarda 3 cards. Guarda um ou dois'),
       );
     });
 
@@ -643,7 +643,7 @@ void main() {
           _band('band', 7, []),
           _chips(),
         ],
-        contains('holds 0 cards'),
+        contains('guarda 0 cards'),
       );
     });
 
@@ -657,7 +657,7 @@ void main() {
           _device('a', null),
           _chips(),
         ],
-        contains('PlanTimeline "plan" has weight 5'),
+        contains('PlanTimeline "plan" tem weight 5'),
       );
     });
 
@@ -672,7 +672,7 @@ void main() {
           for (final id in ['c', 'd', 'e']) _device(id, 4),
           _chips(),
         ],
-        contains('at most one `HeadsUpCard`'),
+        contains('Há no máximo um `HeadsUpCard`'),
       );
       rejects(
         [
@@ -685,7 +685,7 @@ void main() {
           _root(['r1', 'r2', 'r3', 'chips']),
           _chips(),
         ],
-        contains('has 7 cards'),
+        contains('A tela tem 7 cards'),
       );
     });
 
@@ -705,7 +705,7 @@ void main() {
       expect(validator.validate([...first, ...second]), isNotNull);
       expect(
         validator.validate([...first, ...second])!.join(),
-        contains('add up to 8'),
+        contains('somam 8'),
       );
     });
   });

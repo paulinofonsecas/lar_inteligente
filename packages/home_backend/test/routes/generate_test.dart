@@ -203,7 +203,7 @@ void main() {
 
       await route.onRequest(context);
 
-      expect(calls.single.last.text, contains('does not exist yet'));
+      expect(calls.single.last.text, contains('ainda não existe'));
     });
 
     test('tells the model to update a surface the panel shows', () async {
@@ -212,7 +212,7 @@ void main() {
 
       await route.onRequest(context);
 
-      expect(calls.single.last.text, contains('already on screen'));
+      expect(calls.single.last.text, contains('já está na tela'));
     });
 
     test('retries once with the errors fed back, then succeeds', () async {
@@ -228,7 +228,7 @@ void main() {
       expect(retry[retry.length - 2].role, Role.model);
       expect(retry[retry.length - 2].text, 'I am sorry, no.');
       expect(retry.last.role, Role.user);
-      expect(retry.last.text, contains('no A2UI message'));
+      expect(retry.last.text, contains('não continha mensagem A2UI'));
     });
 
     test('feeds back a component the catalog does not declare', () async {
@@ -300,7 +300,7 @@ void main() {
 
       expect(response.statusCode, HttpStatus.ok);
       expect(calls, hasLength(2));
-      expect(calls.first.last.text, contains('already on screen'));
+      expect(calls.first.last.text, contains('já está na tela'));
       final messages = ((await bodyOf(response))['messages'] as List)
           .cast<Json>();
       expect(messages.last, contains('updateComponents'));
@@ -327,7 +327,7 @@ void main() {
 
       expect(
         (await bodyOf(response))['message'],
-        'Failed to generate a response.',
+        'Falha ao gerar uma resposta.',
       );
     });
 

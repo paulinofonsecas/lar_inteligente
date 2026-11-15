@@ -167,7 +167,7 @@ class ScenarioEngine {
     _calendar.ensureEvent({
         'id': deliveryId,
         'userId': owner,
-        'title': 'Cake delivery from the bakery',
+        'title': 'Entrega do bolo da padaria',
       })
       ..['start'] = wallIso(departs)
       ..['end'] = wallIso(eta)
@@ -175,9 +175,9 @@ class ScenarioEngine {
       ..['leavesAt'] = clock12(departs)
       ..['arrivesAt'] = clock12(eta)
       ..['detail'] =
-          'Leaves the bakery ${clock12(departs)} · arrives home '
+          'Sai da padaria ${clock12(departs)} · chega em casa '
           '${clock12(eta)} · ${order['durationMinutes']} min'
-          '${confirmed ? '' : ' · waiting for the bakery to confirm'}'
+          '${confirmed ? '' : ' · aguardando a padaria confirmar'}'
       ..['assignedTo'] = {
         owner,
         ..._database.assigneesOf(_calendar.guestsEvent()),

@@ -123,7 +123,7 @@ void main() {
         expect(
           seen.last.last,
           allOf(
-            contains('no tool called "createSurface"'),
+            contains('Não existe a ferramenta "createSurface"'),
             contains('<a2ui-json>'),
           ),
         );

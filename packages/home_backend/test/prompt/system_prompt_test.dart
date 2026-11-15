@@ -23,7 +23,7 @@ void main() {
 
       expect(prompt.text, contains(homeCatalog.id));
       expect(prompt.text, startsWith('MECHANICS'));
-      expect(prompt.text, contains('MUST be A2UI'));
+      expect(prompt.text, contains('DEVE ser A2UI'));
       expect(prompt.text, contains('`$dashboardSurfaceId`'));
       expect(prompt.text, isNot(contains('{{')));
       for (final name in homeCatalog.components.keys) {

@@ -87,7 +87,7 @@ void main() {
 
       expect(response.statusCode, HttpStatus.badRequest);
       final body = jsonDecode(await response.body()) as Map<String, dynamic>;
-      expect(body['message'], 'Missing session id');
+      expect(body['message'], 'Faltando id de sessão');
     });
 
     for (final id in [

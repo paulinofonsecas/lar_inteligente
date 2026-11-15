@@ -233,7 +233,7 @@ class ActivityFeed {
       if (stops.isEmpty || leaveBy == null) continue;
       final route = stops
           .map((stop) {
-            final time = stop['name'] == 'Home'
+            final time = stop['name'] == 'Casa'
                 ? trip['homeArrivalRange']
                 : clock12(parseWall(stop['arriveBy']! as String));
             return '${stop['name']} $time';
@@ -263,8 +263,8 @@ class ActivityFeed {
         'notes': (trip['notes'] as List<dynamic>).join(' '),
         'droppedStops': dropped.isEmpty
             ? ''
-            : ' The ${dropped.join(', ')} stop is the cause: the bakery can '
-                  'deliver the cake instead.',
+            : ' A parada ${dropped.join(', ')} é a causa: a padaria pode '
+                  'entregar o bolo no lugar.',
       });
     }
     return facts;
@@ -280,7 +280,7 @@ class ActivityFeed {
             'start': parseWall(event['start'] as String),
             'person': person,
             'text': event['kind'] == 'guests_arrive'
-                ? 'Guests arrive'
+                ? 'As visitas chegam'
                 : event['detail'] == null
                 ? event['title']
                 : '${event['title']}: ${event['detail']}',

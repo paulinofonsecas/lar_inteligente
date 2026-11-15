@@ -60,7 +60,7 @@ void main() {
       ]) {
         expect(
           () => ActionCommand.parse(name, {'progressLabel': 'Lock up'}),
-          invalid("That action isn't supported."),
+          invalid('Essa ação não é suportada.'),
           reason: name,
         );
       }
@@ -95,7 +95,7 @@ void main() {
       ]) {
         expect(
           () => ActionCommand.parse(entry.$1, entry.$2),
-          invalid("That action couldn't be understood."),
+          invalid('Não foi possível entender essa ação.'),
           reason: '${entry.$1} ${entry.$2}',
         );
       }
@@ -104,11 +104,11 @@ void main() {
     test('the two refusals print their user-safe message', () {
       expect(
         const InvalidActionException.unsupported().toString(),
-        "That action isn't supported.",
+        'Essa ação não é suportada.',
       );
       expect(
         const InvalidActionException.malformed().toString(),
-        "That action couldn't be understood.",
+        'Não foi possível entender essa ação.',
       );
     });
 
@@ -122,7 +122,7 @@ void main() {
       ]) {
         expect(
           () => ActionCommand.parse(entry.$1, entry.$2),
-          invalid("That action couldn't be understood."),
+          invalid('Não foi possível entender essa ação.'),
           reason: '${entry.$1} ${entry.$2}',
         );
       }
@@ -193,7 +193,7 @@ void main() {
         'deviceId': 'thermostat',
         'direction': 'down',
       }).applyTo(machine);
-      expect(trait('thermostat', 'Thermostat')['heatSetpointF'], 67);
+      expect(trait('thermostat', 'Thermostat')['heatSetpoint'], 19);
     });
 
     test('run_device_action with and without a value', () {
@@ -283,7 +283,7 @@ void main() {
       );
       expect(
         () => ActionRequest.fromJson(body(action: {'name': 'run_scene'})),
-        invalid("That action couldn't be understood."),
+        invalid('Não foi possível entender essa ação.'),
       );
     });
 
@@ -297,7 +297,7 @@ void main() {
       ]) {
         expect(
           () => ActionRequest.fromJson(json),
-          invalid("That action couldn't be understood."),
+          invalid('Não foi possível entender essa ação.'),
         );
       }
     });
@@ -307,7 +307,7 @@ void main() {
         () => ActionRequest.fromJson(
           body(action: {'name': 'nope', 'context': <String, dynamic>{}}),
         ),
-        invalid("That action isn't supported."),
+        invalid('Essa ação não é suportada.'),
       );
     });
   });

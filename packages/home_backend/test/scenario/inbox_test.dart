@@ -226,11 +226,11 @@ void main() {
       expect(inboxOf('ana'), isEmpty);
       final item = inboxOf('marco').single;
       expect(item['from'], 'ana');
-      expect(item['title'], 'Dinner moved to 6:00 PM');
+      expect(item['title'], 'Jantar movido para 6:00 PM');
       expect(
         item['body'],
-        'Ana moved the dinner party from 7:00 PM to 6:00 PM. Your route now '
-        'gets you home at 6:30–6:45 PM, after the guests arrive.',
+        'Ana mudou o jantar de 7:00 PM para 6:00 PM. Sua rota agora '
+        'chega em casa às 6:30–6:45 PM, depois das visitas.',
       );
       expect(
         item['suggestion'],
@@ -252,7 +252,7 @@ void main() {
       final item = inboxOf('ana').single;
       expect(
         item['body'],
-        'Marco moved the dinner party from 7:00 PM to 6:00 PM.',
+        'Marco mudou o jantar de 7:00 PM para 6:00 PM.',
       );
       expect(item.containsKey('suggestion'), isFalse);
     });
@@ -261,10 +261,10 @@ void main() {
       world.planner.moveGuests(shiftMinutes: 60);
 
       final item = inboxOf('marco').single;
-      expect(item['title'], 'Dinner moved to 8:00 PM');
+      expect(item['title'], 'Jantar movido para 8:00 PM');
       expect(
         item['body'],
-        'Ana moved the dinner party from 7:00 PM to 8:00 PM.',
+        'Ana mudou o jantar de 7:00 PM para 8:00 PM.',
       );
       expect(item.containsKey('suggestion'), isFalse);
     });
@@ -275,7 +275,7 @@ void main() {
       world.planner.moveGuests(shiftMinutes: -60);
 
       final item = inboxOf('marco').single;
-      expect(item['body'], contains('after the guests arrive'));
+      expect(item['body'], contains('depois das visitas'));
       expect(item.containsKey('suggestion'), isFalse);
     });
 
@@ -299,7 +299,7 @@ void main() {
       () {
         expect(
           () => world.bakery.requestDelivery('ana'),
-          notFound('assigned to marco'),
+          notFound('está designada a marco'),
         );
         expect(world.bakery.requestDelivery('marco')['action'], 'requested');
       },
@@ -320,11 +320,11 @@ void main() {
       world.moveTo(atHhmm(database.clock.start, '17:00'));
 
       expect(summaries(feed.forUser('marco')['next']), [
-        'Piano lesson pickup',
-        'Bakery cake pickup',
-        'Guests arrive',
+        'Buscar na aula de piano',
+        'Buscar bolo na padaria',
+        'As visitas chegam',
       ]);
-      expect(summaries(feed.forUser('ana')['next']), contains('Guests arrive'));
+      expect(summaries(feed.forUser('ana')['next']), contains('As visitas chegam'));
     });
 
     test('shows a notification as what just happened to its person', () {
@@ -332,7 +332,7 @@ void main() {
 
       final marco = feed.forUser('marco');
 
-      expect(summaries(marco['recent']), contains('Dinner moved to 6:00 PM'));
+      expect(summaries(marco['recent']), contains('Jantar movido para 6:00 PM'));
       expect(
         (marco['recent']! as List<dynamic>)
             .cast<Map<String, dynamic>>()
@@ -343,7 +343,7 @@ void main() {
       );
       expect(
         summaries(feed.forUser('ana')['recent']),
-        isNot(contains('Dinner moved to 6:00 PM')),
+        isNot(contains('Jantar movido para 6:00 PM')),
       );
     });
   });

@@ -52,7 +52,7 @@ void main() {
     expect(update['path'], '/devices/table_lights');
     expect(update['value'], {
       'isActive': false,
-      'status': 'Off',
+      'status': 'Desligada',
       'value': '0',
     });
   });
@@ -73,8 +73,8 @@ void main() {
     world.moveTo(database.clock.now.add(const Duration(minutes: 20)));
 
     final oven = updates()['/devices/oven']! as _Json;
-    expect(oven['status'], startsWith('Ready'));
-    expect(oven['value'], '400');
+    expect(oven['status'], startsWith('Pronto'));
+    expect(oven['value'], '200');
   });
 
   test('sends the first values again when the demo starts over', () {
@@ -85,7 +85,7 @@ void main() {
 
     expect(updates()['/devices/table_lights'], {
       'isActive': true,
-      'status': 'On · 100%',
+      'status': 'Acesa · 100%',
       'value': '100',
     });
   });

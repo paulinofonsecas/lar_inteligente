@@ -34,7 +34,7 @@ Future<Response> onRequest(RequestContext context) async {
     return ApiError.badRequest(message: error.message).toResponse();
   } catch (_) {
     return const ApiError.badRequest(
-      message: "That action couldn't be understood.",
+      message: 'Não foi possível entender essa ação.',
     ).toResponse();
   }
 
@@ -63,10 +63,10 @@ Future<Response> onRequest(RequestContext context) async {
 String _promptFor(GenerateRequest conversation, CommandResult result) {
   final summary = result.summary.replaceFirst(RegExp(r'\.$'), '');
   final note = result.changed
-      ? 'The backend already applied this command: $summary.'
-      : 'The backend handled this command and no device state changed: '
+      ? 'O backend já aplicou este comando: $summary.'
+      : 'O backend tratou este comando e nenhum estado de dispositivo mudou: '
             '$summary.';
-  return '${conversation.prompt}\n\n$note Read the current device data with '
-      'your tools and compose the updated dashboard; do not claim anything '
-      'the data does not show.';
+  return '${conversation.prompt}\n\n$note Leia os dados atuais dos '
+      'dispositivos com suas ferramentas e monte o painel atualizado; não '
+      'afirme nada que os dados não mostrem.';
 }

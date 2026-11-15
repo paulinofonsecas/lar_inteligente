@@ -24,7 +24,7 @@ class CalendarService {
       if (event['id'] == id) return event;
     }
     throw MockDataNotFound(
-      'No calendar event "$id". Available: '
+      'Não há evento "$id" no calendário. Disponíveis: '
       '${_database.calendarEvents.map((e) => e['id']).join(', ')}.',
     );
   }
@@ -36,7 +36,7 @@ class CalendarService {
     for (final event in _database.calendarEvents) {
       if (event['kind'] == 'guests_arrive') return event;
     }
-    throw const MockDataNotFound('No event where guests arrive.');
+    throw const MockDataNotFound('Não há evento de chegada das visitas.');
   }
 
   /// Moves the event [id] to start at [start], keeping its length, and returns

@@ -82,7 +82,7 @@ void main() {
     expect(_summaries(result['next']), [
       'Prep the rack',
       'Pick up wine: Market',
-      'Guests arrive',
+      'As visitas chegam',
     ]);
   });
 
@@ -124,7 +124,10 @@ void main() {
 
     expect(next.last['listId'], 'groceries');
     expect(next.last['urgent'], isTrue);
-    expect(next.last['summary'], contains('1 of 2 items still to get: Eggs'));
+    expect(
+      next.last['summary'],
+      contains('faltam 1 de 2 itens: Eggs'),
+    );
   });
 
   test('throws for an unknown user', () {
@@ -144,21 +147,21 @@ void main() {
             },
             'TemperatureControl': {
               'scheduledStart': '17:00',
-              'temperatureSetpointF': 400,
+              'temperatureSetpoint': 200,
             },
           },
         }
         ..devices['doorbell'] = {
           'traits': {
             'DoorbellPress': {'lastPressAt': '2026-10-10T17:45:00'},
-            'DoorbellEvent': {'label': 'Delivery · cake'},
+            'DoorbellEvent': {'label': 'Entrega · bolo'},
           },
         }
         ..orders = [
           {
             'userId': 'ana',
-            'item': 'Cake',
-            'bakeryName': 'Sweet Spot',
+            'item': 'Bolo',
+            'bakeryName': 'Doce Ponto',
             'requestedAt': '2026-10-10T16:40:00',
             'confirmsAt': '2026-10-10T16:50:00',
             'departsAt': '2026-10-10T17:20:00',
@@ -168,7 +171,7 @@ void main() {
           },
         ]
         ..bakeryMessages = [
-          {'at': '2026-10-10T17:30:00', 'text': 'Asked for a later slot'},
+          {'at': '2026-10-10T17:30:00', 'text': 'Pediu um horário mais tarde'},
         ]
         ..trips = [
           {
@@ -179,20 +182,20 @@ void main() {
             'homeArrivalRange': '7:20 PM',
             'homeAfterGuestsArrive': true,
             'stops': [
-              {'name': 'Bakery', 'arriveBy': '2026-10-10T18:10:00'},
-              {'name': 'Home', 'arriveBy': '2026-10-10T19:30:00'},
+              {'name': 'Padaria', 'arriveBy': '2026-10-10T18:10:00'},
+              {'name': 'Casa', 'arriveBy': '2026-10-10T19:30:00'},
             ],
             'plannedStops': [
-              {'name': 'Bakery', 'droppedWhenDelivered': true},
+              {'name': 'Padaria', 'droppedWhenDelivered': true},
             ],
-            'notes': ['Traffic is heavy.'],
+            'notes': ['Trânsito pesado.'],
             'itinerary': <Object?>[],
           },
         ]
         ..inboxItems = [
           {
             'at': '2026-10-10T17:35:00',
-            'title': 'Marco moved dinner',
+            'title': 'Marco mudou o jantar',
             'userId': 'ana',
             'from': 'marco',
           },
@@ -202,20 +205,20 @@ void main() {
     test('lists what just happened', () {
       final recent = _summaries(feed.forUser('ana')['recent']);
 
-      expect(recent, contains('Oven reaches 400 °F'));
-      expect(recent, contains('Delivery · cake'));
-      expect(recent, contains('Asked for a later slot'));
-      expect(recent, contains('Marco moved dinner'));
+      expect(recent, contains('O forno chega a 200 °C'));
+      expect(recent, contains('Entrega · bolo'));
+      expect(recent, contains('Pediu um horário mais tarde'));
+      expect(recent, contains('Marco mudou o jantar'));
       expect(
         recent.any(
           (s) =>
-              s.contains('gets them home after the guests arrive. Traffic') &&
-              s.contains('The Bakery stop is the cause'),
+              s.contains('chega em casa depois da chegada das visitas. Trânsito') &&
+              s.contains('A parada Padaria é a causa'),
         ),
         isTrue,
       );
       expect(
-        recent.where((s) => s.startsWith('The cake is delivered')),
+        recent.where((s) => s.startsWith('O bolo foi entregue')),
         hasLength(1),
       );
     });
@@ -225,7 +228,7 @@ void main() {
           .cast<Map<String, Object?>>();
 
       final arrival = recent.singleWhere(
-        (m) => (m['summary']! as String).contains('front door'),
+        (m) => (m['summary']! as String).contains('porta da frente'),
       );
       expect(arrival['urgent'], isTrue);
     });
@@ -235,15 +238,15 @@ void main() {
 
       expect(
         next,
-        contains('The roast goes in'.replaceAll('goes in', 'is done')),
+        contains('O assado está pronto'),
       );
       expect(
         next.any(
           (s) =>
               s.startsWith(
-                "Ana's itinerary: leave by 5:55 PM, Bakery 6:10 PM",
+                'Itinerário de Ana: sair às 5:55 PM, Padaria 6:10 PM',
               ) &&
-              s.endsWith('Home 7:20 PM'),
+              s.endsWith('Casa 7:20 PM'),
         ),
         isTrue,
       );
@@ -256,7 +259,7 @@ void main() {
 
       final recent = _summaries(feed.forUser('ana')['recent']);
 
-      expect(recent.any((s) => s.contains('delivery is pending')), isTrue);
+      expect(recent.any((s) => s.contains('está pending')), isTrue);
     });
 
     test('tracks an order on the road', () {
@@ -267,7 +270,10 @@ void main() {
 
       final recent = _summaries(feed.forUser('ana')['recent']);
 
-      expect(recent.any((s) => s.contains('is on its way, 40% there')), isTrue);
+      expect(
+        recent.any((s) => s.contains('está a caminho, 40% do trajeto')),
+        isTrue,
+      );
     });
   });
 }

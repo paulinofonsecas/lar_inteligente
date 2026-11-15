@@ -55,7 +55,7 @@ void main() {
       expect(delivery()['arrivesAt'], '5:45 PM');
       expect(
         delivery()['detail'],
-        'Leaves the bakery 5:20 PM · arrives home 5:45 PM · 25 min',
+        'Sai da padaria 5:20 PM · chega em casa 5:45 PM · 25 min',
       );
     });
 
@@ -94,8 +94,8 @@ void main() {
         expect(
           next,
           contains(
-            'Cake delivery from the bakery: Leaves the bakery 5:20 PM · '
-            'arrives home 5:45 PM · 25 min',
+            'Entrega do bolo da padaria: Sai da padaria 5:20 PM · '
+            'chega em casa 5:45 PM · 25 min',
           ),
         );
       }
@@ -130,7 +130,7 @@ void main() {
         expect(order['progressPercent'], 40);
         expect(
           order['statusLabel'],
-          'In progress · 15 min left, arrives 5:45 PM',
+          'Em andamento · faltam 15 min, chega às 5:45 PM',
         );
         final recent =
             (ActivityFeed(DatabaseFeedSource(database)).forUser(user)['recent']!
@@ -139,7 +139,7 @@ void main() {
         expect(
           recent.where(
             (s) => (s! as String).startsWith(
-              'The cake is on its way, 40% there, 15 min left, arrives 5:45 PM',
+              'O bolo está a caminho, 40% do trajeto, faltam 15 min, chega às 5:45 PM',
             ),
           ),
           hasLength(1),

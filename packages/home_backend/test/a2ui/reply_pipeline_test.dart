@@ -124,7 +124,7 @@ void main() {
       final outcome = run('Sorry, I cannot help with that.');
 
       expect(outcome.isAccepted, isFalse);
-      expect(outcome.errors.single, contains('no A2UI message'));
+      expect(outcome.errors.single, contains('não continha mensagem A2UI'));
     });
 
     test('rejects an unknown component, naming it', () {
@@ -184,7 +184,7 @@ void main() {
       );
 
       expect(outcome.isAccepted, isFalse);
-      expect(outcome.errors.join(), contains('no `Row` of cards'));
+      expect(outcome.errors.join(), contains('não tem uma `Row` de cards'));
     });
 
     test('keeps a card of a device with no readings as it was written', () {
@@ -205,7 +205,7 @@ void main() {
               'component': 'DeviceCard',
               'deviceId': 'toaster',
               'name': 'Toaster',
-              'status': 'Off',
+              'status': 'Desligado',
               'weight': 4,
             },
           ],
@@ -216,7 +216,7 @@ void main() {
       final toaster = _components(
         outcome.messages.single,
       ).firstWhere((c) => c['deviceId'] == 'toaster');
-      expect(toaster['status'], 'Off');
+      expect(toaster['status'], 'Desligado');
       final create = _body(outcome.messages.single, 'createSurface');
       expect(
         (create['dataModel']! as Json)['devices'],
@@ -268,7 +268,7 @@ void main() {
                 'component': 'DeviceCard',
                 'deviceId': 'toaster',
                 'name': id,
-                'status': 'Off',
+                'status': 'Desligado',
                 'weight': 4,
               },
             dashboardComponents().last,

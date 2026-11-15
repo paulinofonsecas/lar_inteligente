@@ -117,11 +117,11 @@ void main() {
       expect(
         prompt,
         contains(
-          'The backend already applied this command: '
+          'O backend já aplicou este comando: '
           'oven state: stopped -> running.',
         ),
       );
-      expect(prompt, contains('do not claim anything the data does not show'));
+      expect(prompt, contains('não afirme nada que os dados não mostrem'));
       // The history keeps the earlier turns and the layered system message.
       expect(messages.first.role, Role.system);
       expect(messages.first.text, contains('A2UI INSTRUCTIONS'));
@@ -152,7 +152,7 @@ void main() {
       final response = await route.onRequest(context);
 
       expect(response.statusCode, HttpStatus.ok);
-      expect(calls.single.last.text, contains('no device state changed'));
+      expect(calls.single.last.text, contains('nenhum estado de dispositivo mudou'));
     });
 
     test('responds 400 for a body that is not an object', () async {
@@ -163,7 +163,7 @@ void main() {
       expect(response.statusCode, HttpStatus.badRequest);
       expect(
         (await json(response))['message'],
-        "That action couldn't be understood.",
+        'Não foi possível entender essa ação.',
       );
       verifyNoGeneration();
     });
@@ -177,7 +177,7 @@ void main() {
         expect(response.statusCode, HttpStatus.badRequest);
         expect(
           (await json(response))['message'],
-          "That action isn't supported.",
+          'Essa ação não é suportada.',
         );
       }
       verifyNoGeneration();
@@ -191,7 +191,7 @@ void main() {
       expect(response.statusCode, HttpStatus.badRequest);
       expect(
         (await json(response))['message'],
-        "That action couldn't be understood.",
+        'Não foi possível entender essa ação.',
       );
       verifyNoGeneration();
     });
@@ -217,7 +217,7 @@ void main() {
           expect(response.statusCode, HttpStatus.badRequest);
           expect(
             (await json(response))['message'],
-            "That action couldn't be understood.",
+            'Não foi possível entender essa ação.',
           );
         }
         verifyNoGeneration();
@@ -230,7 +230,7 @@ void main() {
       final response = await route.onRequest(context);
 
       expect(response.statusCode, HttpStatus.notFound);
-      expect((await json(response))['message'], "Couldn't find the ovenn.");
+      expect((await json(response))['message'], 'Não encontrei "ovenn".');
       verifyNoGeneration();
     });
 
@@ -242,7 +242,7 @@ void main() {
       final response = await route.onRequest(context);
 
       expect(response.statusCode, HttpStatus.conflict);
-      expect((await json(response))['message'], 'The oven is offline.');
+      expect((await json(response))['message'], 'O forno está offline.');
       verifyNoGeneration();
     });
 

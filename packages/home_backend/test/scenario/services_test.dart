@@ -23,7 +23,7 @@ void main() {
 
   group('CalendarService', () {
     test('finds an event, or names the ones there are', () {
-      expect(world.calendar.event('cal_piano')['title'], 'Piano lesson pickup');
+      expect(world.calendar.event('cal_piano')['title'], 'Buscar na aula de piano');
       expect(
         () => world.calendar.event('nope'),
         notFound('cal_dinner, cal_piano, cal_cake'),
@@ -33,7 +33,7 @@ void main() {
     test('finds the event where the guests arrive', () {
       expect(world.calendar.guestsEvent()['id'], 'cal_dinner');
       database.calendarEvents.removeWhere((e) => e['kind'] == 'guests_arrive');
-      expect(world.calendar.guestsEvent, notFound('No event where guests'));
+      expect(world.calendar.guestsEvent, notFound('Não há evento de chegada'));
     });
 
     test('moves an event and keeps its length', () {
@@ -102,7 +102,7 @@ void main() {
     test('says so when there is no oven', () {
       database.homeDevices.removeWhere((d) => d['id'] == 'oven');
 
-      expect(world.oven.schedule, notFound('no oven'));
+      expect(world.oven.schedule, notFound('Não há forno'));
     });
   });
 
@@ -176,7 +176,7 @@ void main() {
     test('a slot the bakery does not have lists the ones it has', () {
       expect(
         () => world.bakery.requestDelivery('marco', slot: '17:30'),
-        notFound('Available: 17:20'),
+        notFound('Disponíveis: 17:20'),
       );
     });
 
@@ -186,7 +186,7 @@ void main() {
         DateTime.utc(2026, 10, 10, 19),
       );
 
-      expect(result['message'], 'Guests now arrive at 6:00 PM (was 7:00 PM).');
+      expect(result['message'], 'As visitas agora chegam às 6:00 PM (era 7:00 PM).');
       expect(database.bakeryFor('marco')['messages'], hasLength(1));
     });
   });
@@ -207,10 +207,10 @@ void main() {
     Matcher rejects(String text) => notFound(text);
 
     test('needs exactly one of a shift or an arrival', () {
-      expect(world.planner.moveGuests, rejects('exactly one'));
+      expect(world.planner.moveGuests, rejects('exatamente um'));
       expect(
         () => world.planner.moveGuests(arrival: '18:00', shiftMinutes: -5),
-        rejects('exactly one'),
+        rejects('exatamente um'),
       );
     });
 
@@ -218,7 +218,7 @@ void main() {
       final result = world.planner.moveGuests(arrival: '18:00');
 
       expect(result['changed'], isTrue);
-      expect(result['summary'], contains('6:00 PM (was 7:00 PM)'));
+      expect(result['summary'], contains('6:00 PM (era 7:00 PM)'));
       expect((result['effects']! as List<dynamic>).length, 5);
       expect(
         ((result['trips']! as List<dynamic>).single as Map)['userId'],
@@ -238,7 +238,7 @@ void main() {
       world.moveTo(atHhmm(database.clock.start, '17:00'));
       expect(
         () => world.planner.moveGuests(arrival: '16:00'),
-        rejects('Guests cannot arrive at 4:00 PM, it is 5:00 PM now'),
+        rejects('não podem chegar às 4:00 PM, são 5:00 PM agora'),
       );
     });
   });
@@ -252,7 +252,7 @@ void main() {
 
       expect(
         (database.tripRows.single['rangeCheck'] as Map)['summary'],
-        'Not enough range for the trip',
+        'Autonomia insuficiente para a viagem',
       );
     });
 

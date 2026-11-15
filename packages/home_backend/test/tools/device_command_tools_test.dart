@@ -78,7 +78,7 @@ void main() {
       );
       expect(
         () => tool.call({'command': 'start'}),
-        message('device_id is required.'),
+        message('device_id é obrigatório.'),
       );
     });
   });
@@ -97,7 +97,7 @@ void main() {
     });
 
     test('needs a scene id', () {
-      expect(() => tool.call({}), message('scene_id is required.'));
+      expect(() => tool.call({}), message('scene_id é obrigatório.'));
     });
   });
 
@@ -123,7 +123,7 @@ void main() {
     test('needs a boolean', () {
       expect(
         () => tool.call({'item_id': 'ribs', 'checked': 'yes'}),
-        message('checked must be true or false.'),
+        message('checked deve ser true ou false.'),
       );
     });
   });

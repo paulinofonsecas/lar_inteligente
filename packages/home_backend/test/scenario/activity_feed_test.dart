@@ -9,8 +9,8 @@ import 'package:test/test.dart';
 const _stop = DeviceCommand.off;
 
 const _confirmed =
-    'Bakery confirmed the cake delivery: the courier leaves at 5:20 PM and '
-    'it takes 25 minutes, ETA 5:45 PM';
+    'A padaria confirmou a entrega do bolo: o entregador sai às 5:20 PM e '
+    'leva 25 minutos, chega às 5:45 PM';
 
 void main() {
   late MockDatabase database;
@@ -37,14 +37,14 @@ void main() {
 
       expect(result['nowLabel'], '4:30 PM');
       expect(summaries(result['recent']), [
-        'Florist drop-off: Table flowers at the front door',
+        'Entrega do florista: Flores da mesa na porta da frente',
       ]);
       expect(
         summaries(result['next']),
         [
-              'Prep the rack',
-              'Preheat the oven to 400 °F',
-              'Oven starts preheating to 400 °F',
+              'Preparar a peça',
+              'Preaquecer o forno a 200 °C',
+              'O forno começa a preaquecer a 200 °C',
             ].where((_) => false).toList() +
             summaries(result['next']),
       );
@@ -55,11 +55,11 @@ void main() {
 
       expect(
         summaries(feed.forUser('ana')['next']),
-        contains('Farmers market run: Thyme, lemons and flowers for tonight'),
+        contains('Feira: Tomilho, limões e flores para hoje'),
       );
       expect(
         summaries(feed.forUser('marco')['next']),
-        contains('Team stand-up: From the upstairs office'),
+        contains('Daily do time: Do escritório no andar de cima'),
       );
     });
 
@@ -69,8 +69,8 @@ void main() {
       expect(
         summaries(feed.forUser('ana')['next']),
         containsAll([
-          'Chill the drinks: Sparkling water and white wine on ice',
-          'Neighbors bring folding chairs: Two chairs from next door',
+          'Gelar as bebidas: Água com gás e vinho branco no gelo',
+          'Vizinhos trazem cadeiras: Duas cadeiras da casa ao lado',
         ]),
       );
     });
@@ -82,15 +82,15 @@ void main() {
       expect(
         summaries(feedOfAna['next']),
         containsAll([
-          'Dessert and coffee: Tiramisu and espresso for 8',
-          'Wind down the music: Lower the volume for conversation',
+          'Sobremesa e café: Tiramisu e café para 8',
+          'Abaixar a música: Baixar o volume para conversar',
         ]),
       );
       at('21:50');
       expect(
         summaries(feed.forUser('ana')['next']),
         contains(
-          'Dishwasher and cleanup: Run the dishwasher after the guests leave',
+          'Lavar a louça: Rodar a lava-louças depois que as visitas forem',
         ),
       );
     });
@@ -99,7 +99,7 @@ void main() {
       final next = (feed.forUser('ana')['next']! as List<dynamic>)
           .cast<Map<String, Object?>>();
 
-      expect(next.first['summary'], startsWith('Set the table'));
+      expect(next.first['summary'], startsWith('Arrumar a mesa'));
       expect(next.first['inMinutes'], 30);
       expect(
         next.map((m) => m['inMinutes']! as int),
@@ -116,7 +116,7 @@ void main() {
       expect(shopping['urgent'], isTrue);
       expect(shopping['listId'], 'shopping');
       expect(shopping['inMinutes'], 90);
-      expect(shopping['summary'], contains('Fresh thyme'));
+      expect(shopping['summary'], contains('Tomilho fresco'));
       expect(
         (feed.forUser('marco')['next']! as List<dynamic>)
             .cast<Map<String, Object?>>()
@@ -147,7 +147,7 @@ void main() {
         (m) => m['kind'] == 'change',
       );
 
-      expect(change['summary'], contains('6:00 PM (was 7:00 PM)'));
+      expect(change['summary'], contains('6:00 PM (era 7:00 PM)'));
       expect(change['minutesAgo'], 1);
     });
 
@@ -160,8 +160,8 @@ void main() {
       expect(trip['tripId'], 'trip_pickup');
       expect(
         trip['summary'],
-        "Marco's itinerary: leave by 4:55 PM, Piano lesson pickup 5:15 PM → "
-        'Bakery 5:45 PM → Home 6:30–6:45 PM',
+        'Itinerário de Marco: sair às 4:55 PM, Aula de piano (buscar) 5:15 PM → '
+        'Padaria 5:45 PM → Casa 6:30–6:45 PM',
       );
       expect(
         (feed.forUser('ana')['next']! as List<dynamic>)
@@ -187,11 +187,11 @@ void main() {
       }
 
       expect(itinerary(), [
-        '4:55 PM Leave home',
-        '5:15 PM Piano lesson pickup',
-        '5:45 PM Bakery',
-        '6:30–6:45 PM Home',
-        '7:00 PM Guests arrive',
+        '4:55 PM Sair de casa',
+        '5:15 PM Aula de piano (buscar)',
+        '5:45 PM Padaria',
+        '6:30–6:45 PM Casa',
+        '7:00 PM As visitas chegam',
       ]);
 
       at('16:36');
@@ -201,11 +201,11 @@ void main() {
       at('16:41');
 
       expect(itinerary(), [
-        '4:55 PM Leave home',
-        '5:15 PM Piano lesson pickup',
-        '5:20–5:45 PM Cake delivery from the bakery',
-        '5:30–5:45 PM Home',
-        '6:00 PM Guests arrive',
+        '4:55 PM Sair de casa',
+        '5:15 PM Aula de piano (buscar)',
+        '5:20–5:45 PM Entrega do bolo da padaria',
+        '5:30–5:45 PM Casa',
+        '6:00 PM As visitas chegam',
       ]);
     });
 
@@ -217,7 +217,7 @@ void main() {
           .firstWhere((m) => m['kind'] == 'trip');
       expect(
         (trip['itinerary']! as List<dynamic>).map((e) => (e as Map)['title']),
-        ['Bakery', 'Home', 'Guests arrive'],
+        ['Padaria', 'Casa', 'As visitas chegam'],
       );
     });
 
@@ -228,7 +228,7 @@ void main() {
         ...summaries(feed.forUser('ana')['recent']),
         ...summaries(feed.forUser('ana')['next']),
       ];
-      expect(all, isNot(contains('Prep the rack')));
+      expect(all, isNot(contains('Preparar a peça')));
     });
 
     test(
@@ -238,8 +238,8 @@ void main() {
             .cast<Map<String, Object?>>()
             .firstWhere((m) => m['kind'] == 'todo');
 
-        expect(shopping['summary'], contains('1 of 5 items still to get'));
-        expect(shopping['summary'], contains('Show every item of the list'));
+        expect(shopping['summary'], contains('faltam 1 de 5 itens'));
+        expect(shopping['summary'], contains('Mostre todos os itens da lista'));
       },
     );
 
@@ -272,12 +272,12 @@ void main() {
               .cast<Map<String, Object?>>()
               .where((m) => m['kind'] == 'trip' && m['urgent'] == true)
               .map((m) => m['summary']! as String)
-              .where((s) => s.contains('home after the guests arrive'))
+              .where((s) => s.contains('chega em casa depois da chegada das visitas'))
               .toList();
 
       expect(
         late('marco'),
-        contains(contains('Bakery stop is the cause')),
+        contains(contains('A parada Padaria é a causa')),
       );
       expect(late('ana'), isEmpty);
     });
@@ -296,7 +296,7 @@ void main() {
           all,
           containsAll([
             _confirmed,
-            'The cake left the bakery, out for delivery, ETA 5:45 PM',
+            'O bolo saiu da padaria, a caminho, chega às 5:45 PM',
           ]),
         );
       }
@@ -316,7 +316,7 @@ void main() {
         expect(next.first['inMinutes'], 24);
         expect(
           next.where((m) => m['deviceId'] == 'oven').first['summary'],
-          'Oven starts preheating to 400 °F',
+          'O forno começa a preaquecer a 200 °C',
         );
       },
     );
@@ -329,13 +329,13 @@ void main() {
       expect(
         summaries(feed.forUser('marco')['recent']),
         containsAll([
-          'Asked the bakery to deliver the cake',
+          'Pediu à padaria que entregue o bolo',
           _confirmed,
         ]),
       );
       expect(
         summaries(feed.forUser('ana')['recent']),
-        isNot(contains('Asked the bakery to deliver the cake')),
+        isNot(contains('Pediu à padaria que entregue o bolo')),
       );
     });
 
@@ -364,14 +364,14 @@ void main() {
           final moment = (feed.forUser(user)['recent']! as List<dynamic>)
               .cast<Map<String, Object?>>()
               .singleWhere(
-                (m) => (m['summary']! as String).contains('is on its way'),
+                (m) => (m['summary']! as String).contains('está a caminho'),
               );
           expect(moment['urgent'], isTrue);
           expect(
             moment['summary'],
             allOf(
-              contains('40% there, 15 min left, arrives 5:45 PM'),
-              contains('one TripCard'),
+              contains('40% do trajeto, faltam 15 min, chega às 5:45 PM'),
+              contains('um TripCard'),
               isNot(contains('progress 40')),
             ),
           );
@@ -391,7 +391,7 @@ void main() {
               .cast<Map<String, Object?>>()
               .singleWhere(
                 (m) => (m['summary']! as String).startsWith(
-                  'The cake is delivered',
+                  'O bolo foi entregue',
                 ),
               );
           expect(delivered['urgent'], isTrue);
@@ -399,8 +399,8 @@ void main() {
             delivered['summary'],
             allOf(
               contains('HeadsUpCard'),
-              contains('The cake is at the front door'),
-              contains('Delivered 5:45 PM'),
+              contains('O bolo está na porta da frente'),
+              contains('Entregue às 5:45 PM'),
             ),
           );
         }
@@ -429,10 +429,10 @@ void main() {
       final recent = summaries(feed.forUser('marco')['recent']);
 
       expect(
-        recent.where((s) => s.startsWith('The cake is delivered')),
+        recent.where((s) => s.startsWith('O bolo foi entregue')),
         hasLength(1),
       );
-      expect(recent, contains('Delivery · cake'));
+      expect(recent, contains('Entrega · bolo'));
     });
 
     test('the oven reaching 400 and the roast going in, with the device', () {
@@ -444,13 +444,13 @@ void main() {
           .cast<Map<String, Object?>>();
 
       final roast = recent.firstWhere(
-        (m) => m['summary'] == 'The roast goes in',
+        (m) => m['summary'] == 'O assado vai ao forno',
       );
       expect(roast['deviceId'], 'oven');
       expect(roast['minutesAgo'], 1);
       expect(
         recent.map((m) => m['summary']),
-        contains('Oven reaches 400 °F'),
+        contains('O forno chega a 200 °C'),
       );
     });
 
@@ -461,7 +461,7 @@ void main() {
 
       expect(
         summaries(feed.forUser('ana')['recent']),
-        isNot(contains('Prep the rack')),
+        isNot(contains('Preparar a peça')),
       );
     });
 
@@ -473,7 +473,7 @@ void main() {
       expect(summaries(feed.forUser('marco')['recent']), isEmpty);
       expect(
         summaries(feed.forUser('marco')['next']),
-        isNot(contains('Asked the bakery to deliver the cake')),
+        isNot(contains('Pediu à padaria que entregue o bolo')),
       );
     });
 

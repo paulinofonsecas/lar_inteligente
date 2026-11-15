@@ -118,3 +118,5 @@ lib/l10n/gen/
 
 # Claude Code worktrees
 .claude/worktrees/
+
+.firebase/

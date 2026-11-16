@@ -209,18 +209,14 @@ CI runs the app, backend and packages as separate workflows in `.github/workflow
 
 ## Deploy
 
-`.github/workflows/deploy.yaml` runs on every push to `main`. It deploys the backend to Cloud Run, then builds the web app and deploys it to Firebase Hosting. GitHub authenticates to Google Cloud through Workload Identity Federation, so no service account key is stored. A fork needs these repository variables:
+CI does not deploy. The upstream `deploy.yaml` deployed the backend to Cloud Run through Workload Identity Federation, and a fork without those Google Cloud variables failed the whole run, so this fork dropped it: the workflows above only check the code.
 
-| Variable | What it holds |
-| --- | --- |
-| `GCP_PROJECT_ID` | The Google Cloud project for Cloud Run and Firebase Hosting. |
-| `GCP_REGION` | The Cloud Run region, for example `us-central1`. |
-| `WIF_PROVIDER` | The Workload Identity provider's full resource name. |
-| `WIF_SERVICE_ACCOUNT` | The service account the workflow deploys as. |
-| `FIREBASE_SITE` | The Firebase Hosting site to deploy the app to. |
-| `CORS_ALLOWED_ORIGINS` | The app's origins, comma separated, passed to the backend as `HOME_CORS_ALLOWED_ORIGINS`. |
+Deploys are manual, and `DEPLOY-GRATIS.md` walks through both halves: the backend on Render and the app on Firebase Hosting. In short, build the web app and push it:
 
-It also needs one secret: `APP_CONFIG_JSON`, the app's `config.json`. The workflow overwrites `GENUI_BACKEND_URL` in it with the Cloud Run URL.
+```sh
+flutter build web --wasm --web-content-hash --no-web-resources-cdn --dart-define-from-file=config.json
+firebase deploy --only hosting
+```
 
 ## License
 

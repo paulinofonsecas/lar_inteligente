@@ -23,7 +23,10 @@ void main() {
 
   group('CalendarService', () {
     test('finds an event, or names the ones there are', () {
-      expect(world.calendar.event('cal_piano')['title'], 'Buscar na aula de piano');
+      expect(
+        world.calendar.event('cal_piano')['title'],
+        'Buscar na aula de piano',
+      );
       expect(
         () => world.calendar.event('nope'),
         notFound('cal_dinner, cal_piano, cal_cake'),
@@ -186,7 +189,10 @@ void main() {
         DateTime.utc(2026, 10, 10, 19),
       );
 
-      expect(result['message'], 'As visitas agora chegam às 6:00 PM (era 7:00 PM).');
+      expect(
+        result['message'],
+        'As visitas agora chegam às 6:00 PM (era 7:00 PM).',
+      );
       expect(database.bakeryFor('marco')['messages'], hasLength(1));
     });
   });

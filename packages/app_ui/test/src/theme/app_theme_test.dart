@@ -1,5 +1,6 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   group(AppTheme, () {
@@ -12,6 +13,20 @@ void main() {
 
     test('derives the text theme from the type scale', () {
       expect(AppTheme.light.textTheme.titleLarge?.fontSize, 28);
+    });
+
+    test('builds the dark scheme from the dark palette', () {
+      final theme = AppTheme.dark;
+
+      expect(theme.brightness, Brightness.dark);
+      expect(theme.scaffoldBackgroundColor, AppPalette.dark.surface);
+      expect(theme.colorScheme.primary, AppPalette.dark.accent);
+      expect(theme.textTheme.bodyMedium?.color, AppPalette.dark.ink);
+    });
+
+    test('registers the palette as a theme extension', () {
+      expect(AppTheme.light.extension<AppPalette>(), AppPalette.light);
+      expect(AppTheme.dark.extension<AppPalette>(), AppPalette.dark);
     });
   });
 

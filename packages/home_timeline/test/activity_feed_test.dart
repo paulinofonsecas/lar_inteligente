@@ -212,7 +212,9 @@ void main() {
       expect(
         recent.any(
           (s) =>
-              s.contains('chega em casa depois da chegada das visitas. Trânsito') &&
+              s.contains(
+                'chega em casa depois da chegada das visitas. Trânsito',
+              ) &&
               s.contains('A parada Padaria é a causa'),
         ),
         isTrue,

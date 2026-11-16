@@ -39,6 +39,21 @@ void main() {
       expect(factory.agents.single.sent, [ana.prompt]);
     });
 
+    testWidgets('the appearance sheet turns the panel dark', (tester) async {
+      await tester.pumpApp(FakeAgentFactory());
+
+      await tester.tap(find.byTooltip('Aparência do painel'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+      await tester.tap(find.text('Escuro'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+
+      final context = tester.element(find.byType(DashboardPage));
+      expect(Theme.of(context).brightness, Brightness.dark);
+      expect(context.colors.surfaceRaised, AppPalette.dark.surfaceRaised);
+    });
+
     testWidgets('switching user rebuilds and requests again', (tester) async {
       final factory = FakeAgentFactory();
       await tester.pumpApp(factory);
@@ -84,7 +99,6 @@ void main() {
       final size = await frameSize(tester, const Size(3000, 2000));
       expect(size, const Size(DeviceFrame.maxWidth, DeviceFrame.maxHeight));
     });
-
     testWidgets('shrinks on a small window keeping its ratio', (tester) async {
       final size = await frameSize(tester, const Size(600, 900));
       expect(size.width, 600);

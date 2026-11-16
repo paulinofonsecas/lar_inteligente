@@ -1,5 +1,5 @@
-import 'package:app_ui/src/theme/app_colors.dart';
 import 'package:app_ui/src/theme/app_icons.dart';
+import 'package:app_ui/src/theme/app_palette.dart';
 import 'package:app_ui/src/theme/app_spacing.dart';
 import 'package:app_ui/src/theme/app_tone.dart';
 import 'package:app_ui/src/theme/app_typography.dart';
@@ -74,11 +74,24 @@ class ChargeCard extends StatelessWidget {
     final summary = this.summary;
     final window = this.window;
     final tag = this.tag;
+    final colors = context.colors;
+    final toneColors = colors.tone(tone);
+    final wash = toneColors.wash ?? colors.surfaceRaised;
     return GlowSurface(
-      color: AppColors.brandGreen100,
-      glows: const [
-        Glow(left: -80, top: -120, size: 260, color: Color(0xFFF2FFF2)),
-        Glow(left: 146, top: 60, size: 360, color: Color(0xFFD6FFD6)),
+      color: wash,
+      glows: [
+        Glow(
+          left: -80,
+          top: -120,
+          size: 260,
+          color: wash.withValues(alpha: 0.9),
+        ),
+        Glow(
+          left: 146,
+          top: 60,
+          size: 360,
+          color: toneColors.accent.withValues(alpha: 0.16),
+        ),
       ],
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,14 +99,20 @@ class ChargeCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(AppIcons.byName('car'), size: 26, color: tone.ink),
+              Icon(
+                AppIcons.byName('car'),
+                size: 26,
+                color: context.colors.tone(tone).ink,
+              ),
               const SizedBox(width: 10),
               Expanded(
                 child: Text(
                   status == null ? title : '$title · $status',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTypography.titleSmall.copyWith(color: tone.ink),
+                  style: AppTypography.titleSmall.copyWith(
+                    color: context.colors.tone(tone).ink,
+                  ),
                 ),
               ),
               if (tag != null) ...[
@@ -104,8 +123,8 @@ class ChargeCard extends StatelessWidget {
                     label: tag,
                     kind: tagKind,
                     icon: tagIcon,
-                    tint: AppColors.overlayOnTint,
-                    ink: tone.ink,
+                    tint: context.colors.overlayOnTint,
+                    ink: context.colors.tone(tone).ink,
                   ),
                 ),
               ],
@@ -121,7 +140,7 @@ class ChargeCard extends StatelessWidget {
                     '$level%',
                     maxLines: 1,
                     style: AppTypography.displayLarge.copyWith(
-                      color: tone.ink,
+                      color: context.colors.tone(tone).ink,
                       height: 1,
                     ),
                   ),
@@ -138,14 +157,17 @@ class ChargeCard extends StatelessWidget {
                         Text(
                           range,
                           style: AppTypography.titleSmall.copyWith(
-                            color: tone.ink,
+                            color: context.colors.tone(tone).ink,
                           ),
                         ),
                       if (summary != null)
                         Text(
                           summary,
                           style: AppTypography.bodyMedium.copyWith(
-                            color: tone.ink.withValues(alpha: 0.78),
+                            color: context.colors
+                                .tone(tone)
+                                .ink
+                                .withValues(alpha: 0.78),
                           ),
                         ),
                     ],
@@ -163,8 +185,10 @@ class ChargeCard extends StatelessWidget {
                 child: LinearProgressIndicator(
                   value: level / 100,
                   minHeight: _barHeight,
-                  color: level < lowLevel ? AppColors.danger : tone.ink,
-                  backgroundColor: AppColors.overlayOnTint,
+                  color: level < lowLevel
+                      ? context.colors.danger
+                      : context.colors.tone(tone).ink,
+                  backgroundColor: context.colors.overlayOnTint,
                 ),
               ),
               if (window != null) ...[
@@ -174,14 +198,14 @@ class ChargeCard extends StatelessWidget {
                     Icon(
                       AppIcons.byName(windowIcon),
                       size: 20,
-                      color: tone.ink,
+                      color: context.colors.tone(tone).ink,
                     ),
                     const SizedBox(width: AppSpacing.s2),
                     Expanded(
                       child: Text(
                         window,
                         style: AppTypography.labelMedium.copyWith(
-                          color: tone.ink,
+                          color: context.colors.tone(tone).ink,
                         ),
                       ),
                     ),

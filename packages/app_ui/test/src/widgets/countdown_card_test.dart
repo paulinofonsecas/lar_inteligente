@@ -168,8 +168,16 @@ void main() {
 
       expect(tester.takeException(), isNull);
       final tag = tester.widget<StatusTag>(find.byType(StatusTag));
-      expect(tag.ink, AppTone.lighting.ink);
-      expect(tag.tint, AppTone.lighting.wash);
+      expect(tag.fill, StatusTagFill.tone);
+      expect(tag.tone, AppTone.lighting);
+      final lighting = AppPalette.light.tone(AppTone.lighting);
+      final label = tester.widget<Text>(
+        find.descendant(
+          of: find.byType(StatusTag),
+          matching: find.byType(Text),
+        ),
+      );
+      expect(label.style?.color, lighting.ink);
       // The tag sits at the top and the text group at the bottom.
       final card = tester.getRect(find.byType(AppCard));
       expect(

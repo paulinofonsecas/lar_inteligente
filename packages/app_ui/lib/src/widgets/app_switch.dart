@@ -1,4 +1,4 @@
-import 'package:app_ui/src/theme/app_colors.dart';
+import 'package:app_ui/src/theme/app_palette.dart';
 import 'package:material_ui/material_ui.dart';
 
 /// {@template app_switch}
@@ -10,7 +10,7 @@ class AppSwitch extends StatelessWidget {
   const AppSwitch({
     required this.value,
     required this.onChanged,
-    this.activeColor = AppColors.ink,
+    this.activeColor,
     super.key,
   });
 
@@ -20,8 +20,8 @@ class AppSwitch extends StatelessWidget {
   /// Called with the new value on tap. Null disables the switch.
   final ValueChanged<bool>? onChanged;
 
-  /// The track color when on.
-  final Color activeColor;
+  /// The track color when on. Defaults to the palette ink.
+  final Color? activeColor;
 
   /// The width of the track.
   static const double width = 72;
@@ -48,14 +48,16 @@ class AppSwitch extends StatelessWidget {
           padding: const EdgeInsets.all(_inset),
           alignment: value ? Alignment.centerRight : Alignment.centerLeft,
           decoration: BoxDecoration(
-            color: value ? activeColor : AppColors.fill,
+            color: value
+                ? activeColor ?? context.colors.ink
+                : context.colors.fill,
             borderRadius: BorderRadius.circular(height / 2),
           ),
           child: Container(
             width: _thumb,
             height: _thumb,
-            decoration: const BoxDecoration(
-              color: AppColors.surfaceRaised,
+            decoration: BoxDecoration(
+              color: context.colors.surfaceRaised,
               shape: BoxShape.circle,
             ),
           ),

@@ -1,55 +1,14 @@
-import 'package:app_ui/src/theme/app_colors.dart';
 import 'package:material_ui/material_ui.dart';
 
-/// {@template app_tone}
-/// The color of a card, chosen by the kind of device or message.
-///
-/// A closed set that mirrors the catalog's `tone` enum: the model never sends
-/// colors. Each tone is a wash from the top right of the card over white.
+/// {@template tone_colors}
+/// The three colors of one [AppTone]: the wash laid over the card, the ink
+/// that reads on it, and the saturated accent for switches and icon bubbles.
 /// {@endtemplate}
-enum AppTone {
-  /// White, no wash.
-  neutral(wash: null, ink: AppColors.ink, accent: AppColors.accent),
+class ToneColors {
+  /// {@macro tone_colors}
+  const ToneColors({required this.ink, required this.accent, this.wash});
 
-  /// Scenes, lights, countdowns, blinds.
-  lighting(
-    wash: AppColors.brandYellow100,
-    ink: AppColors.brandYellow300,
-    accent: AppColors.brandYellow200,
-  ),
-
-  /// The car and the energy meter.
-  energy(
-    wash: AppColors.brandGreen100,
-    ink: AppColors.brandGreen300,
-    accent: AppColors.brandGreen300,
-  ),
-
-  /// Thermostats and heat.
-  climate(
-    wash: AppColors.brandOrange100,
-    ink: AppColors.brandOrange300,
-    accent: AppColors.brandOrange200,
-  ),
-
-  /// Locks, garage, doorbell.
-  security(
-    wash: AppColors.brandBlue100,
-    ink: AppColors.brandBlue300,
-    accent: AppColors.brandBlue200,
-  ),
-
-  /// Outside weather.
-  weather(
-    wash: AppColors.brandAqua100,
-    ink: AppColors.brandAqua300,
-    accent: AppColors.brandAqua200,
-  );
-
-  /// {@macro app_tone}
-  const AppTone({required this.wash, required this.ink, required this.accent});
-
-  /// The wash color, or null when the card stays white.
+  /// The wash color, or null when the card keeps its surface.
   final Color? wash;
 
   /// Text and icon color that reads on [wash].
@@ -58,15 +17,7 @@ enum AppTone {
   /// The saturated color, for switches and icon bubbles.
   final Color accent;
 
-  /// The tone named [name], or [fallback] when it is null or unknown.
-  static AppTone byName(String? name, {AppTone fallback = neutral}) {
-    for (final tone in values) {
-      if (tone.name == name) return tone;
-    }
-    return fallback;
-  }
-
-  /// The decoration painted over the card surface, or null for [neutral].
+  /// The decoration painted over the card surface, or null without a [wash].
   Gradient? get gradient {
     final wash = this.wash;
     if (wash == null) return null;
@@ -75,5 +26,41 @@ enum AppTone {
       radius: 1.3,
       colors: [wash, wash.withValues(alpha: 0)],
     );
+  }
+}
+
+/// {@template app_tone}
+/// The color of a card, chosen by the kind of device or message.
+///
+/// A closed set that mirrors the catalog's `tone` enum: the model never sends
+/// colors. Each tone is a wash from the top right of the card over its
+/// surface; the palette decides what those colors are in each theme, through
+/// `AppPalette.tone`.
+/// {@endtemplate}
+enum AppTone {
+  /// The card surface, no wash.
+  neutral,
+
+  /// Scenes, lights, countdowns, blinds.
+  lighting,
+
+  /// The car and the energy meter.
+  energy,
+
+  /// Thermostats and heat.
+  climate,
+
+  /// Locks, garage, doorbell.
+  security,
+
+  /// Outside weather.
+  weather;
+
+  /// The tone named [name], or [fallback] when it is null or unknown.
+  static AppTone byName(String? name, {AppTone fallback = neutral}) {
+    for (final tone in values) {
+      if (tone.name == name) return tone;
+    }
+    return fallback;
   }
 }

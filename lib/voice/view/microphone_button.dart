@@ -31,16 +31,16 @@ class MicrophoneButton extends StatelessWidget {
         behavior: HitTestBehavior.opaque,
         onTap: onPressed,
         child: DecoratedBox(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: AppColors.ink,
+            color: context.colors.ink,
           ),
           child: SizedBox.square(
             dimension: size,
             child: Icon(
               Symbols.mic_rounded,
               size: size * 0.46,
-              color: AppColors.onPrimary,
+              color: context.colors.onPrimary,
             ),
           ),
         ),

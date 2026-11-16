@@ -34,9 +34,6 @@ Widget planTimelineBuilder(
   );
 }
 
-/// `surface/surface-container-high`, the fill of an "Updated" tag.
-const _updatedFill = Color(0xFFECEAE5);
-
 /// The tag of a plan, dressed by its kind: "Updated" on a grey fill, "Changed
 /// by" on the climate wash with an edit icon, and a plain fact with a live dot.
 StatusTag? _tag(Object? value) {
@@ -50,21 +47,21 @@ StatusTag? _tag(Object? value) {
       label: label,
       kind: kind,
       icon: icon ?? 'edit',
-      tint: AppTone.climate.wash,
-      ink: AppTone.climate.ink,
+      fill: StatusTagFill.tone,
+      tone: AppTone.climate,
     ),
     StatusTagKind.updated || StatusTagKind.isNew => StatusTag(
       label: label,
       kind: kind,
       icon: icon,
-      tint: _updatedFill,
+      fill: StatusTagFill.surfaceHigh,
     ),
     StatusTagKind.info => StatusTag(
       label: label,
       kind: kind,
       icon: icon,
-      dot: icon == null ? AppColors.spark : null,
-      ink: icon == null ? AppColors.ink2 : AppColors.ink,
+      sparkDot: icon == null,
+      mutedInk: icon == null,
     ),
   };
 }

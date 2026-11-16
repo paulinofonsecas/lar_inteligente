@@ -1,5 +1,4 @@
-import 'package:app_ui/src/theme/app_colors.dart';
-import 'package:app_ui/src/theme/app_shadows.dart';
+import 'package:app_ui/src/theme/app_palette.dart';
 import 'package:app_ui/src/theme/app_spacing.dart';
 import 'package:material_ui/material_ui.dart';
 
@@ -98,10 +97,10 @@ class _SkeletonCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: AppColors.surfaceRaised,
+        color: context.colors.surfaceRaised,
         borderRadius: BorderRadius.circular(AppSpacing.cardRadius),
-        border: Border.all(color: AppColors.line),
-        boxShadow: AppShadows.soft,
+        border: Border.all(color: context.colors.line),
+        boxShadow: context.colors.shadows.soft,
       ),
       child: const Padding(
         padding: EdgeInsets.symmetric(
@@ -134,7 +133,7 @@ class _Bar extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: AppColors.brandNeutral200.withValues(alpha: 0.5),
+        color: context.colors.fillStrong.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(height / 2),
       ),
       child: SizedBox(width: width, height: height),

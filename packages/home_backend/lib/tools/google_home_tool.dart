@@ -30,6 +30,7 @@ AgentTool googleHomeTool(MockDatabase database) {
         },
         'room': {
           'type': 'string',
+          // ignore: lines_longer_than_80_chars
           'description': 'Id ou nome opcional do cômodo, por exemplo "Cozinha".',
         },
         'device_type': {

@@ -1,5 +1,4 @@
-import 'package:app_ui/src/theme/app_colors.dart';
-import 'package:app_ui/src/theme/app_shadows.dart';
+import 'package:app_ui/src/theme/app_palette.dart';
 import 'package:app_ui/src/theme/app_typography.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:material_ui/material_ui.dart';
@@ -34,20 +33,20 @@ class AskBar extends StatelessWidget {
       liveRegion: true,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: AppColors.surfaceRaised,
+          color: context.colors.surfaceRaised,
           borderRadius: BorderRadius.circular(999),
-          border: Border.all(color: AppColors.line),
-          boxShadow: AppShadows.soft,
+          border: Border.all(color: context.colors.line),
+          boxShadow: context.colors.shadows.soft,
         ),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(28, 8, 8, 8),
           child: Row(
             spacing: 16,
             children: [
-              const Icon(
+              Icon(
                 Symbols.auto_awesome_rounded,
                 size: 28,
-                color: AppColors.spark,
+                color: context.colors.spark,
               ),
               Expanded(
                 child: Text(
@@ -55,7 +54,7 @@ class AskBar extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTypography.titleSmall.copyWith(
-                    color: isHint ? AppColors.ink2 : AppColors.ink,
+                    color: isHint ? context.colors.ink2 : context.colors.ink,
                   ),
                 ),
               ),

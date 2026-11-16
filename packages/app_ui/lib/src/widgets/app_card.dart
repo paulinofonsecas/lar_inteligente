@@ -1,5 +1,4 @@
-import 'package:app_ui/src/theme/app_colors.dart';
-import 'package:app_ui/src/theme/app_shadows.dart';
+import 'package:app_ui/src/theme/app_palette.dart';
 import 'package:app_ui/src/theme/app_spacing.dart';
 import 'package:app_ui/src/theme/app_tone.dart';
 import 'package:app_ui/src/theme/app_typography.dart';
@@ -43,18 +42,18 @@ class AppCard extends StatelessWidget {
     final radius = BorderRadius.circular(AppSpacing.cardRadius);
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: AppColors.surfaceRaised,
+        color: context.colors.surfaceRaised,
         borderRadius: radius,
-        boxShadow: AppShadows.soft,
+        boxShadow: context.colors.shadows.soft,
       ),
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: tint,
-          gradient: tone.gradient,
+          gradient: context.colors.tone(tone).gradient,
           borderRadius: radius,
           // A white card is lifted by a hairline; a tinted one by its color.
           border: (outlined ?? (tone == AppTone.neutral && tint == null))
-              ? Border.all(color: AppColors.line)
+              ? Border.all(color: context.colors.line)
               : null,
         ),
         child: Padding(padding: padding, child: child),
@@ -70,19 +69,19 @@ class IconTile extends StatelessWidget {
   /// {@macro icon_tile}
   const IconTile({
     required this.icon,
-    this.color = AppColors.accent,
-    this.background = AppColors.accentSoft,
+    this.color,
+    this.background,
     super.key,
   });
 
   /// The icon drawn in the tile.
   final IconData icon;
 
-  /// The icon color.
-  final Color color;
+  /// The icon color. Defaults to the palette accent.
+  final Color? color;
 
-  /// The tile fill.
-  final Color background;
+  /// The tile fill. Defaults to the palette's soft accent.
+  final Color? background;
 
   @override
   Widget build(BuildContext context) {
@@ -90,10 +89,10 @@ class IconTile extends StatelessWidget {
       width: AppSpacing.iconTile,
       height: AppSpacing.iconTile,
       decoration: BoxDecoration(
-        color: background,
+        color: background ?? context.colors.accentSoft,
         shape: BoxShape.circle,
       ),
-      child: Icon(icon, size: 26, color: color),
+      child: Icon(icon, size: 26, color: color ?? context.colors.accent),
     );
   }
 }
@@ -108,7 +107,7 @@ class PillButton extends StatelessWidget {
     required this.onPressed,
     this.icon,
     this.filled = false,
-    this.color = AppColors.accent,
+    this.color,
     super.key,
   });
 
@@ -124,15 +123,16 @@ class PillButton extends StatelessWidget {
   /// Whether the button is filled with [color] rather than the warm fill.
   final bool filled;
 
-  /// The fill of a [filled] button.
-  final Color color;
+  /// The fill of a [filled] button. Defaults to the palette accent.
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
     final icon = this.icon;
-    final foreground = filled ? AppColors.onAccent : AppColors.ink;
+    final color = this.color ?? context.colors.accent;
+    final foreground = filled ? context.colors.onAccent : context.colors.ink;
     return Material(
-      color: filled ? color : AppColors.fillWarm,
+      color: filled ? color : context.colors.fillWarm,
       shape: const StadiumBorder(),
       child: InkWell(
         customBorder: const StadiumBorder(),

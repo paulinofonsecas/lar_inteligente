@@ -114,12 +114,12 @@ class _VoiceOverlayState extends State<VoiceOverlay>
                     size: size,
                     child: DecoratedBox(
                       decoration: BoxDecoration(
-                        color: AppColors.surfaceRaised,
+                        color: context.colors.surfaceRaised,
                         borderRadius: BorderRadius.circular(
                           VoiceOverlay._radius,
                         ),
-                        border: Border.all(color: AppColors.line),
-                        boxShadow: AppShadows.soft,
+                        border: Border.all(color: context.colors.line),
+                        boxShadow: context.colors.shadows.soft,
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(
@@ -187,7 +187,9 @@ class VoiceScrim extends StatelessWidget {
         duration: Duration(milliseconds: open ? 300 : 210),
         curve: Curves.easeOut,
         child: SizedBox.expand(
-          child: ColoredBox(color: AppColors.surface.withValues(alpha: 0.75)),
+          child: ColoredBox(
+            color: context.colors.surface.withValues(alpha: 0.75),
+          ),
         ),
       ),
     );
@@ -230,8 +232,8 @@ class _Glow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        _disc(AppColors.warningSoft, size: 420, right: -76, top: -120),
-        _disc(AppColors.dangerSoft, size: 300, right: -96, top: 140),
+        _disc(context.colors.warningSoft, size: 420, right: -76, top: -120),
+        _disc(context.colors.dangerSoft, size: 300, right: -96, top: 140),
       ],
     );
   }
@@ -278,15 +280,15 @@ class _Content extends StatelessWidget {
                 Row(
                   spacing: 12,
                   children: [
-                    const Icon(
+                    Icon(
                       Symbols.auto_awesome_rounded,
                       size: 28,
-                      color: AppColors.spark,
+                      color: context.colors.spark,
                     ),
                     Text(
                       l10n.voiceListeningTo(name),
                       style: AppTypography.labelLarge.copyWith(
-                        color: AppColors.ink3,
+                        color: context.colors.ink3,
                       ),
                     ),
                   ],
@@ -348,15 +350,16 @@ class _Halo extends StatelessWidget {
 
   static const _duration = Duration(milliseconds: 150);
 
-  Widget _ring(double size, double alpha) => AnimatedContainer(
-    duration: _duration,
-    width: size,
-    height: size,
-    decoration: BoxDecoration(
-      shape: BoxShape.circle,
-      color: AppColors.warning.withValues(alpha: alpha),
-    ),
-  );
+  Widget _ring(BuildContext context, double size, double alpha) =>
+      AnimatedContainer(
+        duration: _duration,
+        width: size,
+        height: size,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: context.colors.warning.withValues(alpha: alpha),
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -365,8 +368,8 @@ class _Halo extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          _ring(128 + 32 * level, 0.2),
-          _ring(112 + 16 * level, 0.35),
+          _ring(context, 128 + 32 * level, 0.2),
+          _ring(context, 112 + 16 * level, 0.35),
           child,
         ],
       ),
@@ -401,8 +404,8 @@ class _LevelBars extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(_barWidth),
                   color: Color.lerp(
-                    AppColors.warning,
-                    AppColors.danger,
+                    context.colors.warning,
+                    context.colors.danger,
                     ((levels[i] - 0.35) / 0.4).clamp(0, 1),
                   ),
                 ),
@@ -413,7 +416,7 @@ class _LevelBars extends StatelessWidget {
                 child: DecoratedBox(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: AppColors.fill.withValues(alpha: 0.6),
+                    color: context.colors.fill.withValues(alpha: 0.6),
                   ),
                 ),
               ),

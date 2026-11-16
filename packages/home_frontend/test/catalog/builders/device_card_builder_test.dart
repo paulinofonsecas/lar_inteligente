@@ -497,7 +497,7 @@ void main() {
         'isLoading': true,
       });
 
-      expect(find.text('Updating…'), findsOneWidget);
+      expect(find.text('Atualizando…'), findsOneWidget);
       expect(find.text('Oven'), findsNothing);
     });
 

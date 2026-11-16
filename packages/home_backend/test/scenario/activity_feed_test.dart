@@ -160,7 +160,8 @@ void main() {
       expect(trip['tripId'], 'trip_pickup');
       expect(
         trip['summary'],
-        'Itinerário de Marco: sair às 4:55 PM, Aula de piano (buscar) 5:15 PM → '
+        'Itinerário de Marco: sair às 4:55 PM, '
+        'Aula de piano (buscar) 5:15 PM → '
         'Padaria 5:45 PM → Casa 6:30–6:45 PM',
       );
       expect(
@@ -272,7 +273,10 @@ void main() {
               .cast<Map<String, Object?>>()
               .where((m) => m['kind'] == 'trip' && m['urgent'] == true)
               .map((m) => m['summary']! as String)
-              .where((s) => s.contains('chega em casa depois da chegada das visitas'))
+              .where(
+                (s) =>
+                    s.contains('chega em casa depois da chegada das visitas'),
+              )
               .toList();
 
       expect(

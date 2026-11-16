@@ -28,7 +28,7 @@ void main() {
     });
 
     test('builds every Material role', () {
-      final theme = AppTypography.textTheme;
+      final theme = AppTypography.textTheme(AppPalette.light);
 
       expect(theme.displayLarge?.fontSize, 88);
       expect(theme.labelSmall?.fontSize, 15);

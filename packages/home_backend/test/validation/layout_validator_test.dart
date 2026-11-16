@@ -377,7 +377,10 @@ void main() {
           _c('r1', 'Row', {}),
           _chips(),
         ],
-        allOf(contains('deve listar os cards'), contains('não tem uma `Row` de cards')),
+        allOf(
+          contains('deve listar os cards'),
+          contains('não tem uma `Row` de cards'),
+        ),
       );
     });
 

@@ -120,6 +120,22 @@ Side packages, imported only through their barrel (never `src/`):
 - `packages/app_ui`: design tokens and the home widgets the builders draw.
 - `packages/home_timeline`: scenario clock and activity feed.
 
+### Themes
+
+The panel ships a light theme and a dark one, and follows the device until someone picks one. The gear next to the lightbulb in the rail is the API key; the moon opens the appearance sheet.
+
+`app_ui` splits color in three layers, and only the middle one changes with the theme:
+
+| Layer | Example | Changes with the theme? |
+| --- | --- | --- |
+| Raw palette | `AppColors.brandYellow200` | No. It is the Figma palette. |
+| Roles | `context.colors.ink`, `context.colors.tone(AppTone.lighting)` | Yes. `AppPalette.light` and `AppPalette.dark`. |
+| Widgets | `AppCard`, `DeviceCard` | They read the roles. |
+
+`AppPalette` rides on the `ThemeData` as a `ThemeExtension`, so a widget reads `context.colors` and follows `themeMode` without a single `if`. New widgets must read the palette, not `AppColors` roles. The exception is the bezel, which is hardware and stays dark in both themes.
+
+`ThemeCubit` holds the choice and `ThemeStore` saves it in the browser storage, so the panel opens in the same theme after a reload. `AppTheme.dark` is built by the same `_build` as `AppTheme.light`, only from the dark palette; the tone washes turn translucent in the dark instead of filling the card.
+
 ## Run locally
 
 You need:

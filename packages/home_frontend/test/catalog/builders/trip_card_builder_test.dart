@@ -36,7 +36,7 @@ void main() {
       expect(card.footer?.tone, TripFooterTone.warning);
       expect(card.stops.single.emphasis, TripStopEmphasis.good);
       expect(find.text('Lincoln Elementary'), findsOneWidget);
-      expect(find.text('was 5:00 PM'), findsOneWidget);
+      expect(find.text('era 5:00 PM'), findsOneWidget);
     });
 
     testWidgets('follows bound values', (tester) async {

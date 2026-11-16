@@ -4,11 +4,13 @@ import 'package:a2ui_vgv_smart_home/api_key/gemini_key_store.dart';
 import 'package:a2ui_vgv_smart_home/clock/view/clock_view.dart';
 import 'package:a2ui_vgv_smart_home/dashboard/agent_factory.dart';
 import 'package:a2ui_vgv_smart_home/dashboard/view/dashboard_surface.dart';
+import 'package:a2ui_vgv_smart_home/suggestions/tips.dart';
 import 'package:a2ui_vgv_smart_home/voice/view/voice_input.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:home_frontend/home_frontend.dart';
 import 'package:home_repository/home_repository.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../helpers/fake_agent.dart';
 import '../helpers/helpers.dart';
@@ -141,6 +143,65 @@ void main() {
 
       expect(factory.agents.first.disposed, isTrue);
       expect(tester.takeException(), isNull);
+    });
+  });
+
+  group('Suggestions', () {
+    Future<void> openTips(WidgetTester tester) async {
+      await tester.tap(find.byTooltip('Sugestões: o que o painel faz'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 400));
+    }
+
+    testWidgets('sends the tip the person tries as a typed turn', (
+      tester,
+    ) async {
+      final factory = FakeAgentFactory(emitSurface: true);
+      await tester.pumpApp(factory);
+      await settle(tester);
+
+      await openTips(tester);
+      expect(find.text('Sugestões'), findsOneWidget);
+
+      await tester.tap(find.text('Experimentar').first);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 400));
+
+      expect(find.text('Sugestões'), findsNothing);
+      expect(factory.agents.single.sent, [ana.prompt, tips.first.ask]);
+    });
+
+    testWidgets('drops a tip while the time is still moving', (tester) async {
+      final factory = FakeAgentFactory(emitSurface: true);
+      await tester.pumpApp(
+        factory,
+        liveRepository: FakeLiveRepository(answers: false),
+      );
+      await settle(tester);
+
+      await tester.tap(
+        find.ancestor(
+          of: find.text('Dia'),
+          matching: find.byWidgetPredicate((widget) => widget is TextButton),
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+      expect(find.byType(SkeletonSurface), findsOneWidget);
+
+      await openTips(tester);
+      await tester.tap(find.text('Experimentar').first);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 400));
+
+      expect(
+        [for (final agent in factory.agents) ...agent.sent],
+        [ana.prompt],
+      );
+
+      // Let the settle timer run out before the tree goes.
+      await tester.pump(const Duration(seconds: 3));
+      await settle(tester);
     });
   });
 

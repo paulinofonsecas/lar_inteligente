@@ -18,15 +18,20 @@ void main() {
     });
 
     test('neutral has no wash and no gradient', () {
-      expect(AppTone.neutral.wash, isNull);
-      expect(AppTone.neutral.gradient, isNull);
+      final colors = AppPalette.light.tone(AppTone.neutral);
+
+      expect(colors.wash, isNull);
+      expect(colors.gradient, isNull);
     });
 
     test('every other tone washes from the top right', () {
-      for (final tone in AppTone.values.where((t) => t != AppTone.neutral)) {
-        final gradient = tone.gradient! as RadialGradient;
-        expect(gradient.center, Alignment.topRight);
-        expect(gradient.colors.first, tone.wash);
+      for (final palette in [AppPalette.light, AppPalette.dark]) {
+        for (final tone in AppTone.values.where((t) => t != AppTone.neutral)) {
+          final colors = palette.tone(tone);
+          final gradient = colors.gradient! as RadialGradient;
+          expect(gradient.center, Alignment.topRight);
+          expect(gradient.colors.first, colors.wash);
+        }
       }
     });
   });

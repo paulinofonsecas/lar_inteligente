@@ -65,7 +65,7 @@ void main() {
         'actionLabel': 'Go',
       });
 
-      expect(find.text('On'), findsOneWidget);
+      expect(find.text('Aceso'), findsOneWidget);
       expect(find.text('Go'), findsNothing);
       expect(
         tester.widget<SceneCard>(find.byType(SceneCard)).tone,
@@ -89,7 +89,7 @@ void main() {
       harness.write('/scenes/dinner/state', 'running');
       await tester.pump();
 
-      expect(find.text('On'), findsOneWidget);
+      expect(find.text('Aceso'), findsOneWidget);
     });
 
     testWidgets('tolerates missing props', (tester) async {

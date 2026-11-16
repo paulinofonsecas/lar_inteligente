@@ -139,7 +139,8 @@ void main() {
         expect(
           recent.where(
             (s) => (s! as String).startsWith(
-              'O bolo está a caminho, 40% do trajeto, faltam 15 min, chega às 5:45 PM',
+              'O bolo está a caminho, 40% do trajeto, '
+              'faltam 15 min, chega às 5:45 PM',
             ),
           ),
           hasLength(1),

@@ -65,7 +65,7 @@ class TimelineBar extends StatelessWidget {
                 Text(
                   l10n.timelineFailed,
                   style: AppTypography.labelStrong.copyWith(
-                    color: AppColors.danger,
+                    color: context.colors.danger,
                   ),
                 ),
               DecoratedBox(
@@ -85,10 +85,14 @@ class TimelineBar extends StatelessWidget {
                     filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
                     child: DecoratedBox(
                       decoration: BoxDecoration(
-                        color: AppColors.surfaceRaised.withValues(alpha: 0.74),
+                        color: context.colors.surfaceRaised.withValues(
+                          alpha: 0.74,
+                        ),
                         borderRadius: BorderRadius.circular(_radius),
                         border: Border.all(
-                          color: AppColors.surfaceRaised.withValues(alpha: 0.8),
+                          color: context.colors.surfaceRaised.withValues(
+                            alpha: 0.8,
+                          ),
                         ),
                       ),
                       child: Padding(
@@ -143,12 +147,14 @@ class _PhaseButton extends StatelessWidget {
       icon: Icon(phase.icon, size: 22),
       label: Text(label),
       style: TextButton.styleFrom(
-        foregroundColor: selected ? AppColors.onAccent : AppColors.ink,
-        backgroundColor: selected ? AppColors.ink : Colors.transparent,
+        foregroundColor: selected
+            ? context.colors.onAccent
+            : context.colors.ink,
+        backgroundColor: selected ? context.colors.ink : Colors.transparent,
         disabledForegroundColor: selected
-            ? AppColors.onAccent
-            : AppColors.fillStrong,
-        disabledBackgroundColor: selected ? AppColors.ink : null,
+            ? context.colors.onAccent
+            : context.colors.fillStrong,
+        disabledBackgroundColor: selected ? context.colors.ink : null,
         minimumSize: const Size(0, 56),
         padding: const EdgeInsets.symmetric(horizontal: 22),
         iconSize: 22,

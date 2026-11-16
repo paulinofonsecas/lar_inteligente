@@ -1,5 +1,6 @@
-import 'package:app_ui/src/theme/app_colors.dart';
+import 'package:app_ui/src/theme/app_palette.dart';
 import 'package:app_ui/src/theme/app_spacing.dart';
+import 'package:app_ui/src/theme/app_tone.dart';
 import 'package:app_ui/src/theme/app_typography.dart';
 import 'package:app_ui/src/widgets/action_pill.dart';
 import 'package:app_ui/src/widgets/glow_surface.dart';
@@ -89,19 +90,6 @@ class HeadsUpCard extends StatelessWidget {
 
   bool get _urgent => variant == HeadsUpVariant.urgent;
 
-  /// `error/error`, the live dot and the border of an urgent card.
-  static const Color _error = Color(0xFFF0443A);
-
-  /// `error/error-container`, the fill of an urgent card.
-  static const Color _errorContainer = Color(0xFFFFE0DE);
-
-  /// `custom/lighting/lighting-outline`, the border of a streamed card.
-  static const Color _lightingOutline = Color(0x99EBB727);
-
-  /// The label of the live dot and the first line of an urgent text, which
-  /// read in the brown that belongs to the red.
-  static const Color _urgentInk = AppColors.brandOrange300;
-
   static const double _borderWidth = 2;
 
   /// Below this width two pills no longer fit on one line, and a second line
@@ -110,8 +98,10 @@ class HeadsUpCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return LayoutBuilder(
       builder: (context, constraints) => _card(
+        colors,
         singleAction:
             constraints.hasBoundedWidth &&
             constraints.maxWidth < _singleActionWidth,
@@ -119,7 +109,7 @@ class HeadsUpCard extends StatelessWidget {
     );
   }
 
-  Widget _card({required bool singleAction}) {
+  Widget _card(AppPalette colors, {required bool singleAction}) {
     final message = this.message;
     final primary = actions.any((action) => action.isPrimary)
         ? actions.indexWhere((action) => action.isPrimary)
@@ -127,33 +117,34 @@ class HeadsUpCard extends StatelessWidget {
     final shown = singleAction && actions.isNotEmpty
         ? [(primary, actions[primary])]
         : [for (var i = 0; i < actions.length; i++) (i, actions[i])];
+    final lighting = colors.tone(AppTone.lighting);
     return GlowSurface(
-      color: _urgent ? _errorContainer : AppColors.surfaceRaised,
+      color: _urgent ? colors.dangerSoft : colors.surfaceRaised,
       border: BorderSide(
-        color: _urgent ? _error : _lightingOutline,
+        color: _urgent ? colors.danger : colors.warning.withValues(alpha: 0.6),
         width: _borderWidth,
       ),
       glows: _urgent
-          ? const [
+          ? [
               Glow(
                 left: -82,
                 top: -122,
                 size: 260,
-                color: Color(0xFFFFEFEE),
+                color: colors.danger.withValues(alpha: 0.12),
               ),
               Glow(
                 left: 144,
                 top: 58,
                 size: 360,
-                color: Color(0xFFFCC0BD),
+                color: colors.danger.withValues(alpha: 0.3),
               ),
             ]
-          : const [
+          : [
               Glow(
                 left: -142,
                 top: -182,
                 size: 360,
-                color: AppColors.brandYellow100,
+                color: lighting.wash ?? colors.fillWarm,
               ),
             ],
       padding: _urgent
@@ -166,7 +157,7 @@ class HeadsUpCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _eyebrow(),
+          _eyebrow(colors),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
@@ -176,7 +167,9 @@ class HeadsUpCard extends StatelessWidget {
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: _urgent
-                    ? AppTypography.titleSmall.copyWith(color: _urgentInk)
+                    ? AppTypography.titleSmall.copyWith(
+                        color: colors.onErrorContainer,
+                      )
                     : AppTypography.titleMedium,
               ),
               if (message != null) ...[
@@ -185,10 +178,10 @@ class HeadsUpCard extends StatelessWidget {
                   message,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTypography.label.copyWith(
+                  style: AppTypography.labelFor(colors).copyWith(
                     color: _urgent
-                        ? _urgentInk.withValues(alpha: 0.78)
-                        : AppColors.ink2,
+                        ? colors.onErrorContainer.withValues(alpha: 0.78)
+                        : colors.ink2,
                   ),
                 ),
               ],
@@ -237,7 +230,7 @@ class HeadsUpCard extends StatelessWidget {
     );
   }
 
-  Widget _eyebrow() {
+  Widget _eyebrow(AppPalette colors) {
     final source = this.source;
     final timestamp = this.timestamp;
     if (_urgent) {
@@ -251,13 +244,13 @@ class HeadsUpCard extends StatelessWidget {
                 horizontal: AppSpacing.chipPadding,
               ),
               decoration: BoxDecoration(
-                color: AppColors.overlayOnTintStrong,
+                color: colors.overlayOnTintStrong,
                 borderRadius: BorderRadius.circular(AppSpacing.pillRadius),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  _dot(12, _error),
+                  _dot(12, colors.danger),
                   const SizedBox(width: 6),
                   Flexible(
                     child: Text(
@@ -265,7 +258,7 @@ class HeadsUpCard extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTypography.labelMedium.copyWith(
-                        color: AppColors.onErrorContainer,
+                        color: colors.onErrorContainer,
                       ),
                     ),
                   ),
@@ -278,7 +271,7 @@ class HeadsUpCard extends StatelessWidget {
             Text(
               timestamp,
               style: AppTypography.labelMedium.copyWith(
-                color: AppColors.onErrorContainer,
+                color: colors.onErrorContainer,
               ),
             ),
           ],
@@ -287,7 +280,7 @@ class HeadsUpCard extends StatelessWidget {
     }
     return Row(
       children: [
-        _dot(16, AppColors.ink),
+        _dot(16, colors.ink),
         const SizedBox(width: AppSpacing.s2),
         Expanded(
           child: Text.rich(
@@ -296,12 +289,12 @@ class HeadsUpCard extends StatelessWidget {
                 TextSpan(
                   text: 'Atenção',
                   style: AppTypography.labelMediumEmphasized.copyWith(
-                    color: AppColors.brandYellow300,
+                    color: colors.tone(AppTone.lighting).ink,
                   ),
                 ),
                 if (source != null) TextSpan(text: ' · $source'),
               ],
-              style: AppTypography.label,
+              style: AppTypography.labelFor(colors),
             ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -311,7 +304,7 @@ class HeadsUpCard extends StatelessWidget {
         // of the card.
         if (timestamp != null) ...[
           const SizedBox(width: AppSpacing.s2),
-          Text(timestamp, style: AppTypography.label),
+          Text(timestamp, style: AppTypography.labelFor(colors)),
         ],
       ],
     );

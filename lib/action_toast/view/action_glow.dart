@@ -25,20 +25,12 @@ class ActionGlow extends StatefulWidget {
 class _ActionGlowState extends State<ActionGlow> {
   /// What the glow looks like while it is showing. Kept when the toast goes
   /// idle so the glow fades out in the color it had instead of changing.
-  late _Glow _glow = _glowOf(widget.status) ?? _loading;
+  late _GlowKind _glow = _glowOf(widget.status) ?? _GlowKind.loading;
 
-  static const _loading = _Glow(AppColors.warning, alpha: 0.22, radius: 0.55);
-  static const _success = _Glow(
-    AppColors.successLight,
-    alpha: 0.4,
-    radius: 1.5,
-  );
-  static const _error = _Glow(AppColors.danger, alpha: 0.35, radius: 1.3);
-
-  static _Glow? _glowOf(ActionToastStatus status) => switch (status) {
-    ActionToastStatus.loading => _loading,
-    ActionToastStatus.success => _success,
-    ActionToastStatus.error => _error,
+  static _GlowKind? _glowOf(ActionToastStatus status) => switch (status) {
+    ActionToastStatus.loading => _GlowKind.loading,
+    ActionToastStatus.success => _GlowKind.success,
+    ActionToastStatus.error => _GlowKind.error,
     ActionToastStatus.idle => null,
   };
 
@@ -53,6 +45,7 @@ class _ActionGlowState extends State<ActionGlow> {
     final visible = widget.status != ActionToastStatus.idle;
     final reduceMotion = MediaQuery.disableAnimationsOf(context);
     final alpha = visible ? _glow.alpha : 0.0;
+    final color = _glow.color(context.colors);
     return IgnorePointer(
       child: AnimatedContainer(
         duration: reduceMotion
@@ -64,8 +57,8 @@ class _ActionGlowState extends State<ActionGlow> {
             center: Alignment.bottomCenter,
             radius: _glow.radius,
             colors: [
-              _glow.color.withValues(alpha: alpha),
-              _glow.color.withValues(alpha: 0),
+              color.withValues(alpha: alpha),
+              color.withValues(alpha: 0),
             ],
           ),
         ),
@@ -75,12 +68,26 @@ class _ActionGlowState extends State<ActionGlow> {
 }
 
 /// How the glow looks: its color, opacity and radius.
-class _Glow {
-  const _Glow(this.color, {required this.alpha, required this.radius});
+///
+/// The kind picks its color from the palette, so the glow follows the theme.
+/// {@template glow_kind}
+/// One of the three glows the toast shows.
+/// {@endtemplate}
+enum _GlowKind {
+  loading(alpha: 0.22, radius: 0.55),
+  success(alpha: 0.4, radius: 1.5),
+  error(alpha: 0.35, radius: 1.3);
 
-  final Color color;
+  const _GlowKind({required this.alpha, required this.radius});
+
   final double alpha;
 
   /// Relative to the shorter side of the panel.
   final double radius;
+
+  Color color(AppPalette palette) => switch (this) {
+    loading => palette.warning,
+    success => palette.successLight,
+    error => palette.danger,
+  };
 }

@@ -1,4 +1,4 @@
-import 'package:app_ui/src/theme/app_colors.dart';
+import 'package:app_ui/src/theme/app_palette.dart';
 import 'package:app_ui/src/theme/app_spacing.dart';
 import 'package:app_ui/src/theme/app_typography.dart';
 import 'package:app_ui/src/widgets/action_pill.dart';
@@ -66,9 +66,9 @@ class TipsSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.surfaceRaised,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+      decoration: BoxDecoration(
+        color: context.colors.surfaceRaised,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -77,7 +77,7 @@ class TipsSheet extends StatelessWidget {
             padding: const EdgeInsets.only(top: AppSpacing.s2),
             child: DecoratedBox(
               decoration: BoxDecoration(
-                color: AppColors.fillStrong,
+                color: context.colors.fillStrong,
                 borderRadius: BorderRadius.circular(999),
               ),
               child: const SizedBox(width: 48, height: 4),
@@ -92,9 +92,9 @@ class TipsSheet extends StatelessWidget {
             ),
             child: Row(
               children: [
-                const CardIconBubble(
+                CardIconBubble(
                   icon: Symbols.lightbulb_rounded,
-                  background: AppColors.warningSoft,
+                  background: context.colors.warningSoft,
                 ),
                 const SizedBox(width: AppSpacing.s3),
                 Expanded(
@@ -102,7 +102,10 @@ class TipsSheet extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(title, style: AppTypography.titleSmall),
-                      Text(subtitle, style: AppTypography.label),
+                      Text(
+                        subtitle,
+                        style: AppTypography.labelFor(context.colors),
+                      ),
                     ],
                   ),
                 ),
@@ -159,9 +162,9 @@ class _TipTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: context.colors.surface,
         borderRadius: BorderRadius.circular(AppSpacing.innerPanelRadius),
-        border: Border.all(color: AppColors.line),
+        border: Border.all(color: context.colors.line),
       ),
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.s4),
@@ -175,7 +178,10 @@ class _TipTile extends StatelessWidget {
                 spacing: 2,
                 children: [
                   Text(item.title, style: AppTypography.labelLarge),
-                  Text(item.description, style: AppTypography.label),
+                  Text(
+                    item.description,
+                    style: AppTypography.labelFor(context.colors),
+                  ),
                 ],
               ),
             ),

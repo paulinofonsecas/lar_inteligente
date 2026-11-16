@@ -152,8 +152,8 @@ StatusTag? _tag(Object? value, AppTone tone) {
     label: label,
     kind: kind,
     icon: icon,
-    dot: kind == StatusTagKind.updated && icon == null ? AppColors.ink : null,
-    tint: AppColors.overlayOnTintStrong,
-    ink: tone == AppTone.neutral ? AppColors.ink : tone.ink,
+    fill: StatusTagFill.overlay,
+    tone: tone,
+    inkDot: kind == StatusTagKind.updated && icon == null,
   );
 }

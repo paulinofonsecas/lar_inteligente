@@ -152,7 +152,10 @@ void main() {
       final response = await route.onRequest(context);
 
       expect(response.statusCode, HttpStatus.ok);
-      expect(calls.single.last.text, contains('nenhum estado de dispositivo mudou'));
+      expect(
+        calls.single.last.text,
+        contains('nenhum estado de dispositivo mudou'),
+      );
     });
 
     test('responds 400 for a body that is not an object', () async {

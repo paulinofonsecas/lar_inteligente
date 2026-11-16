@@ -1,8 +1,7 @@
 import 'dart:ui' show ImageFilter;
 
-import 'package:app_ui/src/theme/app_colors.dart';
 import 'package:app_ui/src/theme/app_icons.dart';
-import 'package:app_ui/src/theme/app_shadows.dart';
+import 'package:app_ui/src/theme/app_palette.dart';
 import 'package:app_ui/src/theme/app_spacing.dart';
 import 'package:app_ui/src/theme/app_tone.dart';
 import 'package:app_ui/src/theme/app_typography.dart';
@@ -72,16 +71,18 @@ class ChangeSummary extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final bounded = constraints.hasBoundedHeight;
-        if (!constraints.hasBoundedWidth) return _card(_maxTiles, bounded);
+        if (!constraints.hasBoundedWidth) {
+          return _card(context, _maxTiles, bounded);
+        }
         const gap = AppSpacing.s3;
         final inner = constraints.maxWidth - 2 * AppSpacing.cardPadding;
         final fitting = ((inner + gap) / (_tileWidth + gap)).floor();
-        return _card(fitting.clamp(1, _maxTiles), bounded);
+        return _card(context, fitting.clamp(1, _maxTiles), bounded);
       },
     );
   }
 
-  Widget _card(int tiles, bool bounded) {
+  Widget _card(BuildContext context, int tiles, bool bounded) {
     final eyebrow = this.eyebrow;
     final shown = changes.take(tiles).toList();
     final radius = BorderRadius.circular(AppSpacing.cardRadius);
@@ -98,9 +99,9 @@ class ChangeSummary extends StatelessWidget {
     );
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: AppColors.surfaceRaised,
+        color: context.colors.surfaceRaised,
         borderRadius: radius,
-        boxShadow: AppShadows.soft,
+        boxShadow: context.colors.shadows.soft,
       ),
       child: ClipRRect(
         borderRadius: radius,
@@ -108,7 +109,9 @@ class ChangeSummary extends StatelessWidget {
           position: DecorationPosition.foreground,
           decoration: BoxDecoration(
             borderRadius: radius,
-            border: Border.all(color: tone.accent.withValues(alpha: 0.45)),
+            border: Border.all(
+              color: context.colors.tone(tone).accent.withValues(alpha: 0.45),
+            ),
           ),
           child: Stack(
             children: [
@@ -122,7 +125,7 @@ class ChangeSummary extends StatelessWidget {
                     width: 380,
                     height: 380,
                     decoration: BoxDecoration(
-                      color: tone.wash,
+                      color: context.colors.tone(tone).wash,
                       shape: BoxShape.circle,
                     ),
                   ),
@@ -140,13 +143,13 @@ class ChangeSummary extends StatelessWidget {
                           width: AppSpacing.iconBubble,
                           height: AppSpacing.iconBubble,
                           decoration: BoxDecoration(
-                            color: tone.wash,
+                            color: context.colors.tone(tone).wash,
                             shape: BoxShape.circle,
                           ),
                           child: Icon(
                             AppIcons.byName('sparkle'),
                             size: 26,
-                            color: tone.ink,
+                            color: context.colors.tone(tone).ink,
                           ),
                         ),
                         const SizedBox(width: AppSpacing.s4),
@@ -159,7 +162,7 @@ class ChangeSummary extends StatelessWidget {
                                   eyebrow,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: AppTypography.label,
+                                  style: AppTypography.labelFor(context.colors),
                                 ),
                               Text(
                                 title,
@@ -207,7 +210,7 @@ class _ChangeTile extends StatelessWidget {
     final detail = data.previous ?? data.note;
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: AppColors.fillWarm,
+        color: context.colors.fillWarm,
         borderRadius: BorderRadius.circular(AppSpacing.innerPanelRadius),
       ),
       child: Padding(
@@ -226,8 +229,8 @@ class _ChangeTile extends StatelessWidget {
                     AppIcons.byName(icon),
                     size: 20,
                     color: _actions.contains(icon)
-                        ? AppColors.accent
-                        : tone.ink,
+                        ? context.colors.accent
+                        : context.colors.tone(tone).ink,
                   ),
                   const SizedBox(width: AppSpacing.s2),
                 ],
@@ -236,7 +239,7 @@ class _ChangeTile extends StatelessWidget {
                     data.label,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTypography.label,
+                    style: AppTypography.labelFor(context.colors),
                   ),
                 ),
               ],
@@ -260,7 +263,7 @@ class _ChangeTile extends StatelessWidget {
                 detail,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: AppTypography.label,
+                style: AppTypography.labelFor(context.colors),
               ),
             ],
           ],

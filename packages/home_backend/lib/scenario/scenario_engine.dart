@@ -253,6 +253,7 @@ class ScenarioEngine {
         target,
       );
     } else {
+      // ignore: lines_longer_than_80_chars
       _ovenIs(op, control, cook, 'done', 'Pronto · o assado está no ponto', target);
     }
   }

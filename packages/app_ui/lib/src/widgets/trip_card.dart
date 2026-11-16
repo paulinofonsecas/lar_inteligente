@@ -1,6 +1,7 @@
-import 'package:app_ui/src/theme/app_colors.dart';
 import 'package:app_ui/src/theme/app_icons.dart';
+import 'package:app_ui/src/theme/app_palette.dart';
 import 'package:app_ui/src/theme/app_spacing.dart';
+import 'package:app_ui/src/theme/app_tone.dart';
 import 'package:app_ui/src/theme/app_typography.dart';
 import 'package:app_ui/src/theme/icon_from_words.dart';
 import 'package:app_ui/src/widgets/card_icon_bubble.dart';
@@ -139,23 +140,20 @@ class TripCard extends StatelessWidget {
   /// Below this width only two stops fit.
   static const double _threeStopsWidth = 600;
 
-  /// `custom/energy/energy-outline`, the border of a card that just changed.
-  static const Color _updatedOutline = Color(0x59025002);
-
   /// The corner pill: a dot for a change, the icon when the agent names one.
-  Widget _tagPill(String label) => DecoratedBox(
+  Widget _tagPill(BuildContext context, String label) => DecoratedBox(
     position: DecorationPosition.foreground,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(AppSpacing.pillRadius),
-      border: Border.all(color: AppColors.line),
+      border: Border.all(color: context.colors.line),
     ),
     child: StatusTag(
       label: label,
       kind: tagKind,
       icon: tagIcon,
-      tint: AppColors.surfaceRaised,
+      tint: context.colors.surfaceRaised,
       dot: tagKind == StatusTagKind.updated && tagIcon == null
-          ? AppColors.ink
+          ? context.colors.ink
           : null,
     ),
   );
@@ -222,14 +220,14 @@ class TripCard extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTypography.labelLarge.copyWith(
-                      color: AppColors.ink2,
+                      color: context.colors.ink2,
                     ),
                   ),
                 ),
                 const SizedBox(width: AppSpacing.s3),
                 ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 260),
-                  child: _tagPill(tag),
+                  child: _tagPill(context, tag),
                 ),
               ],
             ),
@@ -240,8 +238,11 @@ class TripCard extends StatelessWidget {
         return GlowSurface(
           border: BorderSide(
             color: tagKind == StatusTagKind.updated && compact
-                ? _updatedOutline
-                : AppColors.line,
+                ? context.colors
+                      .tone(AppTone.energy)
+                      .accent
+                      .withValues(alpha: 0.35)
+                : context.colors.line,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -293,7 +294,10 @@ class _Hero extends StatelessWidget {
                 bottom: -2,
                 child: DecoratedBox(
                   decoration: BoxDecoration(
-                    color: AppColors.brandYellow100.withValues(alpha: 0.95),
+                    color: context.colors
+                        .tone(AppTone.lighting)
+                        .wash!
+                        .withValues(alpha: 0.95),
                     borderRadius: BorderRadius.circular(18),
                   ),
                 ),
@@ -332,12 +336,15 @@ class _Hero extends StatelessWidget {
                   Text(
                     label,
                     style: AppTypography.labelLarge.copyWith(
-                      color: AppColors.ink2,
+                      color: context.colors.ink2,
                     ),
                   ),
                 time,
                 if (previous != null)
-                  Text('era $previous', style: AppTypography.label),
+                  Text(
+                    'era $previous',
+                    style: AppTypography.labelFor(context.colors),
+                  ),
               ],
             ),
           ),
@@ -361,7 +368,9 @@ class _FooterLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final warning = footer.tone == TripFooterTone.warning;
-    final color = warning ? AppColors.brandOrange300 : AppColors.ink;
+    final color = warning
+        ? context.colors.tone(AppTone.climate).ink
+        : context.colors.ink;
     return Row(
       crossAxisAlignment: warning
           ? CrossAxisAlignment.start
@@ -405,7 +414,9 @@ class _StopTime extends StatelessWidget {
           const SizedBox(width: AppSpacing.s1),
           Text(
             suffix,
-            style: AppTypography.labelMedium.copyWith(color: AppColors.ink2),
+            style: AppTypography.labelMedium.copyWith(
+              color: context.colors.ink2,
+            ),
           ),
         ],
       ],
@@ -435,13 +446,15 @@ class _Stop extends StatelessWidget {
             width: bubble,
             height: bubble,
             decoration: BoxDecoration(
-              color: good ? AppColors.successSoft : AppColors.fillWarm,
+              color: good
+                  ? context.colors.successSoft
+                  : context.colors.fillWarm,
               shape: BoxShape.circle,
             ),
             child: Icon(
               AppIcons.byName(icon),
               size: compact ? 22 : 28,
-              color: good ? AppColors.success : AppColors.ink,
+              color: good ? context.colors.success : context.colors.ink,
             ),
           ),
           SizedBox(width: compact ? AppSpacing.s3 : 14),
@@ -461,7 +474,7 @@ class _Stop extends StatelessWidget {
                   subtitle,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTypography.label,
+                  style: AppTypography.labelFor(context.colors),
                 ),
             ],
           ),

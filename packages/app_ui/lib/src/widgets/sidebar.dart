@@ -1,5 +1,4 @@
-import 'package:app_ui/src/theme/app_colors.dart';
-import 'package:app_ui/src/theme/app_shadows.dart';
+import 'package:app_ui/src/theme/app_palette.dart';
 import 'package:app_ui/src/theme/app_typography.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:material_ui/material_ui.dart';
@@ -18,9 +17,6 @@ class SidebarProfile {
   final ImageProvider? photo;
 }
 
-/// The fill behind the selected profile (`surface/surface-container-high`).
-const Color _selectedFill = AppColors.surfaceContainerHigh;
-
 /// {@template sidebar}
 /// The rail down the left of the screen: who is looking, and where to go.
 ///
@@ -37,6 +33,8 @@ class Sidebar extends StatelessWidget {
     required this.tipsTooltip,
     required this.onSettings,
     required this.settingsTooltip,
+    this.onTheme,
+    this.themeTooltip = '',
     super.key,
   });
 
@@ -61,6 +59,12 @@ class Sidebar extends StatelessWidget {
   /// The tooltip and label of the settings button.
   final String settingsTooltip;
 
+  /// Called when the appearance button is pressed. Hidden when null.
+  final VoidCallback? onTheme;
+
+  /// The tooltip of the appearance button.
+  final String themeTooltip;
+
   /// The width of the rail.
   static const double width = 88;
   static const double _tileWidth = 72;
@@ -72,10 +76,10 @@ class Sidebar extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: AppColors.surfaceRaised,
+        color: context.colors.surfaceRaised,
         borderRadius: BorderRadius.circular(999),
-        border: Border.all(color: AppColors.line),
-        boxShadow: AppShadows.soft,
+        border: Border.all(color: context.colors.line),
+        boxShadow: context.colors.shadows.soft,
       ),
       child: SizedBox(
         width: width,
@@ -117,6 +121,12 @@ class Sidebar extends StatelessWidget {
                         onPressed: onTips,
                       ),
                       const Spacer(),
+                      if (onTheme != null)
+                        _NavButton(
+                          icon: Symbols.dark_mode_rounded,
+                          tooltip: themeTooltip,
+                          onPressed: onTheme,
+                        ),
                       _NavButton(
                         icon: Symbols.settings_rounded,
                         tooltip: settingsTooltip,
@@ -161,10 +171,10 @@ class _Profiles extends StatelessWidget {
             top: selectedIndex * _step,
             width: Sidebar._tileWidth,
             height: Sidebar._tileHeight,
-            child: const DecoratedBox(
+            child: DecoratedBox(
               decoration: BoxDecoration(
-                color: _selectedFill,
-                borderRadius: BorderRadius.all(Radius.circular(999)),
+                color: context.colors.surfaceContainerHigh,
+                borderRadius: const BorderRadius.all(Radius.circular(999)),
               ),
             ),
           ),
@@ -215,7 +225,7 @@ class _ProfileTile extends StatelessWidget {
         child: DecoratedBox(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(999),
-            border: Border.all(color: AppColors.line, width: 1.5),
+            border: Border.all(color: context.colors.line, width: 1.5),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -235,7 +245,7 @@ class _ProfileTile extends StatelessWidget {
                   lineHeight: 20,
                   letterSpacing: -0.07,
                   weight: selected ? FontWeight.w600 : FontWeight.w400,
-                  color: selected ? AppColors.brandNeutral400 : AppColors.ink3,
+                  color: selected ? context.colors.ink : context.colors.ink3,
                 ),
                 child: Text(
                   profile.name,
@@ -262,11 +272,11 @@ class _Avatar extends StatelessWidget {
     final photo = profile.photo;
     return CircleAvatar(
       radius: 24,
-      backgroundColor: AppColors.accentSoft,
+      backgroundColor: context.colors.accentSoft,
       foregroundImage: photo,
       child: Text(
         profile.name.characters.first,
-        style: AppTypography.titleSmall.copyWith(color: AppColors.accent),
+        style: AppTypography.titleSmall.copyWith(color: context.colors.accent),
       ),
     );
   }
@@ -296,14 +306,14 @@ class _NavButton extends StatelessWidget {
         child: DecoratedBox(
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: selected ? AppColors.ink : Colors.transparent,
+            color: selected ? context.colors.ink : Colors.transparent,
           ),
           child: SizedBox.square(
             dimension: Sidebar._buttonSize,
             child: Icon(
               icon,
               size: 28,
-              color: selected ? AppColors.onPrimary : AppColors.ink3,
+              color: selected ? context.colors.onPrimary : context.colors.ink3,
             ),
           ),
         ),

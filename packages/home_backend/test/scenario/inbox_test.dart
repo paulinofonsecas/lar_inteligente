@@ -324,7 +324,10 @@ void main() {
         'Buscar bolo na padaria',
         'As visitas chegam',
       ]);
-      expect(summaries(feed.forUser('ana')['next']), contains('As visitas chegam'));
+      expect(
+        summaries(feed.forUser('ana')['next']),
+        contains('As visitas chegam'),
+      );
     });
 
     test('shows a notification as what just happened to its person', () {
@@ -332,7 +335,10 @@ void main() {
 
       final marco = feed.forUser('marco');
 
-      expect(summaries(marco['recent']), contains('Jantar movido para 6:00 PM'));
+      expect(
+        summaries(marco['recent']),
+        contains('Jantar movido para 6:00 PM'),
+      );
       expect(
         (marco['recent']! as List<dynamic>)
             .cast<Map<String, dynamic>>()

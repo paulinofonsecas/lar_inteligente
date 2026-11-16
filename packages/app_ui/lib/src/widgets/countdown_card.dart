@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:app_ui/src/theme/app_colors.dart';
+import 'package:app_ui/src/theme/app_palette.dart';
 import 'package:app_ui/src/theme/app_spacing.dart';
 import 'package:app_ui/src/theme/app_tone.dart';
 import 'package:app_ui/src/theme/app_typography.dart';
@@ -138,8 +138,13 @@ class _CountdownCardState extends State<CountdownCard> {
     kind: tag.kind,
     icon: tag.icon,
     dot: tag.dot,
-    tint: tag.tint ?? widget.tone.wash,
-    ink: tag.ink == AppColors.ink ? widget.tone.ink : tag.ink,
+    inkDot: tag.inkDot,
+    sparkDot: tag.sparkDot,
+    mutedInk: tag.mutedInk,
+    fill: StatusTagFill.tone,
+    tone: widget.tone,
+    tint: tag.tint,
+    ink: tag.ink,
   );
 
   @override
@@ -222,7 +227,9 @@ class _CountdownCardState extends State<CountdownCard> {
               eyebrow,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: AppTypography.titleSmall.copyWith(color: AppColors.ink2),
+              style: AppTypography.titleSmall.copyWith(
+                color: context.colors.ink2,
+              ),
             ),
           Semantics(
             liveRegion: true,
@@ -233,7 +240,7 @@ class _CountdownCardState extends State<CountdownCard> {
                 countdown,
                 maxLines: 1,
                 style: AppTypography.displayLarge.copyWith(
-                  color: AppColors.ink,
+                  color: context.colors.ink,
                 ),
               ),
             ),
@@ -243,7 +250,9 @@ class _CountdownCardState extends State<CountdownCard> {
               subtitle,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: AppTypography.bodyLarge.copyWith(color: AppColors.ink),
+              style: AppTypography.bodyLarge.copyWith(
+                color: context.colors.ink,
+              ),
             ),
         ],
       ),

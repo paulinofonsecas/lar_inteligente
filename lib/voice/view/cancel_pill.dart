@@ -21,9 +21,6 @@ class CancelPill extends StatelessWidget {
   /// toast.
   final bool prominent;
 
-  /// `surface/surface-container-high`.
-  static const Color _fill = AppColors.surfaceContainerHigh;
-
   @override
   Widget build(BuildContext context) {
     return Semantics(
@@ -36,7 +33,9 @@ class CancelPill extends StatelessWidget {
         onTap: onPressed,
         child: DecoratedBox(
           decoration: BoxDecoration(
-            color: prominent ? AppColors.ink : _fill,
+            color: prominent
+                ? context.colors.ink
+                : context.colors.surfaceContainerHigh,
             borderRadius: BorderRadius.circular(999),
           ),
           child: SizedBox(
@@ -50,13 +49,13 @@ class CancelPill extends StatelessWidget {
                   Icon(
                     Symbols.close_rounded,
                     size: prominent ? 24 : 16,
-                    color: prominent ? AppColors.onPrimary : null,
+                    color: prominent ? context.colors.onPrimary : null,
                   ),
                   Text(
                     context.l10n.cancelButton,
                     style: prominent
                         ? AppTypography.labelLarge.copyWith(
-                            color: AppColors.onPrimary,
+                            color: context.colors.onPrimary,
                           )
                         : AppTypography.bodyLarge,
                   ),

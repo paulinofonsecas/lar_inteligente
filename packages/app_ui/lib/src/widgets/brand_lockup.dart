@@ -1,4 +1,4 @@
-import 'package:app_ui/src/theme/app_colors.dart';
+import 'package:app_ui/src/theme/app_palette.dart';
 import 'package:app_ui/src/theme/app_typography.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:material_ui/material_ui.dart';
@@ -30,10 +30,10 @@ class BrandLockup extends StatelessWidget {
           height: _height,
           child: Row(
             children: [
-              const Icon(
+              Icon(
                 Symbols.house_rounded,
                 size: 38,
-                color: AppColors.onPrimary,
+                color: context.colors.onPrimary,
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -47,7 +47,7 @@ class BrandLockup extends StatelessWidget {
                       lineHeight: 32,
                       weight: FontWeight.w600,
                       letterSpacing: -0.5,
-                      color: AppColors.onPrimary,
+                      color: context.colors.onPrimary,
                     ),
                   ),
                 ),

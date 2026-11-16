@@ -1,4 +1,5 @@
 import 'package:app_ui/src/theme/app_colors.dart';
+import 'package:app_ui/src/theme/app_palette.dart';
 import 'package:material_ui/material_ui.dart';
 
 /// {@template app_typography}
@@ -22,7 +23,7 @@ abstract final class AppTypography {
     required double lineHeight,
     required FontWeight weight,
     double letterSpacing = 0,
-    Color color = AppColors.ink,
+    Color? color,
   }) {
     return TextStyle(
       fontFamily: family,
@@ -43,7 +44,7 @@ abstract final class AppTypography {
     required double lineHeight,
     required FontWeight weight,
     double letterSpacing = 0,
-    Color color = AppColors.ink,
+    Color? color,
   }) {
     return _style(
       family: fontFamily,
@@ -189,14 +190,20 @@ abstract final class AppTypography {
   /// Item titles: `label/large`.
   static TextStyle get body => labelLarge;
 
-  /// Labels and subtitles: `body/medium` in the secondary ink.
+  /// Labels and subtitles: `body/medium` in the secondary ink of [palette].
+  static TextStyle labelFor(AppPalette palette) =>
+      bodyMedium.copyWith(color: palette.ink2);
+
+  /// Labels and subtitles in the light secondary ink, for code that predates
+  /// the palette. New code uses [labelFor].
   static TextStyle get label => bodyMedium.copyWith(color: AppColors.ink2);
 
   /// Chip and control labels: `label/medium`.
   static TextStyle get labelStrong => labelMedium;
 
-  /// The Material text theme, built from the scale above.
-  static TextTheme get textTheme => TextTheme(
+  /// The Material text theme, built from the scale above and painted in the
+  /// ink of [palette].
+  static TextTheme textTheme(AppPalette palette) => TextTheme(
     displayLarge: displayLarge,
     displayMedium: displayMedium,
     displaySmall: displaySmall,
@@ -212,5 +219,5 @@ abstract final class AppTypography {
     labelLarge: labelLarge,
     labelMedium: labelMedium,
     labelSmall: labelMedium,
-  );
+  ).apply(bodyColor: palette.ink, displayColor: palette.ink);
 }

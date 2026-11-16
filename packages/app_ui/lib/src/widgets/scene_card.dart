@@ -1,5 +1,5 @@
-import 'package:app_ui/src/theme/app_colors.dart';
 import 'package:app_ui/src/theme/app_icons.dart';
+import 'package:app_ui/src/theme/app_palette.dart';
 import 'package:app_ui/src/theme/app_spacing.dart';
 import 'package:app_ui/src/theme/app_tone.dart';
 import 'package:app_ui/src/theme/app_typography.dart';
@@ -80,8 +80,8 @@ class SceneCard extends StatelessWidget {
         // The chips are what a short cell gives up first.
         final chips = bounded ? _chipRows(room) : _maxRows;
         final running = state == SceneState.running;
-        final top = _topRow();
-        final texts = _textBlock();
+        final top = _topRow(context);
+        final texts = _textBlock(context);
         final settings = this.settings.take(4).toList();
         final children = <Widget>[
           if (running && chips > 0 && settings.isNotEmpty)
@@ -96,10 +96,14 @@ class SceneCard extends StatelessWidget {
             texts,
           ],
           if (chips > 0 && settings.isNotEmpty)
-            _Settings(settings, rows: chips, ink: tone.ink),
+            _Settings(
+              settings,
+              rows: chips,
+              ink: context.colors.tone(tone).ink,
+            ),
         ];
         return GlowSurface(
-          color: tone.wash ?? AppColors.surfaceRaised,
+          color: context.colors.tone(tone).wash ?? context.colors.surfaceRaised,
           // `Highlight` at the top left and `Ambient glow` past the right
           // edge, as the Figma scene card draws them.
           glows: [
@@ -107,13 +111,13 @@ class SceneCard extends StatelessWidget {
               left: -80,
               top: -120,
               size: 260,
-              color: AppColors.surfaceRaised.withValues(alpha: 0.9),
+              color: context.colors.surfaceRaised.withValues(alpha: 0.9),
             ),
             Glow.fromRight(
               right: -60,
               top: 60,
               size: 360,
-              color: tone.accent.withValues(alpha: 0.6),
+              color: context.colors.tone(tone).accent.withValues(alpha: 0.6),
             ),
           ],
           child: Column(
@@ -139,23 +143,23 @@ class SceneCard extends StatelessWidget {
     return rows.clamp(0, _maxRows);
   }
 
-  Widget _topRow() {
+  Widget _topRow(BuildContext context) {
     final running = state == SceneState.running;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         IconTile(
           icon: AppIcons.byName(icon),
-          background: AppColors.overlayOnTint,
-          color: tone.ink,
+          background: context.colors.overlayOnTint,
+          color: context.colors.tone(tone).ink,
         ),
         const SizedBox(width: AppSpacing.s3),
         if (running)
           StatusTag(
             label: runningLabel,
-            dot: tone.accent,
-            tint: AppColors.overlayOnTint,
-            ink: tone.ink,
+            dot: context.colors.tone(tone).accent,
+            tint: context.colors.overlayOnTint,
+            ink: context.colors.tone(tone).ink,
           )
         else
           Flexible(
@@ -163,7 +167,7 @@ class SceneCard extends StatelessWidget {
               label: actionLabel,
               icon: 'play',
               style: ActionPillStyle.primary,
-              iconColor: tone.accent,
+              iconColor: context.colors.tone(tone).accent,
               horizontalPadding: 24,
               onPressed: onRun,
             ),
@@ -172,7 +176,7 @@ class SceneCard extends StatelessWidget {
     );
   }
 
-  Widget _textBlock() {
+  Widget _textBlock(BuildContext context) {
     final description = this.description;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -183,14 +187,18 @@ class SceneCard extends StatelessWidget {
           name,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: AppTypography.titleSmall.copyWith(color: tone.ink),
+          style: AppTypography.titleSmall.copyWith(
+            color: context.colors.tone(tone).ink,
+          ),
         ),
         if (description != null)
           Text(
             description,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTypography.bodyMedium.copyWith(color: tone.ink),
+            style: AppTypography.bodyMedium.copyWith(
+              color: context.colors.tone(tone).ink,
+            ),
           ),
       ],
     );
@@ -234,9 +242,11 @@ class _Setting extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.overlayOnTint,
-        borderRadius: BorderRadius.all(Radius.circular(AppSpacing.pillRadius)),
+      decoration: BoxDecoration(
+        color: context.colors.overlayOnTint,
+        borderRadius: const BorderRadius.all(
+          Radius.circular(AppSpacing.pillRadius),
+        ),
       ),
       child: SizedBox(
         height: AppSpacing.chipHeight,

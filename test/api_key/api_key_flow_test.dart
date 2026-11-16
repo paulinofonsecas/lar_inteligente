@@ -73,7 +73,9 @@ void main() {
       await tester.pumpApp(FakeAgentFactory(), keys: GeminiKeyStore());
       await _settle(tester);
 
-      await tester.tap(find.text('Obtenha uma chave em aistudio.google.com/apikey'));
+      await tester.tap(
+        find.text('Obtenha uma chave em aistudio.google.com/apikey'),
+      );
       await tester.pump();
 
       expect(launcher.launched, ['https://aistudio.google.com/apikey']);

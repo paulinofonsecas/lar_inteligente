@@ -41,7 +41,30 @@
     "@changeKeyTooltip": {
         "description": "Tooltip do botão de configurações, que reabre o diálogo da chave"
     },
-    "tipsTooltip": "Sugestões: o que o painel faz",
+    "themeTooltip": "Aparência do painel",
+    "@themeTooltip": {
+        "description": "Tooltip do botão que abre a folha de aparência do painel"
+    },
+    "themeTitle": "Aparência",
+    "@themeTitle": {
+        "description": "Título da folha onde se escolhe o tema do painel"
+    },
+    "themeSubtitle": "Como o painel deve desenhar as telas",
+    "@themeSubtitle": {
+        "description": "Subtitulo da folha de aparencia"
+    },
+    "themeLight": "Claro",
+    "@themeLight": {
+        "description": "Segmento que fixa o painel no tema claro"
+    },
+    "themeDark": "Escuro",
+    "@themeDark": {
+        "description": "Segmento que fixa o painel no tema escuro"
+    },
+    "themeSystem": "Sistema",
+    "@themeSystem": {
+        "description": "Segmento que faz o painel seguir o tema do aparelho"
+    },    "tipsTooltip": "Sugestões: o que o painel faz",
     "@tipsTooltip": {
         "description": "Tooltip do botão da lâmpada, que abre a folha de sugestões"
     },

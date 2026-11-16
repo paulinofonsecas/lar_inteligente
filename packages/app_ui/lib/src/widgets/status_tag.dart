@@ -1,6 +1,7 @@
-import 'package:app_ui/src/theme/app_colors.dart';
 import 'package:app_ui/src/theme/app_icons.dart';
+import 'package:app_ui/src/theme/app_palette.dart';
 import 'package:app_ui/src/theme/app_spacing.dart';
+import 'package:app_ui/src/theme/app_tone.dart';
 import 'package:app_ui/src/theme/app_typography.dart';
 import 'package:material_ui/material_ui.dart';
 
@@ -35,6 +36,24 @@ enum StatusTagKind {
   };
 }
 
+/// {@template status_tag_fill}
+/// What fills a [StatusTag]. Each one is a palette role, so the tag follows
+/// the theme instead of carrying a hex.
+/// {@endtemplate}
+enum StatusTagFill {
+  /// The warm fill of pills that sit on a card.
+  warm,
+
+  /// The heavier surface fill, for a tag that reports a change.
+  surfaceHigh,
+
+  /// The veil over a tinted card, for a tag inside one.
+  overlay,
+
+  /// The wash of the tag's tone, for a tag about that tone.
+  tone,
+}
+
 /// {@template status_tag}
 /// The small pill in a card corner that says the card changed.
 /// {@endtemplate}
@@ -44,23 +63,43 @@ class StatusTag extends StatelessWidget {
     required this.label,
     this.kind = StatusTagKind.info,
     this.icon,
+    this.fill = StatusTagFill.warm,
+    this.tone = AppTone.neutral,
     this.tint,
     this.dot,
-    this.ink = AppColors.ink,
+    this.sparkDot = false,
+    this.inkDot = false,
+    this.mutedInk = false,
+    this.ink,
     super.key,
   });
 
   /// The pill text.
   final String label;
 
-  /// The pill fill, for a card whose wash would swallow the default grey.
+  /// The pill fill, which is a palette role.
+  final StatusTagFill fill;
+
+  /// The card's tone, whose ink [StatusTagFill.tone] paints.
+  final AppTone tone;
+
+  /// The pill fill, for a caller that already has a color. Wins over [fill].
   final Color? tint;
 
   /// A small filled dot before the label, in place of the icon.
   final Color? dot;
 
-  /// The label and icon color: the ink of the card's tone.
-  final Color ink;
+  /// Draws [dot] in the palette's spark, for the assistant's own tags.
+  final bool sparkDot;
+
+  /// Draws [dot] in the palette's ink, for a tag that marks a change.
+  final bool inkDot;
+
+  /// Draws the label in the secondary ink, for a tag that is a subtitle.
+  final bool mutedInk;
+
+  /// Overrides the text and icon color.
+  final Color? ink;
 
   /// How the tag reads, which picks its default icon.
   final StatusTagKind kind;
@@ -73,11 +112,33 @@ class StatusTag extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final iconName = icon ?? kind.defaultIcon;
+    final colors = context.colors;
+    final toneColors = colors.tone(tone);
+    final fill =
+        tint ??
+        switch (this.fill) {
+          StatusTagFill.warm => colors.fillWarm,
+          StatusTagFill.surfaceHigh => colors.surfaceContainerHigh,
+          StatusTagFill.overlay => colors.overlayOnTintStrong,
+          StatusTagFill.tone => toneColors.wash ?? colors.fillWarm,
+        };
+    final ink =
+        this.ink ??
+        switch (this.fill) {
+          StatusTagFill.tone => toneColors.ink,
+          StatusTagFill.overlay when tone != AppTone.neutral => toneColors.ink,
+          _ => mutedInk ? colors.ink2 : colors.ink,
+        };
+    final dot = sparkDot
+        ? colors.spark
+        : inkDot
+        ? colors.ink
+        : this.dot;
     return Container(
       height: _height,
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.chipPadding),
       decoration: BoxDecoration(
-        color: tint ?? AppColors.fillWarm,
+        color: fill,
         borderRadius: BorderRadius.circular(AppSpacing.pillRadius),
       ),
       child: Row(

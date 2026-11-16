@@ -51,7 +51,7 @@ void main() {
       expect(_barColor(tester), AppColors.danger);
 
       await tester.pumpComponent(const ChargeCard(percent: 30));
-      expect(_barColor(tester), AppTone.energy.ink);
+      expect(_barColor(tester), AppPalette.light.tone(AppTone.energy).ink);
     });
 
     testWidgets('clamps an out of range level', (tester) async {

@@ -62,15 +62,18 @@ void main() {
     ) async {
       await tester.pumpComponent(const HeadsUpCard(title: 'A'));
       final amber = tester.widget<GlowSurface>(find.byType(GlowSurface));
-      expect(amber.color, AppColors.surfaceRaised);
-      expect(amber.border?.color, const Color(0x99EBB727));
+      expect(amber.color, AppPalette.light.surfaceRaised);
+      expect(
+        amber.border?.color,
+        AppPalette.light.warning.withValues(alpha: 0.6),
+      );
 
       await tester.pumpComponent(
         const HeadsUpCard(title: 'A', variant: HeadsUpVariant.urgent),
       );
       final red = tester.widget<GlowSurface>(find.byType(GlowSurface));
-      expect(red.color, const Color(0xFFFFE0DE));
-      expect(red.border?.color, const Color(0xFFF0443A));
+      expect(red.color, AppPalette.light.dangerSoft);
+      expect(red.border?.color, AppPalette.light.danger);
     });
 
     for (final variant in HeadsUpVariant.values) {

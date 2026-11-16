@@ -502,8 +502,8 @@ class DeviceStateMachine {
             throw CommandRejected.cannot(device['name'] as String);
           }
           _command(txn, id, DeviceCommand.on, null);
-          txn.set(id, media, 'MediaPlayback', 'state', 'playing');
-          txn.set(id, media, 'MediaPlayback', 'playlist', action['playlist']);
+          txn..set(id, media, 'MediaPlayback', 'state', 'playing')
+          ..set(id, media, 'MediaPlayback', 'playlist', action['playlist']);
         default:
           throw const CommandRejected('Essa cena não pode rodar agora.');
       }

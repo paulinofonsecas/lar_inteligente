@@ -1,4 +1,4 @@
-import 'package:app_ui/src/theme/app_colors.dart';
+import 'package:app_ui/src/theme/app_palette.dart';
 import 'package:material_ui/material_ui.dart';
 
 /// {@template icon_bubble}
@@ -8,8 +8,8 @@ class CardIconBubble extends StatelessWidget {
   /// {@macro icon_bubble}
   const CardIconBubble({
     required this.icon,
-    this.background = AppColors.accentSoft,
-    this.color = AppColors.ink,
+    this.background,
+    this.color,
     this.size = 48,
     super.key,
   });
@@ -17,11 +17,11 @@ class CardIconBubble extends StatelessWidget {
   /// The icon drawn in the bubble.
   final IconData icon;
 
-  /// The bubble fill.
-  final Color background;
+  /// The bubble fill. Defaults to the palette's soft accent.
+  final Color? background;
 
-  /// The icon color.
-  final Color color;
+  /// The icon color. Defaults to the palette ink.
+  final Color? color;
 
   /// The bubble diameter.
   final double size;
@@ -31,8 +31,15 @@ class CardIconBubble extends StatelessWidget {
     return Container(
       width: size,
       height: size,
-      decoration: BoxDecoration(color: background, shape: BoxShape.circle),
-      child: Icon(icon, size: size / 2, color: color),
+      decoration: BoxDecoration(
+        color: background ?? context.colors.accentSoft,
+        shape: BoxShape.circle,
+      ),
+      child: Icon(
+        icon,
+        size: size / 2,
+        color: color ?? context.colors.ink,
+      ),
     );
   }
 }

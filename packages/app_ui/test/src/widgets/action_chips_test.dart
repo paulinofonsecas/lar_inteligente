@@ -126,7 +126,7 @@ void main() {
       expect(icons.map((i) => i.color), [
         AppColors.spark,
         AppColors.accent,
-        AppTone.lighting.ink,
+        AppPalette.light.tone(AppTone.lighting).ink,
       ]);
     });
   });

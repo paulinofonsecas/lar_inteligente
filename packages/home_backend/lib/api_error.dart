@@ -63,6 +63,7 @@ class ApiError {
   ///
   /// A `500 Internal Server Error`. Defaults to a generic [message] so internal
   /// details are never leaked to clients.
+  // ignore: lines_longer_than_80_chars
   const ApiError.internalServerError({this.message = 'Erro interno do servidor'})
     : statusCode = HttpStatus.internalServerError;
 

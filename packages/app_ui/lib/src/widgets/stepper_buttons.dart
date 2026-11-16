@@ -1,4 +1,4 @@
-import 'package:app_ui/src/theme/app_colors.dart';
+import 'package:app_ui/src/theme/app_palette.dart';
 import 'package:app_ui/src/theme/app_spacing.dart';
 import 'package:material_ui/material_ui.dart';
 
@@ -10,7 +10,7 @@ class StepperButtons extends StatelessWidget {
   const StepperButtons({
     required this.onDecrement,
     required this.onIncrement,
-    this.color = AppColors.ink,
+    this.color,
     super.key,
   });
 
@@ -24,11 +24,12 @@ class StepperButtons extends StatelessWidget {
   /// {@endtemplate}
   final VoidCallback? onIncrement;
 
-  /// The icon color: the ink of the card's tone.
-  final Color color;
+  /// The icon color: the ink of the card's tone, or the palette ink.
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
+    final color = this.color ?? context.colors.ink;
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -72,7 +73,7 @@ class _RoundButton extends StatelessWidget {
       button: true,
       label: label,
       child: Material(
-        color: AppColors.overlayOnTintStrong,
+        color: context.colors.overlayOnTintStrong,
         shape: const CircleBorder(),
         child: InkWell(
           customBorder: const CircleBorder(),

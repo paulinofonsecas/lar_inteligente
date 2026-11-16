@@ -1,4 +1,4 @@
-import 'package:app_ui/src/theme/app_colors.dart';
+import 'package:app_ui/src/theme/app_palette.dart';
 import 'package:app_ui/src/theme/app_typography.dart';
 import 'package:material_ui/material_ui.dart';
 
@@ -45,7 +45,9 @@ class ClockDisplay extends StatelessWidget {
             ),
             Text(
               date,
-              style: AppTypography.labelMedium.copyWith(color: AppColors.ink2),
+              style: AppTypography.labelMedium.copyWith(
+                color: context.colors.ink2,
+              ),
             ),
           ],
         ),

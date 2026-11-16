@@ -1,5 +1,5 @@
-import 'package:app_ui/src/theme/app_colors.dart';
 import 'package:app_ui/src/theme/app_icons.dart';
+import 'package:app_ui/src/theme/app_palette.dart';
 import 'package:app_ui/src/theme/app_spacing.dart';
 import 'package:app_ui/src/theme/app_typography.dart';
 import 'package:material_ui/material_ui.dart';
@@ -66,26 +66,28 @@ class ActionPill extends StatelessWidget {
   /// The pill height.
   static const double height = AppSpacing.buttonHeight;
 
-  Color get _fill =>
+  Color _fill(BuildContext context) =>
       fill ??
       switch (style) {
-        ActionPillStyle.primary => AppColors.ink,
-        ActionPillStyle.secondary => AppColors.fillWarm,
-        ActionPillStyle.outlined => AppColors.surfaceRaised,
-        ActionPillStyle.done => AppColors.successSoft,
+        ActionPillStyle.primary => context.colors.ink,
+        ActionPillStyle.secondary => context.colors.fillWarm,
+        ActionPillStyle.outlined => context.colors.surfaceRaised,
+        ActionPillStyle.done => context.colors.successSoft,
       };
 
-  Color get _foreground =>
+  Color _foregroundOf(BuildContext context) =>
       foreground ??
       switch (style) {
-        ActionPillStyle.primary => AppColors.onPrimary,
-        ActionPillStyle.done => AppColors.success,
-        _ => AppColors.ink,
+        ActionPillStyle.primary => context.colors.onPrimary,
+        ActionPillStyle.done => context.colors.success,
+        _ => context.colors.ink,
       };
 
-  Color get _iconColor =>
+  Color _iconColorOf(BuildContext context) =>
       iconColor ??
-      (style == ActionPillStyle.primary ? AppColors.spark : _foreground);
+      (style == ActionPillStyle.primary
+          ? context.colors.spark
+          : _foregroundOf(context));
 
   @override
   Widget build(BuildContext context) {
@@ -95,11 +97,11 @@ class ActionPill extends StatelessWidget {
         : (icon == null ? null : AppIcons.byName(icon));
     final shape = StadiumBorder(
       side: style == ActionPillStyle.outlined
-          ? const BorderSide(color: AppColors.line)
+          ? BorderSide(color: context.colors.line)
           : BorderSide.none,
     );
     return Material(
-      color: _fill,
+      color: _fill(context),
       shape: shape,
       child: InkWell(
         customBorder: shape,
@@ -113,7 +115,7 @@ class ActionPill extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 if (iconData != null) ...[
-                  Icon(iconData, size: 24, color: _iconColor),
+                  Icon(iconData, size: 24, color: _iconColorOf(context)),
                   const SizedBox(width: 10),
                 ],
                 Flexible(
@@ -122,7 +124,7 @@ class ActionPill extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTypography.labelLarge.copyWith(
-                      color: _foreground,
+                      color: _foregroundOf(context),
                     ),
                   ),
                 ),

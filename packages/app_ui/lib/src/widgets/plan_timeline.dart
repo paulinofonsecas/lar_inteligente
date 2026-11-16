@@ -1,5 +1,5 @@
-import 'package:app_ui/src/theme/app_colors.dart';
 import 'package:app_ui/src/theme/app_icons.dart';
+import 'package:app_ui/src/theme/app_palette.dart';
 import 'package:app_ui/src/theme/app_spacing.dart';
 import 'package:app_ui/src/theme/app_tone.dart';
 import 'package:app_ui/src/theme/app_typography.dart';
@@ -272,7 +272,8 @@ class _Header extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTypography.titleSmall,
                 ),
-              if (subtitle != null) Text(subtitle, style: AppTypography.label),
+              if (subtitle != null)
+                Text(subtitle, style: AppTypography.labelFor(context.colors)),
             ],
           ),
         ),
@@ -304,7 +305,9 @@ class _Sub extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
         // Who moved it reads in the climate ink, a bare move in the lighting.
         style: AppTypography.bodyMedium.copyWith(
-          color: changedBy == null ? AppTone.lighting.ink : AppTone.climate.ink,
+          color: changedBy == null
+              ? context.colors.tone(AppTone.lighting).ink
+              : context.colors.tone(AppTone.climate).ink,
         ),
       );
     }
@@ -316,7 +319,7 @@ class _Sub extends StatelessWidget {
       text,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
-      style: AppTypography.label,
+      style: AppTypography.labelFor(context.colors),
     );
   }
 }
@@ -347,7 +350,7 @@ class _Time extends StatelessWidget {
         SizedBox(width: gap),
         Text(
           match.group(2)!.toUpperCase(),
-          style: AppTypography.labelMedium.copyWith(color: AppColors.ink2),
+          style: AppTypography.labelMedium.copyWith(color: context.colors.ink2),
         ),
       ],
     );
@@ -389,10 +392,14 @@ class _StackedRow extends StatelessWidget {
           width: AppSpacing.iconBubble,
           height: AppSpacing.iconBubble,
           decoration: BoxDecoration(
-            color: tone.wash ?? AppColors.fillWarm,
+            color: context.colors.tone(tone).wash ?? context.colors.fillWarm,
             shape: BoxShape.circle,
           ),
-          child: Icon(AppIcons.byName(icon), size: 26, color: tone.ink),
+          child: Icon(
+            AppIcons.byName(icon),
+            size: 26,
+            color: context.colors.tone(tone).ink,
+          ),
         ),
         const SizedBox(width: AppSpacing.s4),
         Expanded(

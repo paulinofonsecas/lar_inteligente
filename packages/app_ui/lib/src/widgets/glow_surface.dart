@@ -1,5 +1,4 @@
-import 'package:app_ui/src/theme/app_colors.dart';
-import 'package:app_ui/src/theme/app_shadows.dart';
+import 'package:app_ui/src/theme/app_palette.dart';
 import 'package:app_ui/src/theme/app_spacing.dart';
 import 'package:material_ui/material_ui.dart';
 
@@ -60,7 +59,7 @@ class GlowSurface extends StatelessWidget {
   /// {@macro glow_surface}
   const GlowSurface({
     required this.child,
-    this.color = AppColors.surfaceRaised,
+    this.color,
     this.border,
     this.glows = const [],
     this.padding = const EdgeInsets.all(AppSpacing.cardPadding),
@@ -70,8 +69,8 @@ class GlowSurface extends StatelessWidget {
   /// The card content.
   final Widget child;
 
-  /// The fill.
-  final Color color;
+  /// The fill. Defaults to the raised surface of the palette.
+  final Color? color;
 
   /// The border, drawn inside the card's edge.
   final BorderSide? border;
@@ -89,13 +88,13 @@ class GlowSurface extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: radius,
-        boxShadow: AppShadows.soft,
+        boxShadow: context.colors.shadows.soft,
       ),
       child: ClipRRect(
         borderRadius: radius,
         child: DecoratedBox(
           decoration: BoxDecoration(
-            color: color,
+            color: color ?? context.colors.surfaceRaised,
             borderRadius: radius,
             border: border == null
                 ? null

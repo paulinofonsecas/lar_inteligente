@@ -1,7 +1,6 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:home_frontend/src/catalog/builders/plan_timeline_builder.dart';
-import 'package:material_ui/material_ui.dart';
 
 import 'pump_builder.dart';
 
@@ -33,7 +32,7 @@ void main() {
       expect(find.text('Friday, Oct 2'), findsOneWidget);
       expect(find.text('Now 4:30'), findsOneWidget);
       expect(find.text('400 °F'), findsOneWidget);
-      expect(find.text('was 6:00 · Ana'), findsOneWidget);
+      expect(find.text('era 6:00 · Ana'), findsOneWidget);
     });
 
     testWidgets('reads the compact density', (tester) async {
@@ -46,7 +45,7 @@ void main() {
       });
 
       expect(find.text('Hidden'), findsNothing);
-      expect(find.text('Unchanged'), findsOneWidget);
+      expect(find.text('Sem mudança'), findsOneWidget);
     });
 
     testWidgets('follows bound entries and tag', (tester) async {
@@ -76,7 +75,7 @@ void main() {
       await tester.pump();
 
       expect(find.text('After'), findsOneWidget);
-      expect(find.text('was 7:00'), findsOneWidget);
+      expect(find.text('era 7:00'), findsOneWidget);
       expect(find.text('Updated'), findsOneWidget);
     });
 
@@ -107,19 +106,20 @@ void main() {
         'kind': 'moved',
       });
       expect(changed.icon, 'edit');
-      expect(changed.tint, AppTone.climate.wash);
-      expect(changed.ink, AppTone.climate.ink);
+      expect(changed.fill, StatusTagFill.tone);
+      expect(changed.tone, AppTone.climate);
 
       final updated = await tagFor({'label': 'Updated', 'kind': 'updated'});
-      expect(updated.tint, const Color(0xFFECEAE5));
+      expect(updated.fill, StatusTagFill.surfaceHigh);
 
       final now = await tagFor({'label': 'Now 4:30'});
-      expect(now.dot, AppColors.spark);
-      expect(now.ink, AppColors.ink2);
+      expect(now.sparkDot, isTrue);
+      expect(now.mutedInk, isTrue);
 
       final withIcon = await tagFor({'label': 'Now', 'icon': 'clock'});
       expect(withIcon.dot, isNull);
-      expect(withIcon.ink, AppColors.ink);
+      expect(withIcon.sparkDot, isFalse);
+      expect(withIcon.mutedInk, isFalse);
     });
   });
 }

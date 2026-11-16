@@ -7,6 +7,7 @@ import 'package:a2ui_vgv_smart_home/dashboard/view/member_dashboard.dart';
 import 'package:a2ui_vgv_smart_home/l10n/l10n.dart';
 import 'package:a2ui_vgv_smart_home/live/cubit/live_cubit.dart';
 import 'package:a2ui_vgv_smart_home/suggestions/tips.dart';
+import 'package:a2ui_vgv_smart_home/theme/view/theme_sheet.dart';
 import 'package:a2ui_vgv_smart_home/timeline/cubit/timeline_cubit.dart';
 import 'package:a2ui_vgv_smart_home/users/cubit/users_cubit.dart';
 import 'package:app_ui/app_ui.dart';
@@ -146,6 +147,8 @@ class _DashboardViewState extends State<DashboardView> {
                     ),
                   ),
                   settingsTooltip: context.l10n.changeKeyTooltip,
+                  onTheme: () => unawaited(showThemeSheet(context)),
+                  themeTooltip: context.l10n.themeTooltip,
                 ),
                 Expanded(
                   // Each settled time builds the dashboard again, from the

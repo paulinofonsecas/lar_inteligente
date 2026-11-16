@@ -1,6 +1,7 @@
-import 'package:app_ui/src/theme/app_colors.dart';
 import 'package:app_ui/src/theme/app_icons.dart';
+import 'package:app_ui/src/theme/app_palette.dart';
 import 'package:app_ui/src/theme/app_spacing.dart';
+import 'package:app_ui/src/theme/app_tone.dart';
 import 'package:app_ui/src/theme/app_typography.dart';
 import 'package:app_ui/src/widgets/app_card.dart';
 import 'package:app_ui/src/widgets/optimistic_scope.dart';
@@ -177,8 +178,8 @@ class _ShoppingListState extends State<ShoppingList> {
             children: [
               IconTile(
                 icon: AppIcons.byName(icon),
-                background: AppColors.brandYellow100,
-                color: AppColors.brandYellow300,
+                background: context.colors.tone(AppTone.lighting).wash,
+                color: context.colors.tone(AppTone.lighting).ink,
               ),
               const SizedBox(width: AppSpacing.s4),
               Expanded(
@@ -196,7 +197,7 @@ class _ShoppingListState extends State<ShoppingList> {
                         subtitle,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: AppTypography.label,
+                        style: AppTypography.labelFor(context.colors),
                       ),
                   ],
                 ),
@@ -281,7 +282,7 @@ class _Row extends StatelessWidget {
           height: height + (divider ? 1 : 0),
           decoration: BoxDecoration(
             border: divider
-                ? const Border(bottom: BorderSide(color: AppColors.line))
+                ? Border(bottom: BorderSide(color: context.colors.line))
                 : null,
           ),
           child: Row(
@@ -292,7 +293,9 @@ class _Row extends StatelessWidget {
                 child: Text(
                   item.label,
                   style: AppTypography.bodyLargeEmphasized.copyWith(
-                    color: item.checked ? AppColors.ink2 : AppColors.ink,
+                    color: item.checked
+                        ? context.colors.ink2
+                        : context.colors.ink,
                   ),
                 ),
               ),
@@ -305,7 +308,7 @@ class _Row extends StatelessWidget {
                     maxLines: 1,
                     textAlign: TextAlign.right,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTypography.label,
+                    style: AppTypography.labelFor(context.colors),
                   ),
                 ),
               ],
@@ -329,17 +332,17 @@ class _Checkbox extends StatelessWidget {
       width: 36,
       height: 36,
       decoration: BoxDecoration(
-        color: checked ? AppColors.ink : null,
+        color: checked ? context.colors.ink : null,
         borderRadius: BorderRadius.circular(12),
         border: checked
             ? null
-            : Border.all(color: AppColors.brandNeutral200, width: 2),
+            : Border.all(color: context.colors.fillStrong, width: 2),
       ),
       child: checked
-          ? const Icon(
+          ? Icon(
               Icons.check_rounded,
               size: 24,
-              color: AppColors.onPrimary,
+              color: context.colors.onPrimary,
             )
           : null,
     );

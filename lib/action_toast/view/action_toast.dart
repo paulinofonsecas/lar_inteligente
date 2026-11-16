@@ -122,17 +122,19 @@ class _ActionToastState extends State<ActionToast>
             foregroundPainter: _ProgressBorder(
               progress: _spin,
               active: state.status == ActionToastStatus.loading,
+              spark: context.colors.spark,
+              warning: context.colors.warning,
             ),
             child: DecoratedBox(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(999),
                 border: Border.all(
                   color: state.status == ActionToastStatus.error
-                      ? AppColors.danger
-                      : AppColors.overlayOnTintStrong,
+                      ? context.colors.danger
+                      : context.colors.overlayOnTintStrong,
                 ),
                 boxShadow: _shadow,
-                color: AppColors.surfaceRaised,
+                color: context.colors.surfaceRaised,
               ),
               child: child,
             ),
@@ -165,8 +167,8 @@ class _ActionToastState extends State<ActionToast>
                       overflow: TextOverflow.ellipsis,
                       style: AppTypography.bodyLarge.copyWith(
                         color: state.status == ActionToastStatus.success
-                            ? AppColors.success
-                            : AppColors.ink,
+                            ? context.colors.success
+                            : context.colors.ink,
                       ),
                     ),
                     if (reason != null)
@@ -176,7 +178,7 @@ class _ActionToastState extends State<ActionToast>
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTypography.bodyMedium.copyWith(
-                          color: AppColors.ink2,
+                          color: context.colors.ink2,
                         ),
                       ),
                   ],
@@ -215,24 +217,24 @@ class _Indicator extends StatelessWidget {
         transitionBuilder: (child, animation) =>
             ScaleTransition(scale: animation, child: child),
         child: switch (status) {
-          ActionToastStatus.success => const Icon(
+          ActionToastStatus.success => Icon(
             Symbols.check_circle_rounded,
-            key: ValueKey('success'),
-            color: AppColors.successLight,
+            key: const ValueKey('success'),
+            color: context.colors.successLight,
             fill: 1,
             size: 24,
           ),
-          ActionToastStatus.error => const Icon(
+          ActionToastStatus.error => Icon(
             Symbols.cancel_rounded,
-            key: ValueKey('error'),
-            color: AppColors.danger,
+            key: const ValueKey('error'),
+            color: context.colors.danger,
             fill: 1,
             size: 24,
           ),
-          ActionToastStatus.idle || ActionToastStatus.loading => const Icon(
+          ActionToastStatus.idle || ActionToastStatus.loading => Icon(
             Symbols.auto_awesome_rounded,
-            key: ValueKey('loading'),
-            color: AppColors.ink,
+            key: const ValueKey('loading'),
+            color: context.colors.ink,
             fill: 1,
             size: 24,
           ),
@@ -245,11 +247,17 @@ class _Indicator extends StatelessWidget {
 /// A bright arc that runs around the border of the pill while the request is
 /// on its way, so the toast shows it is making progress.
 class _ProgressBorder extends CustomPainter {
-  _ProgressBorder({required this.progress, required this.active})
-    : super(repaint: progress);
+  _ProgressBorder({
+    required this.progress,
+    required this.active,
+    required this.spark,
+    required this.warning,
+  }) : super(repaint: progress);
 
   final Animation<double> progress;
   final bool active;
+  final Color spark;
+  final Color warning;
 
   static const double _width = 2.5;
 
@@ -260,10 +268,10 @@ class _ProgressBorder extends CustomPainter {
     final shader = SweepGradient(
       transform: GradientRotation(progress.value * 2 * math.pi),
       colors: [
-        AppColors.spark.withValues(alpha: 0),
-        AppColors.spark.withValues(alpha: 0),
-        AppColors.warning,
-        AppColors.spark,
+        spark.withValues(alpha: 0),
+        spark.withValues(alpha: 0),
+        warning,
+        spark,
       ],
       stops: const [0, 0.45, 0.8, 1],
     ).createShader(rect);

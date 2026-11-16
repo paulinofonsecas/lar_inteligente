@@ -1,5 +1,5 @@
-import 'package:app_ui/src/theme/app_colors.dart';
 import 'package:app_ui/src/theme/app_icons.dart';
+import 'package:app_ui/src/theme/app_palette.dart';
 import 'package:app_ui/src/theme/app_spacing.dart';
 import 'package:app_ui/src/theme/app_tone.dart';
 import 'package:app_ui/src/theme/app_typography.dart';
@@ -73,12 +73,14 @@ class ActionChips extends StatelessWidget {
               Icon(
                 AppIcons.byName('sparkle'),
                 size: 22,
-                color: AppColors.spark,
+                color: context.colors.spark,
               ),
               const SizedBox(width: AppSpacing.s2),
               Text(
                 label,
-                style: AppTypography.labelLarge.copyWith(color: AppColors.ink2),
+                style: AppTypography.labelLarge.copyWith(
+                  color: context.colors.ink2,
+                ),
               ),
               const SizedBox(width: AppSpacing.s2),
             ],
@@ -91,7 +93,9 @@ class ActionChips extends StatelessWidget {
               style: i == primary
                   ? ActionPillStyle.primary
                   : ActionPillStyle.outlined,
-              iconColor: i == primary ? null : _iconColor(chips[i].icon),
+              iconColor: i == primary
+                  ? null
+                  : _iconColor(context, chips[i].icon),
             ),
         ],
       ),
@@ -100,8 +104,11 @@ class ActionChips extends StatelessWidget {
 
   /// The icon of a white pill: the lighting ink for what lights and scenes
   /// do, the accent blue for the rest.
-  static Color _iconColor(String? icon) => switch (icon) {
-    'scene' || 'light' || 'blinds' || 'restaurant' => AppTone.lighting.ink,
-    _ => AppColors.accent,
+  static Color _iconColor(BuildContext context, String? icon) => switch (icon) {
+    'scene' ||
+    'light' ||
+    'blinds' ||
+    'restaurant' => context.colors.tone(AppTone.lighting).ink,
+    _ => context.colors.accent,
   };
 }

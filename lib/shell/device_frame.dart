@@ -41,7 +41,7 @@ class DeviceFrame extends StatelessWidget {
               color: Colors.black,
               borderRadius: BorderRadius.circular(AppSpacing.bezelRadius),
               border: Border.all(
-                color: AppColors.bezelEdge,
+                color: context.colors.bezelEdge,
                 width: AppSpacing.bezelEdgeWidth,
               ),
             ),

@@ -1,5 +1,5 @@
-import 'package:app_ui/src/theme/app_colors.dart';
 import 'package:app_ui/src/theme/app_icons.dart';
+import 'package:app_ui/src/theme/app_palette.dart';
 import 'package:app_ui/src/theme/app_spacing.dart';
 import 'package:app_ui/src/theme/app_tone.dart';
 import 'package:app_ui/src/theme/app_typography.dart';
@@ -221,7 +221,7 @@ class _DeviceCardState extends State<DeviceCard> {
       position: DecorationPosition.foreground,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(AppSpacing.cardRadius),
-        border: Border.all(color: tone.accent, width: 2),
+        border: Border.all(color: context.colors.tone(tone).accent, width: 2),
       ),
       child: card,
     );
@@ -248,10 +248,11 @@ class _DeviceCardState extends State<DeviceCard> {
 
   /// The ink of the card's text and icons: navy on white, the tone's ink on a
   /// tint.
-  Color get _ink => _neutral ? AppColors.ink : widget.tone.ink;
+  Color get _ink =>
+      _neutral ? context.colors.ink : context.colors.tone(widget.tone).ink;
 
-  TextStyle get _label => AppTypography.label.copyWith(
-    color: _neutral ? AppColors.ink2 : _ink.withValues(alpha: 0.78),
+  TextStyle get _label => AppTypography.labelFor(context.colors).copyWith(
+    color: _neutral ? context.colors.ink2 : _ink.withValues(alpha: 0.78),
   );
 
   Widget _top({required bool isActive, required StatusTag? tag}) {
@@ -280,8 +281,12 @@ class _DeviceCardState extends State<DeviceCard> {
   /// white card, a white veil on a tint.
   Widget _bubble(String icon) => CardIconBubble(
     icon: AppIcons.byName(icon),
-    background: _neutral ? AppColors.brandYellow100 : AppColors.overlayOnTint,
-    color: _neutral ? AppColors.brandYellow300 : widget.tone.ink,
+    background: _neutral
+        ? context.colors.tone(AppTone.lighting).wash
+        : context.colors.overlayOnTint,
+    color: _neutral
+        ? context.colors.tone(AppTone.lighting).ink
+        : context.colors.tone(widget.tone).ink,
   );
 
   Widget _text(String status) {
@@ -378,9 +383,9 @@ class _DeviceCardState extends State<DeviceCard> {
   }
 
   Color get _switchColor => switch (widget.tone) {
-    AppTone.neutral => AppColors.brandYellow200,
-    AppTone.security => AppColors.ink,
-    _ => widget.tone.accent,
+    AppTone.neutral => context.colors.tone(AppTone.lighting).accent,
+    AppTone.security => context.colors.ink,
+    _ => context.colors.tone(widget.tone).accent,
   };
 
   /// A short unit such as `°F` or `%` is part of the hero; a word such as
@@ -415,7 +420,7 @@ class _DeviceCardState extends State<DeviceCard> {
           const SizedBox(width: 10),
           Text(
             unit,
-            style: AppTypography.title.copyWith(color: AppColors.ink2),
+            style: AppTypography.title.copyWith(color: context.colors.ink2),
           ),
         ],
       ],
@@ -431,7 +436,7 @@ class _DeviceCardState extends State<DeviceCard> {
           bottom: -2,
           child: DecoratedBox(
             decoration: BoxDecoration(
-              color: AppColors.overlayOnTint.withValues(alpha: 0.36),
+              color: context.colors.overlayOnTint.withValues(alpha: 0.36),
               borderRadius: BorderRadius.circular(18),
             ),
           ),
@@ -504,7 +509,7 @@ class _LoadingCard extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTypography.labelStrong.copyWith(
-                            color: AppColors.ink2,
+                            color: context.colors.ink2,
                           ),
                         ),
                       ),
@@ -551,15 +556,15 @@ class _LiveDot extends StatelessWidget {
       width: 12,
       height: 12,
       alignment: Alignment.center,
-      decoration: const BoxDecoration(
-        color: Color(0x26020F30),
+      decoration: BoxDecoration(
+        color: context.colors.ink.withValues(alpha: 0.15),
         shape: BoxShape.circle,
       ),
       child: Container(
         width: 6,
         height: 6,
-        decoration: const BoxDecoration(
-          color: AppColors.ink,
+        decoration: BoxDecoration(
+          color: context.colors.ink,
           shape: BoxShape.circle,
         ),
       ),
@@ -589,7 +594,7 @@ class _Block extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-        color: AppColors.fillWarm,
+        color: context.colors.fillWarm,
         shape: circle ? BoxShape.circle : BoxShape.rectangle,
         borderRadius: circle
             ? null

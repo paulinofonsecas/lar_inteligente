@@ -62,12 +62,12 @@ void main() {
       await tester.pumpApp(FakeAgentFactory());
       expect(_brightness(tester), Brightness.light);
 
-      await tester.tap(find.text('Noite'));
+      await tester.tap(find.byTooltip('Noite'));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 500));
       expect(_brightness(tester), Brightness.dark);
 
-      await tester.tap(find.text('Manhã'));
+      await tester.tap(find.byTooltip('Manhã'));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 500));
       expect(_brightness(tester), Brightness.light);

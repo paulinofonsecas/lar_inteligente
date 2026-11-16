@@ -33,20 +33,18 @@ void main() {
         supportedLocales: AppLocalizations.supportedLocales,
         home: BlocProvider.value(
           value: cubit,
-          child: const Scaffold(
-            body: Center(child: SizedBox(width: 88, child: TimelineRail())),
-          ),
+          child: const Scaffold(body: Center(child: TimelineRail())),
         ),
       ),
     );
 
-    Finder button(String label) => find.text(label);
+    Finder button(String label) => find.byTooltip(label);
 
     bool enabled(WidgetTester tester, String label) =>
         tester
             .widget<GestureDetector>(
               find
-                  .ancestor(
+                  .descendant(
                     of: button(label),
                     matching: find.byType(GestureDetector),
                   )
@@ -80,7 +78,7 @@ void main() {
       await pump(tester);
 
       expect(
-        tester.getSemantics(find.text('Manhã')),
+        tester.getSemantics(find.bySemanticsLabel('Manhã')),
         isSemantics(
           label: 'Manhã',
           isButton: true,
@@ -95,11 +93,11 @@ void main() {
       await tester.pump();
 
       expect(
-        tester.getSemantics(find.text('Manhã')),
+        tester.getSemantics(find.bySemanticsLabel('Manhã')),
         isSemantics(label: 'Manhã', isButton: true, isSelected: false),
       );
       expect(
-        tester.getSemantics(find.text('Noite')),
+        tester.getSemantics(find.bySemanticsLabel('Noite')),
         isSemantics(label: 'Noite', isButton: true, isSelected: true),
       );
       semantics.dispose();

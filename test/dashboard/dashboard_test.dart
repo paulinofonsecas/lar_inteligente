@@ -20,8 +20,8 @@ Future<void> settle(WidgetTester tester) async {
   }
 }
 
-/// The demo's clock button in the navigation rail.
-Finder _button(String label) => find.text(label);
+/// The demo's clock button in the panel header.
+Finder _button(String label) => find.byTooltip(label);
 
 void main() {
   group('MemberDashboard', () {

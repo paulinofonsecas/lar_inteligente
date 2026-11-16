@@ -13,8 +13,8 @@ import 'package:material_ui/material_ui.dart';
 import '../helpers/fake_agent.dart';
 import '../helpers/helpers.dart';
 
-/// The demo's clock button in the navigation rail.
-Finder _button(String label) => find.text(label);
+/// The demo's clock button in the panel header.
+Finder _button(String label) => find.byTooltip(label);
 
 Future<void> _play(WidgetTester tester) async {
   await tester.pump();
@@ -63,25 +63,33 @@ void main() {
       expect(factory.agents, hasLength(1));
     });
 
-    testWidgets('keeps the time control inside the panel navigation', (
+    testWidgets('puts the time control in the panel header, beside the brand', (
       tester,
     ) async {
       await tester.pumpApp(FakeAgentFactory());
 
-      expect(find.byType(TimelineRail), findsOneWidget);
+      final rail = find.byType(TimelineRail);
+      expect(rail, findsOneWidget);
+      // Inside the panel, not in the navigation rail.
       expect(
-        find.descendant(
-          of: find.byType(Sidebar),
-          matching: find.byType(TimelineRail),
-        ),
-        findsOneWidget,
+        find.descendant(of: find.byType(Sidebar), matching: rail),
+        findsNothing,
       );
       expect(
-        find.descendant(
-          of: find.byType(DeviceFrame),
-          matching: find.byType(TimelineRail),
+        find.descendant(of: find.byType(BrandLockup), matching: rail),
+        findsNothing,
+      );
+      // On the same line as the brand and the ask bar.
+      expect(
+        tester.getCenter(rail).dy,
+        moreOrLessEquals(
+          tester.getCenter(find.byType(BrandLockup)).dy,
+          epsilon: 1,
         ),
-        findsOneWidget,
+      );
+      expect(
+        tester.getTopLeft(rail).dx,
+        greaterThan(tester.getTopRight(find.byType(BrandLockup)).dx),
       );
     });
 

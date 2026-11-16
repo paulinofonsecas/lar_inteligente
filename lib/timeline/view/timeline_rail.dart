@@ -8,14 +8,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
 
 /// {@template timeline_rail}
-/// The control that moves the demo's time, in the navigation panel.
+/// The control that moves the demo's time, in the panel's header.
 ///
-/// One button per [DayPhase], stacked: the phase the time is in is filled, and
-/// choosing another takes the time there, easing instead of jumping, see
-/// [TimelineCubit]. Needs a [TimelineCubit] above it.
-///
-/// It sits in the rail on every window size, so the panel itself is only the
-/// household's screen.
+/// One button per [DayPhase], side by side beside the brand: the phase the
+/// time is in is filled, and choosing another takes the time there, easing
+/// instead of jumping, see [TimelineCubit]. Needs a [TimelineCubit] above it.
 /// {@endtemplate}
 class TimelineRail extends StatelessWidget {
   /// {@macro timeline_rail}
@@ -46,32 +43,39 @@ class TimelineRail extends StatelessWidget {
       container: true,
       explicitChildNodes: true,
       label: l10n.timelineLabel,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        spacing: AppSpacing.s1,
-        children: [
-          if (failed)
-            Text(
-              l10n.timelineFailed,
-              textAlign: TextAlign.center,
-              style: AppTypography.labelFor(
-                context.colors,
-              ).copyWith(color: context.colors.danger),
-            ),
-          for (final phase in DayPhase.values)
-            _PhaseButton(
-              phase: phase,
-              label: labels[phase]!,
-              selected: phase == selected,
-              onPressed: press(phase),
-            ),
-        ],
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        alignment: AlignmentDirectional.centerStart,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          spacing: AppSpacing.s1,
+          children: [
+            if (failed)
+              Padding(
+                padding: const EdgeInsets.only(right: AppSpacing.s2),
+                child: Text(
+                  l10n.timelineFailed,
+                  style: AppTypography.labelFor(
+                    context.colors,
+                  ).copyWith(color: context.colors.danger),
+                ),
+              ),
+            for (final phase in DayPhase.values)
+              _PhaseButton(
+                phase: phase,
+                label: labels[phase]!,
+                selected: phase == selected,
+                onPressed: press(phase),
+              ),
+          ],
+        ),
       ),
     );
   }
 }
 
-/// One day phase button of the rail: its icon above its name.
+/// One day phase button of the rail: its icon, and its name when it is the one
+/// the time is in.
 class _PhaseButton extends StatelessWidget {
   const _PhaseButton({
     required this.phase,
@@ -92,40 +96,44 @@ class _PhaseButton extends StatelessWidget {
         : onPressed == null
         ? context.colors.ink3
         : context.colors.ink;
-    return Semantics(
-      button: true,
-      selected: selected,
-      label: label,
-      excludeSemantics: true,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: onPressed,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          width: 72,
-          padding: const EdgeInsets.symmetric(vertical: 4),
-          decoration: BoxDecoration(
-            color: selected ? context.colors.ink : Colors.transparent,
-            borderRadius: BorderRadius.circular(999),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            spacing: 2,
-            children: [
-              Icon(phase.icon, size: 20, color: ink),
-              Text(
-                label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
-                style: AppTypography.ui(
-                  size: 12,
-                  lineHeight: 16,
-                  weight: selected ? FontWeight.w600 : FontWeight.w400,
-                  color: ink,
-                ),
-              ),
-            ],
+    return Tooltip(
+      message: label,
+      child: Semantics(
+        button: true,
+        selected: selected,
+        label: label,
+        excludeSemantics: true,
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: onPressed,
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            padding: EdgeInsets.symmetric(
+              horizontal: selected ? 14 : 12,
+              vertical: 10,
+            ),
+            decoration: BoxDecoration(
+              color: selected ? context.colors.ink : Colors.transparent,
+              borderRadius: BorderRadius.circular(999),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              spacing: 8,
+              children: [
+                Icon(phase.icon, size: 20, color: ink),
+                if (selected)
+                  Text(
+                    label,
+                    maxLines: 1,
+                    style: AppTypography.ui(
+                      size: 14,
+                      lineHeight: 18,
+                      weight: FontWeight.w600,
+                      color: ink,
+                    ),
+                  ),
+              ],
+            ),
           ),
         ),
       ),

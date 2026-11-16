@@ -9,6 +9,7 @@ import 'package:a2ui_vgv_smart_home/l10n/l10n.dart';
 import 'package:a2ui_vgv_smart_home/live/cubit/live_cubit.dart';
 import 'package:a2ui_vgv_smart_home/suggestions/tips.dart';
 import 'package:a2ui_vgv_smart_home/timeline/cubit/timeline_cubit.dart';
+import 'package:a2ui_vgv_smart_home/timeline/view/timeline_rail.dart';
 import 'package:a2ui_vgv_smart_home/voice/cubit/voice_cubit.dart';
 import 'package:a2ui_vgv_smart_home/voice/microphone.dart';
 import 'package:a2ui_vgv_smart_home/voice/transcription_client.dart';
@@ -254,19 +255,16 @@ class _MemberDashboardState extends State<MemberDashboard> {
               SizedBox(
                 height: _barHeight,
                 child: Row(
+                  spacing: AppSpacing.gutter,
                   children: [
                     BrandLockup(semanticLabel: context.l10n.brandLabel),
-                    Expanded(
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: ConstrainedBox(
-                          constraints: const BoxConstraints(
-                            maxWidth: _askWidth,
-                          ),
-                          child: VoiceInput(
-                            hint: context.l10n.askHint(widget.user.name),
-                          ),
-                        ),
+                    const Expanded(
+                      child: Align(child: TimelineRail()),
+                    ),
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: _askWidth),
+                      child: VoiceInput(
+                        hint: context.l10n.askHint(widget.user.name),
                       ),
                     ),
                   ],

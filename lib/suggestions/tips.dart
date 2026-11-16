@@ -46,7 +46,8 @@ const tips = <Tip>[
     icon: Symbols.schedule_rounded,
     title: 'A agenda manda na casa',
     description:
-        'Mude a hora do jantar e o forno, a receita e as rotas se ajustam sozinhos.',
+        'Mude a hora do jantar e o forno, a receita e as rotas se ajustam '
+        'sozinhos.',
     ask: 'as visitas chegam uma hora mais cedo',
   ),
   Tip(
@@ -71,7 +72,8 @@ const tips = <Tip>[
     icon: Symbols.notifications_rounded,
     title: 'Fique sabendo das mudanças',
     description:
-        'Quando alguém muda algo que te afeta, um alerta abre com a melhor saída.',
+        'Quando alguém muda algo que te afeta, um alerta abre com a melhor '
+        'saída.',
     ask: 'o que mudou para mim?',
   ),
 ];

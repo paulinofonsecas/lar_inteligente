@@ -6,6 +6,7 @@ import 'package:app_ui/app_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:material_ui/material_ui.dart' as mui;
 
 import '../../helpers/fake_live_repository.dart';
 import '../../helpers/fake_scenario_repository.dart';
@@ -26,7 +27,10 @@ void main() {
 
     Future<void> pump(WidgetTester tester) => tester.pumpWidget(
       MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        localizationsDelegates: const [
+          ...AppLocalizations.localizationsDelegates,
+          ...mui.GlobalMaterialLocalizations.delegates,
+        ],
         supportedLocales: AppLocalizations.supportedLocales,
         home: BlocProvider.value(
           value: cubit,
@@ -169,7 +173,10 @@ void main() {
       cubit.emit(cubit.state.copyWith(status: TimelineStatus.failure));
       await pump(tester);
 
-      expect(find.text('Não é possível alcançar o relógio da demo'), findsOneWidget);
+      expect(
+        find.text('Não é possível alcançar o relógio da demo'),
+        findsOneWidget,
+      );
       expect(enabled(tester, 'Dia'), isTrue);
 
       await tester.tap(button('Dia'));

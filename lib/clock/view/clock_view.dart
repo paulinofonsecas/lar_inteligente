@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:material_ui/material_ui.dart';
 
 /// The intl date tables already loaded. Tests pump the app without running
-/// [bootstrap], so the widget asks for itself, one locale at a time.
+/// `bootstrap`, so the widget asks for itself, one locale at a time.
 final _dateTablesLoaded = <String>{};
 
 /// {@template clock_view}

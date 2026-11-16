@@ -16,6 +16,10 @@ import 'package:app_ui/app_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:home_repository/home_repository.dart';
 import 'package:material_ui/material_ui.dart';
+// Same library, prefixed: the app's MaterialApp is material_ui's, and its
+// widgets read the MaterialLocalizations of material_ui, which the gen'd
+// delegate (flutter_localizations) does not provide.
+import 'package:material_ui/material_ui.dart' as mui;
 
 /// The room the timeline bar needs below the tablet, and above it to match.
 ///
@@ -87,7 +91,10 @@ class App extends StatelessWidget {
         child: MaterialApp(
           onGenerateTitle: (context) => context.l10n.appTitle,
           theme: AppTheme.light,
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          localizationsDelegates: const [
+            ...AppLocalizations.localizationsDelegates,
+            ...mui.GlobalMaterialLocalizations.delegates,
+          ],
           supportedLocales: AppLocalizations.supportedLocales,
           debugShowCheckedModeBanner: false,
           // The timeline control sits below the tablet, outside its screen.

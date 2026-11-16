@@ -4,6 +4,7 @@ import 'package:a2ui_vgv_smart_home/action_toast/view/action_toast.dart';
 import 'package:a2ui_vgv_smart_home/l10n/l10n.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:material_ui/material_ui.dart' as mui;
 
 void main() {
   group(ActionGlow, () {
@@ -59,7 +60,10 @@ void main() {
     }) {
       return tester.pumpWidget(
         MaterialApp(
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          localizationsDelegates: const [
+            ...AppLocalizations.localizationsDelegates,
+            ...mui.GlobalMaterialLocalizations.delegates,
+          ],
           supportedLocales: AppLocalizations.supportedLocales,
           home: MediaQuery(
             data: MediaQueryData(disableAnimations: reduceMotion),

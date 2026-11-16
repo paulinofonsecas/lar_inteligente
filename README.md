@@ -136,6 +136,10 @@ The panel ships a light theme and a dark one. It opens following the demo's time
 
 `ThemeCubit` holds the choice and `ThemeStore` saves it in the browser storage, so the panel opens in the same theme after a reload. `AppTheme.dark` is built by the same `_build` as `AppTheme.light`, only from the dark palette; the tone washes turn translucent in the dark instead of filling the card.
 
+The default is `PanelTheme.auto`: `PanelTheme.modeFor` reads the phase `DayPhase.at` takes from the timeline's clock, so the panel is light from the morning to the sunset and dark once it is evening. Both the clock ticking on its own and a press on the day phase buttons go through `TimelineCubit`, so either one turns the panel. The sheet's other two segments pin light or dark for good.
+
+On a phone's window the timeline bar leaves the bottom of the page and becomes a rail to the right of the tablet, so the screen keeps its height; the buttons stack there and the whole bar still shrinks to fit. See `_railBelowWidth` in `app.dart`.
+
 ## Run locally
 
 You need:

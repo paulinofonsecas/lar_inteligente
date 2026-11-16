@@ -7,6 +7,9 @@ import 'package:material_ui/material_ui.dart';
 import '../../helpers/fake_agent.dart';
 import '../../helpers/helpers.dart';
 
+Brightness _brightness(WidgetTester tester) =>
+    Theme.of(tester.element(find.byType(DashboardPage))).brightness;
+
 void main() {
   group('App', () {
     testWidgets('renders the dashboard inside the device frame', (
@@ -52,6 +55,22 @@ void main() {
       final context = tester.element(find.byType(DashboardPage));
       expect(Theme.of(context).brightness, Brightness.dark);
       expect(context.colors.surfaceRaised, AppPalette.dark.surfaceRaised);
+    });
+
+    testWidgets('the time of day makes the panel light by day and dark at '
+        'night', (tester) async {
+      await tester.pumpApp(FakeAgentFactory());
+      expect(_brightness(tester), Brightness.light);
+
+      await tester.tap(find.text('Noite'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+      expect(_brightness(tester), Brightness.dark);
+
+      await tester.tap(find.text('Manhã'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+      expect(_brightness(tester), Brightness.light);
     });
 
     testWidgets('switching user rebuilds and requests again', (tester) async {

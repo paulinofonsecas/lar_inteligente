@@ -9,16 +9,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
 
 /// {@template timeline_bar}
-/// The control that moves the demo's time, below the tablet.
+/// The control that moves the demo's time, beside the tablet.
 ///
-/// A frosted pill at the bottom of the screen with a button for each
-/// [DayPhase]: morning, day, sunset and evening. The one the time is in is
-/// filled, and choosing another takes the time there, easing instead of
-/// jumping, see [TimelineCubit]. Needs a [TimelineCubit] above it.
+/// A frosted pill with a button for each [DayPhase]: morning, day, sunset and
+/// evening. The one the time is in is filled, and choosing another takes the
+/// time there, easing instead of jumping, see [TimelineCubit]. Needs a
+/// [TimelineCubit] above it.
+///
+/// It lies flat below the tablet, and stands [vertical] to its right on a
+/// phone's window.
 /// {@endtemplate}
 class TimelineBar extends StatelessWidget {
   /// {@macro timeline_bar}
-  const TimelineBar({super.key});
+  const TimelineBar({this.vertical = false, super.key});
+
+  /// Whether the buttons stack, for the rail beside the tablet.
+  final bool vertical;
 
   static const double _radius = 44;
 
@@ -51,12 +57,17 @@ class TimelineBar extends StatelessWidget {
         explicitChildNodes: true,
         label: l10n.timelineLabel,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(
-            AppSpacing.s4,
-            AppSpacing.s1,
-            AppSpacing.s4,
-            AppSpacing.s2,
-          ),
+          padding: vertical
+              ? const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.s1,
+                  vertical: AppSpacing.s1,
+                )
+              : const EdgeInsets.fromLTRB(
+                  AppSpacing.s4,
+                  AppSpacing.s1,
+                  AppSpacing.s4,
+                  AppSpacing.s2,
+                ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             spacing: AppSpacing.s1,
@@ -64,6 +75,7 @@ class TimelineBar extends StatelessWidget {
               if (failed)
                 Text(
                   l10n.timelineFailed,
+                  textAlign: TextAlign.center,
                   style: AppTypography.labelStrong.copyWith(
                     color: context.colors.danger,
                   ),
@@ -97,21 +109,37 @@ class TimelineBar extends StatelessWidget {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(10),
-                        // Shrinks to fit a window too narrow for the buttons.
+                        // Shrinks to fit a window too narrow or too short for
+                        // the buttons.
                         child: FittedBox(
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            spacing: 4,
-                            children: [
-                              for (final phase in DayPhase.values)
-                                _PhaseButton(
-                                  phase: phase,
-                                  label: labels[phase]!,
-                                  selected: phase == selected,
-                                  onPressed: press(phase),
+                          child: vertical
+                              ? Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  spacing: 2,
+                                  children: [
+                                    for (final phase in DayPhase.values)
+                                      _PhaseButton(
+                                        phase: phase,
+                                        label: labels[phase]!,
+                                        selected: phase == selected,
+                                        onPressed: press(phase),
+                                        vertical: true,
+                                      ),
+                                  ],
+                                )
+                              : Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  spacing: 4,
+                                  children: [
+                                    for (final phase in DayPhase.values)
+                                      _PhaseButton(
+                                        phase: phase,
+                                        label: labels[phase]!,
+                                        selected: phase == selected,
+                                        onPressed: press(phase),
+                                      ),
+                                  ],
                                 ),
-                            ],
-                          ),
                         ),
                       ),
                     ),
@@ -133,6 +161,7 @@ class _PhaseButton extends StatelessWidget {
     required this.label,
     required this.selected,
     required this.onPressed,
+    this.vertical = false,
   });
 
   final DayPhase phase;
@@ -140,12 +169,13 @@ class _PhaseButton extends StatelessWidget {
   final bool selected;
   final VoidCallback? onPressed;
 
+  /// Whether the icon sits above the label, in the rail.
+  final bool vertical;
+
   @override
   Widget build(BuildContext context) {
-    return TextButton.icon(
+    return TextButton(
       onPressed: onPressed,
-      icon: Icon(phase.icon, size: 22),
-      label: Text(label),
       style: TextButton.styleFrom(
         foregroundColor: selected
             ? context.colors.onAccent
@@ -155,17 +185,36 @@ class _PhaseButton extends StatelessWidget {
             ? context.colors.onAccent
             : context.colors.fillStrong,
         disabledBackgroundColor: selected ? context.colors.ink : null,
-        minimumSize: const Size(0, 56),
-        padding: const EdgeInsets.symmetric(horizontal: 22),
+        minimumSize: Size(0, vertical ? 54 : 56),
+        padding: vertical
+            ? const EdgeInsets.symmetric(horizontal: 12)
+            : const EdgeInsets.symmetric(horizontal: 22),
         iconSize: 22,
         shape: const StadiumBorder(),
         textStyle: AppTypography.ui(
-          size: 18,
-          lineHeight: 24,
+          size: vertical ? 13 : 18,
+          lineHeight: vertical ? 16 : 24,
           weight: FontWeight.w500,
-          letterSpacing: -0.18,
+          letterSpacing: vertical ? 0 : -0.18,
         ),
       ),
+      child: vertical
+          ? Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(phase.icon, size: 22),
+                const SizedBox(height: 2),
+                Text(label),
+              ],
+            )
+          : Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(phase.icon, size: 22),
+                const SizedBox(width: 8),
+                Text(label),
+              ],
+            ),
     );
   }
 }

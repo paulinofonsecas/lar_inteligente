@@ -1,8 +1,5 @@
-import 'package:material_ui/material_ui.dart';
+/// Reads the saved theme outside the web, where nothing survives a restart.
+String? readSavedTheme(String key) => null;
 
-/// Reads the saved theme mode outside the web, where nothing survives a
-/// restart.
-ThemeMode? readThemeMode(String key) => null;
-
-/// Saves the theme mode outside the web, where nothing survives a restart.
-void writeThemeMode(String key, String value) {}
+/// Saves the theme outside the web, where nothing survives a restart.
+void writeSavedTheme(String key, String value) {}

@@ -8,6 +8,7 @@ import 'package:a2ui_vgv_smart_home/l10n/l10n.dart';
 import 'package:a2ui_vgv_smart_home/live/cubit/live_cubit.dart';
 import 'package:a2ui_vgv_smart_home/shell/device_frame.dart';
 import 'package:a2ui_vgv_smart_home/theme/cubit/theme_cubit.dart';
+import 'package:a2ui_vgv_smart_home/theme/panel_theme.dart';
 import 'package:a2ui_vgv_smart_home/timeline/cubit/timeline_cubit.dart';
 import 'package:a2ui_vgv_smart_home/timeline/day_phase.dart';
 import 'package:a2ui_vgv_smart_home/timeline/view/timeline_bar.dart';
@@ -26,6 +27,14 @@ import 'package:material_ui/material_ui.dart' as mui;
 ///
 /// Enough for the bar with its error line above the pill, the tallest it gets.
 const double _timelineSlot = 112;
+
+/// The room the timeline bar needs to the right of the tablet, where it moves
+/// on a phone's window, and the width of the rail it becomes there.
+const double _timelineRail = 108;
+
+/// Below this width the window is a phone's, and the bar goes to the right of
+/// the tablet instead of below it, so the screen keeps its height.
+const double _railBelowWidth = 700;
 
 /// {@template app}
 /// The page around the demo: a tablet frame holding the actual application.
@@ -90,55 +99,87 @@ class App extends StatelessWidget {
             ),
           ),
         ],
-        child: BlocBuilder<ThemeCubit, ThemeMode>(
-          builder: (context, themeMode) => MaterialApp(
-            onGenerateTitle: (context) => context.l10n.appTitle,
-            theme: AppTheme.light,
-            darkTheme: AppTheme.dark,
-            themeMode: themeMode,
-            localizationsDelegates: const [
-              ...AppLocalizations.localizationsDelegates,
-              ...mui.GlobalMaterialLocalizations.delegates,
-            ],
-            supportedLocales: AppLocalizations.supportedLocales,
-            debugShowCheckedModeBanner: false,
-            // The timeline control sits below the tablet, outside its screen.
-            builder: (context, child) => ColoredBox(
-              color: context.colors.bezel,
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  const _Backdrop(),
-                  // The tablet is centered in the window, and the timeline bar
-                  // is centered in the gap between the tablet and the window's
-                  // bottom edge. The tablet leaves room for the bar on both
-                  // sides, so the two gaps match.
-                  LayoutBuilder(
-                    builder: (context, constraints) {
-                      final frameHeight = [
-                        DeviceFrame.maxHeight,
-                        constraints.maxWidth *
-                            DeviceFrame.maxHeight /
-                            DeviceFrame.maxWidth,
-                        constraints.maxHeight - 2 * _timelineSlot,
-                      ].reduce(min).clamp(0, double.infinity).toDouble();
-                      return Column(
-                        children: [
-                          const Spacer(),
-                          SizedBox(
-                            height: frameHeight,
-                            child: DeviceFrame(child: child!),
-                          ),
-                          const Expanded(child: Center(child: TimelineBar())),
-                        ],
-                      );
-                    },
-                  ),
-                ],
+        child: BlocBuilder<ThemeCubit, PanelTheme>(
+          builder: (context, panelTheme) {
+            final phase = context.select<TimelineCubit, DayPhase>(
+              (cubit) => DayPhase.at(cubit.state.now),
+            );
+            return MaterialApp(
+              onGenerateTitle: (context) => context.l10n.appTitle,
+              theme: AppTheme.light,
+              darkTheme: AppTheme.dark,
+              themeMode: panelTheme.modeFor(phase),
+              localizationsDelegates: const [
+                ...AppLocalizations.localizationsDelegates,
+                ...mui.GlobalMaterialLocalizations.delegates,
+              ],
+              supportedLocales: AppLocalizations.supportedLocales,
+              debugShowCheckedModeBanner: false,
+              // The timeline control sits below the tablet, outside its screen,
+              // or to its right on a phone's window.
+              builder: (context, child) => ColoredBox(
+                color: context.colors.bezel,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    const _Backdrop(),
+                    // The tablet is centered in the window, and the timeline
+                    // bar is centered in the room left around it. The tablet
+                    // leaves room for the bar on every side, so the gaps match.
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        final rail = constraints.maxWidth < _railBelowWidth;
+                        final width = rail
+                            ? constraints.maxWidth - _timelineRail
+                            : constraints.maxWidth;
+                        final height = rail
+                            ? constraints.maxHeight - 2 * AppSpacing.s4
+                            : constraints.maxHeight - 2 * _timelineSlot;
+                        final frameHeight = [
+                          DeviceFrame.maxHeight,
+                          width * DeviceFrame.maxHeight / DeviceFrame.maxWidth,
+                          height,
+                        ].reduce(min).clamp(0, double.infinity).toDouble();
+                        // The frame keeps its ratio, so its width follows the
+                        // height the window leaves it.
+                        final frame = SizedBox(
+                          width:
+                              frameHeight *
+                              DeviceFrame.maxWidth /
+                              DeviceFrame.maxHeight,
+                          height: frameHeight,
+                          child: DeviceFrame(child: child!),
+                        );
+                        if (rail) {
+                          return Row(
+                            children: [
+                              Expanded(child: Center(child: frame)),
+                              const SizedBox(
+                                width: _timelineRail,
+                                child: Center(
+                                  child: TimelineBar(vertical: true),
+                                ),
+                              ),
+                            ],
+                          );
+                        }
+                        return Column(
+                          children: [
+                            const Spacer(),
+                            frame,
+                            const Expanded(
+                              child: Center(child: TimelineBar()),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ),
-            home: const ApiKeyGate(child: DashboardPage()),
-          ),
+              home: const ApiKeyGate(child: DashboardPage()),
+            );
+          },
         ),
       ),
     );

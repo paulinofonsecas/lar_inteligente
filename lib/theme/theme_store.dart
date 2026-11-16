@@ -1,6 +1,6 @@
+import 'package:a2ui_vgv_smart_home/theme/panel_theme.dart';
 import 'package:a2ui_vgv_smart_home/theme/theme_store_stub.dart'
     if (dart.library.js_interop) 'package:a2ui_vgv_smart_home/theme/theme_store_web.dart';
-import 'package:material_ui/material_ui.dart';
 
 /// {@template theme_store}
 /// Keeps the panel's appearance choice between visits.
@@ -14,9 +14,9 @@ class ThemeStore {
 
   static const _key = 'lar_inteligente.theme';
 
-  /// The mode saved last, or null when nothing was saved.
-  ThemeMode? read() => readThemeMode(_key);
+  /// The choice saved last, or null when nothing was saved.
+  PanelTheme? read() => PanelTheme.byName(readSavedTheme(_key));
 
-  /// Saves [mode] for the next visit.
-  void write(ThemeMode mode) => writeThemeMode(_key, mode.name);
+  /// Saves [theme] for the next visit.
+  void write(PanelTheme theme) => writeSavedTheme(_key, theme.name);
 }

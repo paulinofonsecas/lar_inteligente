@@ -83,6 +83,26 @@ void main() {
       );
     });
 
+    testWidgets('puts the timeline to the right of the tablet on a phone', (
+      tester,
+    ) async {
+      await tester.pumpApp(FakeAgentFactory());
+      tester.view.physicalSize = const Size(420, 900);
+      await tester.pump();
+
+      final bar = find.byType(TimelineBar);
+      final frame = find.byType(DeviceFrame);
+      expect(
+        tester.getTopLeft(bar).dx,
+        greaterThanOrEqualTo(tester.getTopRight(frame).dx),
+      );
+      expect(
+        tester.getCenter(bar).dy,
+        moreOrLessEquals(tester.getCenter(frame).dy, epsilon: 1),
+      );
+      expect(tester.takeException(), isNull);
+    });
+
     testWidgets('jumps to the time at once, with a skeleton until it settles', (
       tester,
     ) async {

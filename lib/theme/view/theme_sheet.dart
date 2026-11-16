@@ -1,12 +1,13 @@
 import 'package:a2ui_vgv_smart_home/l10n/l10n.dart';
 import 'package:a2ui_vgv_smart_home/theme/cubit/theme_cubit.dart';
+import 'package:a2ui_vgv_smart_home/theme/panel_theme.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:material_ui/material_ui.dart';
 
 /// Opens the appearance sheet, where the panel is set to light, dark, or the
-/// device's own setting.
+/// demo's time of day.
 Future<void> showThemeSheet(BuildContext context) {
   return showModalBottomSheet<void>(
     context: context,
@@ -66,23 +67,23 @@ class ThemeSheet extends StatelessWidget {
                   ),
                 ],
               ),
-              SegmentedButton<ThemeMode>(
+              SegmentedButton<PanelTheme>(
                 showSelectedIcon: false,
                 segments: [
                   ButtonSegment(
-                    value: ThemeMode.light,
+                    value: PanelTheme.light,
                     icon: const Icon(Symbols.light_mode_rounded),
                     label: Text(l10n.themeLight),
                   ),
                   ButtonSegment(
-                    value: ThemeMode.dark,
+                    value: PanelTheme.dark,
                     icon: const Icon(Symbols.dark_mode_rounded),
                     label: Text(l10n.themeDark),
                   ),
                   ButtonSegment(
-                    value: ThemeMode.system,
+                    value: PanelTheme.auto,
                     icon: const Icon(Symbols.brightness_auto_rounded),
-                    label: Text(l10n.themeSystem),
+                    label: Text(l10n.themeAuto),
                   ),
                 ],
                 selected: {mode},

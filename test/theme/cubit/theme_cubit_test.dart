@@ -1,48 +1,48 @@
 import 'package:a2ui_vgv_smart_home/theme/cubit/theme_cubit.dart';
+import 'package:a2ui_vgv_smart_home/theme/panel_theme.dart';
 import 'package:a2ui_vgv_smart_home/theme/theme_store.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:material_ui/material_ui.dart';
 
 /// A store the test keeps in memory.
 class FakeThemeStore extends ThemeStore {
-  FakeThemeStore([this.mode]);
+  FakeThemeStore([this.theme]);
 
-  ThemeMode? mode;
-
-  @override
-  ThemeMode? read() => mode;
+  PanelTheme? theme;
 
   @override
-  void write(ThemeMode mode) => this.mode = mode;
+  PanelTheme? read() => theme;
+
+  @override
+  void write(PanelTheme theme) => this.theme = theme;
 }
 
 void main() {
   group(ThemeCubit, () {
-    test('starts on the system theme without a saved choice', () {
-      expect(ThemeCubit(store: FakeThemeStore()).state, ThemeMode.system);
+    test('starts on the time of day without a saved choice', () {
+      expect(ThemeCubit(store: FakeThemeStore()).state, PanelTheme.auto);
     });
 
     test('starts on the saved choice', () {
-      final cubit = ThemeCubit(store: FakeThemeStore(ThemeMode.dark));
+      final cubit = ThemeCubit(store: FakeThemeStore(PanelTheme.dark));
 
-      expect(cubit.state, ThemeMode.dark);
+      expect(cubit.state, PanelTheme.dark);
     });
 
-    test('persists the chosen mode', () async {
+    test('persists the chosen theme', () async {
       final store = FakeThemeStore();
-      final cubit = ThemeCubit(store: store)..select(ThemeMode.dark);
+      final cubit = ThemeCubit(store: store)..select(PanelTheme.dark);
 
-      expect(cubit.state, ThemeMode.dark);
-      expect(store.mode, ThemeMode.dark);
+      expect(cubit.state, PanelTheme.dark);
+      expect(store.theme, PanelTheme.dark);
     });
 
     test('ignores a choice that changes nothing', () async {
-      final store = FakeThemeStore(ThemeMode.light);
+      final store = FakeThemeStore(PanelTheme.light);
       final cubit = ThemeCubit(store: store);
       var emissions = 0;
       cubit.stream.listen((_) => emissions++);
 
-      cubit.select(ThemeMode.light);
+      cubit.select(PanelTheme.light);
       await Future<void>.delayed(Duration.zero);
 
       expect(emissions, 0);
@@ -57,7 +57,7 @@ void main() {
     test('writing outside the web keeps nothing, but never throws', () {
       final store = ThemeStore();
 
-      expect(() => store.write(ThemeMode.dark), returnsNormally);
+      expect(() => store.write(PanelTheme.dark), returnsNormally);
       expect(store.read(), isNull);
     });
   });

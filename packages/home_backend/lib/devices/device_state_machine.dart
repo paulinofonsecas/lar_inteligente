@@ -29,8 +29,15 @@ class DeviceStateMachine {
   /// [onChanged] runs after every command that changed something, so values
   /// that follow from the new state and the clock (the oven's temperature, say)
   /// are brought up to date before anything reads them.
-  DeviceStateMachine(this._database, {void Function()? onChanged})
-    : _onChanged = onChanged ?? _noop;
+  ///
+  /// [onTodosChanged] runs after a command that changed the shopping list, so
+  /// the household's own list reaches its file before the answer goes out.
+  DeviceStateMachine(
+    this._database, {
+    void Function()? onChanged,
+    void Function()? onTodosChanged,
+  }) : _onChanged = onChanged ?? _noop,
+       _onTodosChanged = onTodosChanged ?? _noop;
 
   static void _noop() {}
 
@@ -38,6 +45,7 @@ class DeviceStateMachine {
 
   final MockDatabase _database;
   final void Function() _onChanged;
+  final void Function() _onTodosChanged;
   final List<List<_Revert>> _undoStack = [];
 
   /// Forgets what can be undone. Called when the database is reset, because
@@ -151,6 +159,7 @@ class DeviceStateMachine {
       );
     }
     _onChanged();
+    _saveTodos(changes);
     return CommandResult(
       summary: 'Desfez a última mudança: ${_describe(changes)}.',
       changes: changes,
@@ -174,10 +183,19 @@ class DeviceStateMachine {
     _undoStack.add(txn.reverts);
     if (_undoStack.length > _maxUndo) _undoStack.removeAt(0);
     _onChanged();
+    _saveTodos(txn.changes);
     return CommandResult(
       summary: _describe(txn.changes),
       changes: List.unmodifiable(txn.changes),
     );
+  }
+
+  /// Writes the shopping list down when a command changed it, so what someone
+  /// ticked survives the next request, restart or deploy.
+  void _saveTodos(Iterable<StateChange> changes) {
+    if (changes.any((change) => change.trait.startsWith('Todo'))) {
+      _onTodosChanged();
+    }
   }
 
   String _describe(List<StateChange> changes) => [

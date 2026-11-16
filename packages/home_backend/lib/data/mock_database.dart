@@ -64,8 +64,11 @@ class MockDatabase {
   }
 
   /// Reads `users.json`, `google_home.json`, `calendar.json`,
-  /// `recipe_timeline.json`, `trips.json`, `bakery.json`, `inbox.json`,
-  /// and `todos.json` from [directory].
+  /// `recipe_timeline.json`, `trips.json`, `bakery.json` and `inbox.json` from
+  /// [directory], and `todos.json` as well unless [todos] is given.
+  ///
+  /// [todos] is the household's own list, kept in a `TodoStore`: it is the same
+  /// document for every visitor, and [reset] leaves it alone.
   ///
   /// Throws when a file is missing or is not valid JSON so the server fails at
   /// boot rather than on the first request.
@@ -74,6 +77,7 @@ class MockDatabase {
   static Future<MockDatabase> load({
     String directory = 'data',
     String photoDirectory = 'assets/photos',
+    Map<String, dynamic>? todos,
     TextLoader? loader,
   }) async {
     final read = loader ?? (path) => File(path).readAsString();
@@ -93,7 +97,7 @@ class MockDatabase {
       calendar: await decode('calendar.json'),
       recipeTimeline: await decode('recipe_timeline.json'),
       trips: await decode('trips.json'),
-      todos: await decode('todos.json'),
+      todos: todos ?? await decode('todos.json'),
       bakery: await decode('bakery.json'),
       inbox: await decode('inbox.json'),
     );
@@ -107,7 +111,9 @@ class MockDatabase {
   Map<String, dynamic> _calendar;
   Map<String, dynamic> _recipeTimeline;
   Map<String, dynamic> _trips;
-  Map<String, dynamic> _todos;
+
+  /// The household's own list, shared with every visitor and never reset.
+  final Map<String, dynamic> _todos;
   Map<String, dynamic> _bakery;
   Map<String, dynamic> _inbox;
   final Map<String, String> _photos;
@@ -119,13 +125,15 @@ class MockDatabase {
     'calendar': _calendar,
     'recipeTimeline': _recipeTimeline,
     'trips': _trips,
-    'todos': _todos,
     'bakery': _bakery,
     'inbox': _inbox,
   };
 
   /// Restores every document to how it was when the database was built, and
   /// puts the [clock] back at the start.
+  ///
+  /// The shopping list is not one of them: it is the household's own, kept in
+  /// a `TodoStore`, so a demo reset never wipes what someone ticked.
   ///
   /// The restored maps are new objects, so nothing may hold a map from before
   /// the reset: read through the getters again.
@@ -137,7 +145,6 @@ class MockDatabase {
     _calendar = doc('calendar');
     _recipeTimeline = doc('recipeTimeline');
     _trips = doc('trips');
-    _todos = doc('todos');
     _bakery = doc('bakery');
     _inbox = doc('inbox');
     clock.reset();

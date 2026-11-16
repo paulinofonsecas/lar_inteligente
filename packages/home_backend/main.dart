@@ -22,6 +22,7 @@ import 'package:home_backend/runtime.dart';
 import 'package:home_backend/scenario/scenario_world.dart';
 import 'package:home_backend/session/demo_session.dart';
 import 'package:home_backend/session/session_store.dart';
+import 'package:home_backend/todos/todo_store.dart';
 import 'package:home_backend/tools/agent_tools.dart';
 import 'package:home_backend/transcribe/transcriber.dart';
 import 'package:home_backend/validation/layout_composer.dart';
@@ -58,8 +59,15 @@ Future<void> init(InternetAddress ip, int port) async {
         ),
       );
 
+  // The shopping list is the household's, not a visitor's: one file, read at
+  // boot and written whenever a command changes it.
+  final todos = TodoStore.open(
+    file: env.optional(HomeVar.todosFile) ?? defaultTodosFile,
+    seed: 'data/todos.json',
+  );
+
   runtime = Runtime(
-    sessions: SessionStore(factory: () => _newSession(model, processor)),
+    sessions: SessionStore(factory: () => _newSession(model, processor, todos)),
     systemPrompt: await SystemPrompt.load(
       homeCatalog,
       a2uiPrompt: processor.promptSnippet,
@@ -75,14 +83,19 @@ Future<void> init(InternetAddress ip, int port) async {
 Future<DemoSession> _newSession(
   ModelRef<dynamic> model,
   A2uiRequestProcessor processor,
+  TodoStore todos,
 ) async {
-  final database = await MockDatabase.load();
+  final database = await MockDatabase.load(todos: todos.document);
   final hub = LiveHub();
   final world = ScenarioWorld(database, live: hub);
   // The model's write tools and `/action` both change the home through this
   // machine, and the world brings the time dependent values up to date after
   // each change.
-  final machine = DeviceStateMachine(database, onChanged: world.reconcile);
+  final machine = DeviceStateMachine(
+    database,
+    onChanged: world.reconcile,
+    onTodosChanged: todos.save,
+  );
 
   final ai = buildGenkitRuntime();
   final tools = registerAgentTools(

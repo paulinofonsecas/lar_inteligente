@@ -63,6 +63,7 @@ on one. Its client offers the key as a subprotocol instead. See
 |---|---|---|
 | `HOME_LLM_MODEL` | no | Overrides the default Gemini model, `gemini-3.1-flash-lite`. |
 | `HOME_CORS_ALLOWED_ORIGINS` | no | Comma separated browser origins allowed to call the API. |
+| `HOME_TODOS_FILE` | no | Where the household's shopping list is kept, `data-store/todos.json` by default. |
 
 There is no variable for a key, and a key placed in `.env` or the environment is
 not read.
@@ -103,6 +104,10 @@ dropped after 30 minutes without a request, unless a `/live` socket is still
 open, and at most 200 exist at once. A request with no valid id gets `400`, and a
 new visitor when all 200 are in use gets `503`. State lives in server memory, so
 a restart also starts everyone over.
+
+The shopping list is the exception, because it is the household's and not a
+world's: it is kept in a file, shared by every visitor and left alone by
+`POST /reset`. See [Shopping list](#shopping-list).
 
 ### Example request
 
@@ -163,6 +168,25 @@ leak:
 `messages` is a non-empty list ordered from oldest to newest. Each entry has a
 `role` of `user` or `assistant` and a non-empty `content` string. The last
 entry must be a user message and is the prompt for this turn.
+
+## Shopping list
+
+The household's shopping list is not mock state: it is kept in a file of its
+own, `data-store/todos.json` by default (`HOME_TODOS_FILE`), and every visitor
+sees the same one. `TodoStore` (`lib/todos/`) reads it at boot, seeding it from
+`data/todos.json` the first time, and the device state machine writes it down
+whenever a command changes it — a tick, a share, an undo. The write is
+synchronous and lands before `/action` answers, so what someone ticked survives
+the next request, the next visitor and a restart.
+
+`POST /reset` does not touch it: restarting the demo restores the devices, the
+calendar, the plans and the clock, not the house's list. Undoing a tick with the
+Undo chip still works, and that also goes to the file.
+
+A host with an ephemeral filesystem keeps the list across restarts but not
+across a deploy. Point `HOME_TODOS_FILE` at a mounted disk to keep it. A file
+that cannot be read is reported in the log and seeded again, so a corrupt list
+never takes the server down.
 
 ## Component presses: `POST /action`
 

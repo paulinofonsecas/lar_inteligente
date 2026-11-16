@@ -447,6 +447,23 @@ void main() {
       expect(result.changes.single.deviceId, 'shopping');
     });
 
+    test('saves the list whenever a command changes it, and only then', () {
+      final saved = <String>[];
+
+      DeviceStateMachine(
+          database,
+          onTodosChanged: () => saved.add('todos'),
+        )
+        // A device change is not the list's business.
+        ..setPower('oven', on: true)
+        ..toggleTodo(itemId: 'shallots', checked: false)
+        ..shareList('shopping')
+        ..undoLast();
+
+      // One save for the tick, one for the share and one for the undo.
+      expect(saved, ['todos', 'todos', 'todos']);
+    });
+
     test('finds the item without a list, by list title too', () {
       machine.toggleTodo(itemId: 'shallots', checked: false);
       expect(item('shallots')['checked'], isFalse);

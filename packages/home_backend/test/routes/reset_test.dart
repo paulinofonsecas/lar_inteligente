@@ -34,7 +34,7 @@ void main() {
   }
 
   group('POST /reset', () {
-    test('restores the data, the clock and the undo stack', () async {
+    test('restores the data and the clock, keeping the list', () async {
       world.moveTo(DateTime.utc(2026, 10, 10, 17, 50));
       world.planner.moveGuests(shiftMinutes: -60);
       machine.toggleTodo(itemId: 'thyme', checked: true);
@@ -55,7 +55,8 @@ void main() {
       final thyme = items.cast<Map<String, dynamic>>().firstWhere(
         (i) => i['id'] == 'thyme',
       );
-      expect(thyme['checked'], isFalse);
+      // The household's own list is not demo state: what someone ticked stays.
+      expect(thyme['checked'], isTrue);
     });
 
     test('rejects other methods with 405', () {

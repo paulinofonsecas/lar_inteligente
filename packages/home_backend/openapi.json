@@ -352,7 +352,7 @@
       "post": {
         "operationId": "resetDemo",
         "summary": "Reset the demo",
-        "description": "Restores every document (devices, calendar, recipe plan, trips, bakery, to-do lists) and puts the scenario clock back at its start.",
+        "description": "Restores every document (devices, calendar, recipe plan, trips, bakery, users) and puts the scenario clock back at its start. The household shopping list is not demo state: it is kept in a file of its own and is left as it is.",
         "security": [],
         "responses": {
           "200": {

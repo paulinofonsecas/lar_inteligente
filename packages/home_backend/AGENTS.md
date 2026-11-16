@@ -34,6 +34,7 @@ lib/
 ├── logging/
 ├── prompt/                  SystemPrompt: the A2UI prompt and three assets in one message
 ├── scenario/                the demo's mocked services and the engine
+├── todos/                   TodoStore: the household's shopping list on disk
 ├── tools/                   tools the model may call
 ├── transcribe/              /transcribe relay and the Gemini Live session
 └── validation/              LayoutValidator and LayoutComposer: the panel grid
@@ -143,6 +144,10 @@ Each file is one source, named after the system that owns it in the real world:
 | `bakery.json` | the mocked bakery's orders and messages, and its fixed delivery slots and duration | `get_bakery_orders` |
 | `inbox.json` | the household inbox: what one person changed that another has to know | `get_inbox`, `mark_inbox_read` |
 
+`todos.json` is only the seed. The list itself is the household's, not a
+visitor's, so it lives in `TodoStore` (`lib/todos/`) and in a file of its own,
+and `/reset` leaves it alone. Every other file above is demo state that resets.
+
 The calendar is one household calendar. An event has an owner (`userId`) and
 may name more people in `assignedTo`; `ActivityFeed` (package
 `home_timeline`) serves
@@ -199,6 +204,8 @@ lets it be replayed. Four rules hold it together:
   keeps must live in a document (see `bakery.json`), not in a field. The
   restored maps are new objects: read through the getters, never hold a map
   across a reset. `POST /reset` also clears the state machine's undo stack.
+  The shopping list is the one document outside the snapshot: it is the
+  household's, not the demo's, and `TodoStore` keeps it.
 
 The calendar has events around each part of the day the panel's timeline
 jumps to (morning 7:30 AM, day 4:30 PM, sunset 5:40 PM, evening 8:40 PM), so

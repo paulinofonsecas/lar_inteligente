@@ -496,7 +496,8 @@ void main() {
       final thyme = items.cast<Map<String, dynamic>>().firstWhere(
         (i) => i['id'] == 'thyme',
       );
-      expect(thyme['checked'], isFalse);
+      // The shopping list is the household's, so the reset leaves it as is.
+      expect(thyme['checked'], isTrue);
     });
   });
 

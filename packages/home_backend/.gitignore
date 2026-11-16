@@ -17,3 +17,6 @@ build/
 
 # Test related files
 coverage/
+
+# The household's shopping list (HOME_TODOS_FILE)
+data-store/

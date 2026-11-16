@@ -137,3 +137,17 @@ Com a URL final do app (do passo 3.4), volte ao Render:
 | Erros de CORS no console do navegador | `HOME_CORS_ALLOWED_ORIGINS` errado | URL exata do app, sem barra final, protocolo `https` |
 | Primeira resposta demora ~1 min | Render acordando do sleep | Ping em `/health` antes da demo |
 | `502` ao gerar | Chave do Gemini inválida/ausente | Reabra o diálogo de chave (engrenagem na sidebar) |
+| Lista de compras volta ao início depois de um deploy | O disco do Render gratuito é efêmero | Veja "Lista de compras" abaixo |
+
+### Lista de compras
+
+A lista de compras é a única coisa que o servidor grava em disco: um arquivo em
+`HOME_TODOS_FILE`, `data-store/todos.json` por padrão, criado a partir de
+`data/todos.json` na primeira execução. Ela sobrevive a restart do container,
+mas **não** a um novo deploy, porque o Render gratuito recria o sistema de
+arquivos a cada publicação.
+
+Para manter a lista entre deploys, anexe um disco persistente no Render
+(pago) e aponte a variável para ele, por exemplo
+`HOME_TODOS_FILE=/var/data/todos.json`. Localmente não há nada a fazer: o
+arquivo fica em `packages/home_backend/data-store/` e não vai para o git.

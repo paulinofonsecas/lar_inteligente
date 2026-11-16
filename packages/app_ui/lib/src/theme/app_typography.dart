@@ -1,5 +1,5 @@
 import 'package:app_ui/src/theme/app_colors.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template app_typography}
 /// The type tokens of the panel, from the Google GenUI Demo Figma file.

@@ -6,7 +6,7 @@ import 'package:app_ui/src/theme/icon_from_words.dart';
 import 'package:app_ui/src/widgets/card_icon_bubble.dart';
 import 'package:app_ui/src/widgets/glow_surface.dart';
 import 'package:app_ui/src/widgets/status_tag.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template trip_stop_emphasis}
 /// How a [TripStop] reads.

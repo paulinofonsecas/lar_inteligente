@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template default_loading_indicator}
 /// The default affordance rendered while a turn is in flight in

@@ -7,9 +7,9 @@ import 'package:a2ui_vgv_smart_home/l10n/l10n.dart';
 import 'package:a2ui_vgv_smart_home/voice/cubit/voice_cubit.dart';
 import 'package:a2ui_vgv_smart_home/voice/view/voice_input.dart';
 import 'package:a2ui_vgv_smart_home/voice/view/voice_overlay.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:home_frontend/home_frontend.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template voice_layer}
 /// Everything that happens on [child] once the user speaks: the card that

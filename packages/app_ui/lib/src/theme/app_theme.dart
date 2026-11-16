@@ -1,7 +1,7 @@
 import 'package:app_ui/src/theme/app_colors.dart';
 import 'package:app_ui/src/theme/app_spacing.dart';
 import 'package:app_ui/src/theme/app_typography.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template app_theme}
 /// The panel theme. Light only, tuned for a landscape wall mount.

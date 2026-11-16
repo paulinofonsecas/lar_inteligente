@@ -6,12 +6,13 @@ import 'package:a2ui_vgv_smart_home/dashboard/agent_factory.dart';
 import 'package:a2ui_vgv_smart_home/dashboard/view/member_dashboard.dart';
 import 'package:a2ui_vgv_smart_home/l10n/l10n.dart';
 import 'package:a2ui_vgv_smart_home/live/cubit/live_cubit.dart';
+import 'package:a2ui_vgv_smart_home/suggestions/tips.dart';
 import 'package:a2ui_vgv_smart_home/timeline/cubit/timeline_cubit.dart';
 import 'package:a2ui_vgv_smart_home/users/cubit/users_cubit.dart';
 import 'package:app_ui/app_ui.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:home_repository/home_repository.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template dashboard_page}
 /// The dashboard. Starting it starts the demo over, so the panel always
@@ -79,9 +80,18 @@ class _DashboardPageState extends State<DashboardPage> {
 /// {@template dashboard_view}
 /// The whole screen: the sidebar beside the clock, the ask bar and the surface.
 /// {@endtemplate}
-class DashboardView extends StatelessWidget {
+class DashboardView extends StatefulWidget {
   /// {@macro dashboard_view}
   const DashboardView({super.key});
+
+  @override
+  State<DashboardView> createState() => _DashboardViewState();
+}
+
+class _DashboardViewState extends State<DashboardView> {
+  /// The bridge a tip of the suggestions sheet crosses to land as a typed
+  /// turn on the dashboard on screen.
+  final _tipSink = TipSink();
 
   @override
   Widget build(BuildContext context) {
@@ -121,6 +131,13 @@ class DashboardView extends StatelessWidget {
                   selectedIndex: state.users.indexOf(state.selected!),
                   onProfileSelected: (index) =>
                       context.read<UsersCubit>().select(state.users[index]),
+                  onTips: () => unawaited(
+                    showTipsSheet(
+                      context,
+                      send: (tip) => _tipSink.request(tip.ask),
+                    ),
+                  ),
+                  tipsTooltip: context.l10n.tipsTooltip,
                   onSettings: () => unawaited(
                     showApiKeyDialog(
                       context,
@@ -138,6 +155,7 @@ class DashboardView extends StatelessWidget {
                     key: ValueKey(state.selected!.id),
                     user: state.selected!,
                     agentFactory: context.read<AgentFactory>(),
+                    tipSink: _tipSink,
                   ),
                 ),
               ],

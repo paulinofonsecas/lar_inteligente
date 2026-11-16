@@ -6,7 +6,7 @@ import 'package:app_ui/src/theme/app_typography.dart';
 import 'package:app_ui/src/theme/icon_from_words.dart';
 import 'package:app_ui/src/widgets/app_card.dart';
 import 'package:app_ui/src/widgets/status_tag.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template plan_density}
 /// How much room a [PlanTimeline] has.

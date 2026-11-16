@@ -1,6 +1,6 @@
 import 'package:a2ui_vgv_smart_home/action_toast/cubit/action_toast_cubit.dart';
 import 'package:app_ui/app_ui.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template action_glow}
 /// The light that follows a request across the panel, behind the toast.

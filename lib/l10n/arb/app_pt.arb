@@ -41,6 +41,10 @@
     "@changeKeyTooltip": {
         "description": "Tooltip do botão de configurações, que reabre o diálogo da chave"
     },
+    "tipsTooltip": "Sugestões: o que o painel faz",
+    "@tipsTooltip": {
+        "description": "Tooltip do botão da lâmpada, que abre a folha de sugestões"
+    },
     "usersLoadFailed": "Não foi possível carregar a família.",
     "@usersLoadFailed": {
         "description": "Mostrado quando a lista de usuários falha ao carregar"

@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:home_frontend/home_frontend.dart';
 import 'package:home_frontend/src/zone/view/genui_zone_view.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:mocktail/mocktail.dart';
 
 // Stubs ChangeNotifier's protected getter so mocktail does not warn when
@@ -53,7 +53,6 @@ class _SurfaceCallRecorder {
     BuildContext context,
     Widget surface,
     // Matches GenUISurfaceBuilder's positional bool.
-    // ignore: avoid_positional_boolean_parameters
     bool isLatest,
   ) {
     isLatestFlags.add(isLatest);

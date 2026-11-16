@@ -1,5 +1,5 @@
 import 'package:app_ui/src/theme/app_colors.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template app_switch}
 /// A 72 x 40 on/off switch whose on color is set by the caller, usually the

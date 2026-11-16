@@ -13,9 +13,9 @@ import 'package:a2ui_vgv_smart_home/timeline/view/timeline_bar.dart';
 import 'package:a2ui_vgv_smart_home/voice/microphone.dart';
 import 'package:a2ui_vgv_smart_home/voice/transcription_client.dart';
 import 'package:app_ui/app_ui.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:home_repository/home_repository.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// The room the timeline bar needs below the tablet, and above it to match.
 ///

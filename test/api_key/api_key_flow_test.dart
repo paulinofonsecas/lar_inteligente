@@ -2,11 +2,11 @@ import 'package:a2ui_vgv_smart_home/api_key/gemini_key_store.dart';
 import 'package:a2ui_vgv_smart_home/api_key/view/api_key_dialog.dart';
 import 'package:a2ui_vgv_smart_home/dashboard/view/dashboard_page.dart';
 import 'package:app_ui/app_ui.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:home_frontend/home_frontend.dart';
 import 'package:home_repository/home_repository.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 import 'package:url_launcher_platform_interface/url_launcher_platform_interface.dart';
 

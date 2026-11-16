@@ -1,8 +1,8 @@
 import 'package:app_ui/src/theme/app_colors.dart';
 import 'package:app_ui/src/theme/app_shadows.dart';
 import 'package:app_ui/src/theme/app_typography.dart';
-import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template ask_bar}
 /// The field where the user talks to the assistant.

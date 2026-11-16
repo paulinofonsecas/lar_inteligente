@@ -3,7 +3,7 @@ import 'package:app_ui/src/theme/app_shadows.dart';
 import 'package:app_ui/src/theme/app_spacing.dart';
 import 'package:app_ui/src/theme/app_tone.dart';
 import 'package:app_ui/src/theme/app_typography.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template app_card}
 /// The raised surface every panel card sits on.

@@ -18,6 +18,7 @@ dependencies:
   home_catalog:
     path: ../home_catalog
   http: ^1.2.0
+  material_ui: ^1.11.0
 
 dev_dependencies:
   flutter_test:

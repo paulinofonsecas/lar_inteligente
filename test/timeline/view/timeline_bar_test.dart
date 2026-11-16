@@ -3,9 +3,9 @@ import 'package:a2ui_vgv_smart_home/timeline/cubit/timeline_cubit.dart';
 import 'package:a2ui_vgv_smart_home/timeline/day_phase.dart';
 import 'package:a2ui_vgv_smart_home/timeline/view/timeline_bar.dart';
 import 'package:app_ui/app_ui.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../helpers/fake_live_repository.dart';
 import '../../helpers/fake_scenario_repository.dart';

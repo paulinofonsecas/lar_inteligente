@@ -1,7 +1,7 @@
 import 'package:a2ui_vgv_smart_home/l10n/l10n.dart';
 import 'package:app_ui/app_ui.dart';
-import 'package:flutter/material.dart';
 import 'package:home_frontend/home_frontend.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template dashboard_surface}
 /// The part of the screen the model draws: always the latest surface.

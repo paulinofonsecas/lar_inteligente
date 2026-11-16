@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template default_user_message_bubble}
 /// The default bubble rendered for a user message in `GenUIZone.chat`.

@@ -1,7 +1,7 @@
 import 'package:a2ui_vgv_smart_home/l10n/l10n.dart';
 import 'package:app_ui/app_ui.dart';
-import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template cancel_pill}
 /// The "Cancel" pill of the voice card and of the toast that follows it.

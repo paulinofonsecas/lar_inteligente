@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template app_shadows}
 /// The elevation tokens of the panel: small controls, floating panels and

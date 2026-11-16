@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:home_frontend/src/widgets/default_user_message_bubble.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   Widget pump({ColorScheme? colorScheme, String message = 'hi'}) => MaterialApp(

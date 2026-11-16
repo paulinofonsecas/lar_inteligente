@@ -5,7 +5,7 @@ import 'package:app_ui/src/theme/app_tone.dart';
 import 'package:app_ui/src/theme/app_typography.dart';
 import 'package:app_ui/src/widgets/glow_surface.dart';
 import 'package:app_ui/src/widgets/status_tag.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template charge_card}
 /// Battery, range and charging window for a car.

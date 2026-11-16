@@ -4,7 +4,7 @@ import 'package:app_ui/src/theme/app_spacing.dart';
 import 'package:app_ui/src/theme/app_tone.dart';
 import 'package:app_ui/src/theme/app_typography.dart';
 import 'package:app_ui/src/widgets/action_pill.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template action_chip_data}
 /// One suggested next step: its label, icon and what pressing it does.

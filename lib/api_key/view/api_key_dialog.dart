@@ -1,7 +1,7 @@
 import 'package:a2ui_vgv_smart_home/api_key/gemini_key_store.dart';
 import 'package:a2ui_vgv_smart_home/l10n/l10n.dart';
 import 'package:app_ui/app_ui.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// Asks for the person's own Gemini API key and keeps it in [keys].

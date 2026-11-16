@@ -2,7 +2,7 @@ import 'package:app_ui/src/theme/app_colors.dart';
 import 'package:app_ui/src/theme/app_icons.dart';
 import 'package:app_ui/src/theme/app_spacing.dart';
 import 'package:app_ui/src/theme/app_typography.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template status_tag_kind}
 /// How a [StatusTag] reads: what it says about the card.

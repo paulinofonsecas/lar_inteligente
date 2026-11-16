@@ -13,7 +13,7 @@
 # The one Flutter pin. CI reads it too, through
 # .github/workflows/flutter_version.yaml, so change it here and nowhere else.
 # Dart comes with it.
-flutter = "3.44.9-stable"
+flutter = "3.50.0-stable"
 # Only for `npx cspell`.
 node = "24"
 

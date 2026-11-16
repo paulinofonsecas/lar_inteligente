@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:app_ui/src/theme/app_colors.dart';
+import 'package:app_ui/src/theme/app_typography.dart';
 import 'package:material_symbols_icons/symbols.dart';
-
-import '../theme/app_colors.dart';
-import '../theme/app_typography.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template brand_lockup}
 /// The app's lockup: the house glyph with "Lar Inteligente" beside it.
@@ -31,7 +30,7 @@ class BrandLockup extends StatelessWidget {
           height: _height,
           child: Row(
             children: [
-              Icon(
+              const Icon(
                 Symbols.house_rounded,
                 size: 38,
                 color: AppColors.onPrimary,

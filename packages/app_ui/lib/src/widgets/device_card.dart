@@ -10,7 +10,7 @@ import 'package:app_ui/src/widgets/card_icon_bubble.dart';
 import 'package:app_ui/src/widgets/optimistic_scope.dart';
 import 'package:app_ui/src/widgets/status_tag.dart';
 import 'package:app_ui/src/widgets/stepper_buttons.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template device_control_type}
 /// The control a [DeviceCard] shows in its top-right slot.

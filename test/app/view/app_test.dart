@@ -1,8 +1,8 @@
 import 'package:a2ui_vgv_smart_home/dashboard/view/dashboard_page.dart';
 import 'package:a2ui_vgv_smart_home/shell/device_frame.dart';
 import 'package:app_ui/app_ui.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../helpers/fake_agent.dart';
 import '../../helpers/helpers.dart';

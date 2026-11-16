@@ -4,3 +4,5 @@ include:
 analyzer:
   exclude:
     - lib/l10n/gen/*
+    - build/**
+    - web/**

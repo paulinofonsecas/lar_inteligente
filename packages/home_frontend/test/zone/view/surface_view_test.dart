@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:home_catalog/home_catalog.dart';
 import 'package:home_frontend/home_frontend.dart';
 import 'package:home_frontend/src/catalog/genui_catalog.dart';
+import 'package:material_ui/material_ui.dart';
 
 MessageProcessor<ComponentImplementation> _processor() {
   final processor = MessageProcessor<ComponentImplementation>(

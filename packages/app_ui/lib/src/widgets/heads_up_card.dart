@@ -3,7 +3,7 @@ import 'package:app_ui/src/theme/app_spacing.dart';
 import 'package:app_ui/src/theme/app_typography.dart';
 import 'package:app_ui/src/widgets/action_pill.dart';
 import 'package:app_ui/src/widgets/glow_surface.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template heads_up_variant}
 /// How urgent a [HeadsUpCard] is.

@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:home_catalog/home_catalog.dart';
 import 'package:home_frontend/src/a2ui/a2ui.dart';
 import 'package:home_frontend/src/catalog/widget_builders.dart';
 import 'package:json_schema_builder/json_schema_builder.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// A `Text` for tests only. The home catalog has no plain text or button, as
 /// the Figma component catalog has none, but the agent tests need a surface

@@ -2,8 +2,8 @@ import 'package:a2ui_vgv_smart_home/action_toast/cubit/action_toast_cubit.dart';
 import 'package:a2ui_vgv_smart_home/action_toast/view/action_glow.dart';
 import 'package:a2ui_vgv_smart_home/action_toast/view/action_toast.dart';
 import 'package:a2ui_vgv_smart_home/l10n/l10n.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   group(ActionGlow, () {

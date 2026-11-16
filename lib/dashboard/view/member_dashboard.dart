@@ -7,6 +7,7 @@ import 'package:a2ui_vgv_smart_home/dashboard/agent_factory.dart';
 import 'package:a2ui_vgv_smart_home/dashboard/view/dashboard_surface.dart';
 import 'package:a2ui_vgv_smart_home/l10n/l10n.dart';
 import 'package:a2ui_vgv_smart_home/live/cubit/live_cubit.dart';
+import 'package:a2ui_vgv_smart_home/suggestions/tips.dart';
 import 'package:a2ui_vgv_smart_home/timeline/cubit/timeline_cubit.dart';
 import 'package:a2ui_vgv_smart_home/voice/cubit/voice_cubit.dart';
 import 'package:a2ui_vgv_smart_home/voice/microphone.dart';
@@ -14,10 +15,10 @@ import 'package:a2ui_vgv_smart_home/voice/transcription_client.dart';
 import 'package:a2ui_vgv_smart_home/voice/view/voice_input.dart';
 import 'package:a2ui_vgv_smart_home/voice/view/voice_layer.dart';
 import 'package:app_ui/app_ui.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:home_frontend/home_frontend.dart';
 import 'package:home_repository/home_repository.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template member_dashboard}
 /// One user's generated dashboard: the brand and ask bar above the surface,
@@ -47,6 +48,7 @@ class MemberDashboard extends StatefulWidget {
   const MemberDashboard({
     required this.user,
     required this.agentFactory,
+    required this.tipSink,
     super.key,
   });
 
@@ -55,6 +57,9 @@ class MemberDashboard extends StatefulWidget {
 
   /// Builds the agent that generates the dashboard.
   final AgentFactory agentFactory;
+
+  /// Where the suggestions sheet's tips land.
+  final TipSink tipSink;
 
   @override
   State<MemberDashboard> createState() => _MemberDashboardState();
@@ -101,6 +106,13 @@ class _MemberDashboardState extends State<MemberDashboard> {
   /// to enter their key, which the app asks for as it opens.
   bool _awaitingKey = false;
 
+  /// Sends [text] as a typed turn on the dashboard on screen, the same path
+  /// the ask bar uses. A tip of the suggestions sheet lands here.
+  void _sendText(String text) {
+    if (_awaitingTime || _awaitingKey) return;
+    unawaited(_shown.controller.sendMessage(text));
+  }
+
   @override
   void initState() {
     super.initState();
@@ -111,6 +123,7 @@ class _MemberDashboardState extends State<MemberDashboard> {
     _messageSub = context.read<LiveCubit>().surfaceMessages.listen(
       (message) => _shown.agent.apply(message),
     );
+    widget.tipSink.register(_sendText);
     _shown = _Session(widget.agentFactory.create(widget.user));
     unawaited(_load(_shown));
   }

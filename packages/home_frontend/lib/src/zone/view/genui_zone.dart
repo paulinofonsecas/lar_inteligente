@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:home_frontend/src/zone/controller/genui_zone_controller.dart';
 import 'package:home_frontend/src/zone/view/genui_zone_view.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Wraps the widget rendered for each agent-produced item.
 ///
@@ -14,7 +14,6 @@ typedef GenUISurfaceBuilder =
       Widget surface,
       // Positional bool keeps the signature flat and familiar alongside
       // Flutter's WidgetBuilder.
-      // ignore: avoid_positional_boolean_parameters
       bool isLatest,
     );
 

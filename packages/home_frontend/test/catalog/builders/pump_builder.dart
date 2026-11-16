@@ -1,9 +1,9 @@
 import 'package:a2ui_core/a2ui_core.dart' show ComponentModel;
 import 'package:app_ui/app_ui.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:home_catalog/home_catalog.dart';
 import 'package:home_frontend/src/a2ui/a2ui.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// A builder pumped inside a themed scaffold, with the actions it raised.
 class BuilderHarness {

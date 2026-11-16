@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template default_error_bubble}
 /// The default notice rendered for a failed turn in `GenUIZone.chat`.

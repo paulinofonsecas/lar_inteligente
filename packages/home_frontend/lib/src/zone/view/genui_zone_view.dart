@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:home_frontend/src/a2ui/a2ui.dart';
 import 'package:home_frontend/src/widgets/widgets.dart';
 import 'package:home_frontend/src/zone/controller/genui_zone_controller.dart';
@@ -7,6 +6,7 @@ import 'package:home_frontend/src/zone/controller/genui_zone_state.dart';
 import 'package:home_frontend/src/zone/view/genui_zone.dart';
 import 'package:home_frontend/src/zone/view/lockable_surface.dart';
 import 'package:home_frontend/src/zone/view/surface_view.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template gen_u_i__zone_view}
 /// Renders the current state of a [GenUIZoneController].

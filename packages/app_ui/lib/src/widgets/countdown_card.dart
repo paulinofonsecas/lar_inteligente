@@ -7,7 +7,7 @@ import 'package:app_ui/src/theme/app_typography.dart';
 import 'package:app_ui/src/widgets/app_card.dart';
 import 'package:app_ui/src/widgets/now_scope.dart';
 import 'package:app_ui/src/widgets/status_tag.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// The countdown text from [now] to [startsAt]: "2h 30m", "45m", "Now" or
 /// "Started".

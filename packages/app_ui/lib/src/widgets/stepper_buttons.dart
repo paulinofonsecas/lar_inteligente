@@ -1,6 +1,6 @@
 import 'package:app_ui/src/theme/app_colors.dart';
 import 'package:app_ui/src/theme/app_spacing.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template stepper_buttons}
 /// Two round buttons, minus and plus, for nudging a value.

@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:a2ui_vgv_smart_home/action_toast/cubit/action_toast_cubit.dart';
@@ -6,8 +5,8 @@ import 'package:a2ui_vgv_smart_home/action_toast/view/action_glow.dart';
 import 'package:a2ui_vgv_smart_home/l10n/l10n.dart';
 import 'package:a2ui_vgv_smart_home/voice/view/cancel_pill.dart';
 import 'package:app_ui/app_ui.dart';
-import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template action_toast}
 /// The request on its way, shown at the bottom of the screen: a sparkle, the
@@ -80,7 +79,7 @@ class _ActionToastState extends State<ActionToast>
         _status == ActionToastStatus.loading &&
         !MediaQuery.disableAnimationsOf(context);
     if (spinning) {
-      if (!_spin.isAnimating) unawaited(_spin.repeat());
+      if (!_spin.isAnimating) _spin.repeat();
     } else {
       _spin.stop();
     }
@@ -88,7 +87,7 @@ class _ActionToastState extends State<ActionToast>
 
   void _enter() {
     if (_status == ActionToastStatus.error) {
-      unawaited(_shake.forward(from: 0));
+      _shake.forward(from: 0);
     }
   }
 

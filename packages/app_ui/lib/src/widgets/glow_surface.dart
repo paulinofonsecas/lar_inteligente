@@ -1,7 +1,7 @@
 import 'package:app_ui/src/theme/app_colors.dart';
 import 'package:app_ui/src/theme/app_shadows.dart';
 import 'package:app_ui/src/theme/app_spacing.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template glow}
 /// A soft round light laid over a [GlowSurface], placed from the top left of

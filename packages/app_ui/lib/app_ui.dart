@@ -34,4 +34,5 @@ export 'src/widgets/sidebar.dart';
 export 'src/widgets/skeleton_surface.dart';
 export 'src/widgets/status_tag.dart';
 export 'src/widgets/stepper_buttons.dart';
+export 'src/widgets/tips_sheet.dart';
 export 'src/widgets/trip_card.dart';

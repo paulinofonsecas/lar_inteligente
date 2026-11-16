@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template lockable_surface}
 /// Wraps a `Surface` so the zone can freeze it once it is no longer the

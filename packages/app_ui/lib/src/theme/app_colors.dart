@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template app_colors}
 /// The color tokens of the panel, from the Google GenUI Demo Figma file.

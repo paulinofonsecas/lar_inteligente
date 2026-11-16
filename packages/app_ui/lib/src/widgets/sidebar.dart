@@ -1,8 +1,8 @@
 import 'package:app_ui/src/theme/app_colors.dart';
 import 'package:app_ui/src/theme/app_shadows.dart';
 import 'package:app_ui/src/theme/app_typography.dart';
-import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template sidebar_profile}
 /// Someone the [Sidebar] can switch to.
@@ -24,8 +24,8 @@ const Color _selectedFill = AppColors.surfaceContainerHigh;
 /// {@template sidebar}
 /// The rail down the left of the screen: who is looking, and where to go.
 ///
-/// Only the profiles and settings do anything for now; the navigation between
-/// them is a placeholder.
+/// The profiles switch the dashboard; the lightbulb opens the tips sheet and
+/// the settings reopen the key dialog.
 /// {@endtemplate}
 class Sidebar extends StatelessWidget {
   /// {@macro sidebar}
@@ -33,6 +33,8 @@ class Sidebar extends StatelessWidget {
     required this.profiles,
     required this.selectedIndex,
     required this.onProfileSelected,
+    required this.onTips,
+    required this.tipsTooltip,
     required this.onSettings,
     required this.settingsTooltip,
     super.key,
@@ -47,6 +49,12 @@ class Sidebar extends StatelessWidget {
   /// Called with the index of the profile that was tapped.
   final ValueChanged<int> onProfileSelected;
 
+  /// Called when the tips button is pressed.
+  final VoidCallback onTips;
+
+  /// The tooltip and label of the tips button.
+  final String tipsTooltip;
+
   /// Called when the settings button is pressed.
   final VoidCallback onSettings;
 
@@ -59,13 +67,6 @@ class Sidebar extends StatelessWidget {
   static const double _tileHeight = 96;
   static const double _gap = 12;
   static const double _buttonSize = 64;
-
-  static const List<IconData> _navigation = [
-    Symbols.home_rounded,
-    Symbols.calendar_month_rounded,
-    Symbols.lightbulb_rounded,
-    Symbols.videocam_rounded,
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -105,8 +106,16 @@ class Sidebar extends StatelessWidget {
                         width: 40,
                         child: Divider(height: 1, thickness: 1),
                       ),
-                      for (final (index, icon) in _navigation.indexed)
-                        _NavButton(icon: icon, selected: index == 0),
+                      const _NavButton(
+                        icon: Symbols.home_rounded,
+                        selected: true,
+                        tooltip: 'Início',
+                      ),
+                      _NavButton(
+                        icon: Symbols.lightbulb_rounded,
+                        tooltip: tipsTooltip,
+                        onPressed: onTips,
+                      ),
                       const Spacer(),
                       _NavButton(
                         icon: Symbols.settings_rounded,

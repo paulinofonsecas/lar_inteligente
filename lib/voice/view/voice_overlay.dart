@@ -5,8 +5,8 @@ import 'package:a2ui_vgv_smart_home/voice/cubit/voice_cubit.dart';
 import 'package:a2ui_vgv_smart_home/voice/view/cancel_pill.dart';
 import 'package:a2ui_vgv_smart_home/voice/view/microphone_button.dart';
 import 'package:app_ui/app_ui.dart';
-import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template voice_overlay}
 /// The card that opens from the ask bar while the user speaks: who is being

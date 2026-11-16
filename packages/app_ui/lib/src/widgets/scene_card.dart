@@ -7,7 +7,7 @@ import 'package:app_ui/src/widgets/action_pill.dart';
 import 'package:app_ui/src/widgets/app_card.dart';
 import 'package:app_ui/src/widgets/glow_surface.dart';
 import 'package:app_ui/src/widgets/status_tag.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template scene_state}
 /// Whether a scene waits to be started or is already on.

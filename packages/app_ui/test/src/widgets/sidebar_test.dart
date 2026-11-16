@@ -1,7 +1,7 @@
 import 'package:app_ui/app_ui.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:material_ui/material_ui.dart';
 
 const _profiles = [
   SidebarProfile(name: 'Ana'),
@@ -29,6 +29,8 @@ Future<void> _pump(
               onProfileSelected: onProfileSelected ?? (_) {},
               onSettings: onSettings ?? () {},
               settingsTooltip: 'Settings',
+              onTips: () {},
+              tipsTooltip: '',
             ),
           ),
         ),

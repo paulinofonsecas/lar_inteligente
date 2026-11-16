@@ -63,11 +63,17 @@ No `config.json` da raiz:
 
 O `--no-web-resources-cdn` é importante: sem ele o `flutter.js`/canvaskit são
 buscados em `fonts.gstatic.com`, que pode estar bloqueado na sua rede (foi o
-caso aqui) — o app ficaria em tela preta no visitante.
+caso aqui) - o app ficaria em tela preta no visitante.
 
 ```powershell
-flutter build web --no-web-resources-cdn --dart-define-from-file=config.json
+mise run build:web
 ```
+
+Esse comando roda o build completo (`--wasm --web-content-hash
+--no-web-resources-cdn`) e depois restaura o worklet de áudio que o
+`--web-content-hash` renomeia. Sem essa segunda etapa o microfone não abre no
+site publicado: o painel responde 404 ao `record.worklet.js` que o `record_web`
+pede pelo nome.
 
 ### 3.3 Criar o projeto Firebase
 

@@ -122,7 +122,7 @@ Side packages, imported only through their barrel (never `src/`):
 
 ### Themes
 
-The panel ships a light theme and a dark one, and follows the device until someone picks one. The gear next to the lightbulb in the rail is the API key; the moon opens the appearance sheet.
+The panel ships a light theme and a dark one. It opens following the demo's time of day, and the appearance sheet can pin it. The gear next to the lightbulb in the rail is the API key; the moon opens the appearance sheet.
 
 `app_ui` splits color in three layers, and only the middle one changes with the theme:
 
@@ -230,9 +230,11 @@ CI does not deploy. The upstream `deploy.yaml` deployed the backend to Cloud Run
 Deploys are manual, and `DEPLOY-GRATIS.md` walks through both halves: the backend on Render and the app on Firebase Hosting. In short, build the web app and push it:
 
 ```sh
-flutter build web --wasm --web-content-hash --no-web-resources-cdn --dart-define-from-file=config.json
+mise run build:web
 firebase deploy --only hosting
 ```
+
+`build:web` runs `flutter build web --wasm --web-content-hash --no-web-resources-cdn --dart-define-from-file=config.json` and then `tool/restore_worklet.dart`. The second step is not optional: `--web-content-hash` renames every built asset to `name.<hash>.ext`, while `record_web` loads its audio worklet from the literal `assets/packages/record_web/assets/js/record.worklet.js`, so without the copy the deployed panel answers the worklet request with a 404 and the voice commands cannot capture audio.
 
 ## License
 

@@ -117,6 +117,14 @@ run = [
   "cd packages/home_backend && dart pub get",
 ]
 
+[tasks."build:web"]
+description = "Build the web app for Firebase Hosting, restoring the assets plugins load by name"
+depends = ["deps"]
+run = [
+  "flutter build web --wasm --web-content-hash --no-web-resources-cdn --dart-define-from-file=config.json",
+  "dart run tool/restore_worklet.dart",
+]
+
 # Format and analyze run per package on the paths CI uses. A root-level
 # `dart format .` reaches into packages/, so the root app stays on lib and test.
 [tasks."format:check"]

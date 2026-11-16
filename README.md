@@ -138,7 +138,9 @@ The panel ships a light theme and a dark one. It opens following the demo's time
 
 The default is `PanelTheme.auto`: `PanelTheme.modeFor` reads the phase `DayPhase.at` takes from the timeline's clock, so the panel is light from the morning to the sunset and dark once it is evening. Both the clock ticking on its own and a press on the day phase buttons go through `TimelineCubit`, so either one turns the panel. The sheet's other two segments pin light or dark for good.
 
-On a phone's window the timeline bar leaves the bottom of the page and becomes a rail to the right of the tablet, so the screen keeps its height; the buttons stack there and the whole bar still shrinks to fit. See `_railBelowWidth` in `app.dart`.
+The demo's clock is part of the panel's navigation rail on every window size: `TimelineRail` stacks one button per day phase above the appearance and settings buttons, and the phase the time is in is filled. That is what the panel's own screen shows, so nothing of the demo sits outside it.
+
+On a phone's window (`_phoneWidth` in `app.dart`) the panel stops being a tablet floating in the kitchen: `DeviceFrame(fill: true)` takes 98% of the window on both axes and centers the 16:10 screen inside the bezel, never stretched. On a wider window the frame keeps its 16:10 shape and floats.
 
 ## Run locally
 

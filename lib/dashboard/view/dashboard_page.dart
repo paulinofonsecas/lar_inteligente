@@ -9,6 +9,7 @@ import 'package:a2ui_vgv_smart_home/live/cubit/live_cubit.dart';
 import 'package:a2ui_vgv_smart_home/suggestions/tips.dart';
 import 'package:a2ui_vgv_smart_home/theme/view/theme_sheet.dart';
 import 'package:a2ui_vgv_smart_home/timeline/cubit/timeline_cubit.dart';
+import 'package:a2ui_vgv_smart_home/timeline/view/timeline_rail.dart';
 import 'package:a2ui_vgv_smart_home/users/cubit/users_cubit.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -147,6 +148,7 @@ class _DashboardViewState extends State<DashboardView> {
                     ),
                   ),
                   settingsTooltip: context.l10n.changeKeyTooltip,
+                  timeControl: const TimelineRail(),
                   onTheme: () => unawaited(showThemeSheet(context)),
                   themeTooltip: context.l10n.themeTooltip,
                 ),

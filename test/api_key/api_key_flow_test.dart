@@ -48,6 +48,9 @@ Finder get _continue => find.descendant(
   matching: find.byType(FilledButton),
 );
 
+/// The demo's clock button in the navigation rail.
+Finder _button(String label) => find.text(label);
+
 void main() {
   group('Gemini key popup', () {
     testWidgets('opens over the dashboard when the app first opens', (
@@ -227,12 +230,7 @@ void main() {
       await tester.pumpApp(factory, keys: keys, liveRepository: live);
       await _settle(tester);
 
-      await tester.tap(
-        find.ancestor(
-          of: find.text('Dia'),
-          matching: find.byWidgetPredicate((widget) => widget is TextButton),
-        ),
-      );
+      await tester.tap(_button('Dia'));
       await tester.pump();
       await tester.pump(const Duration(seconds: 3));
       await tester.pump();

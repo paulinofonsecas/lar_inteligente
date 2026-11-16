@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:a2ui_vgv_smart_home/dashboard/view/dashboard_page.dart';
 import 'package:a2ui_vgv_smart_home/shell/device_frame.dart';
 import 'package:a2ui_vgv_smart_home/timeline/day_phase.dart';
-import 'package:a2ui_vgv_smart_home/timeline/view/timeline_bar.dart';
+import 'package:a2ui_vgv_smart_home/timeline/view/timeline_rail.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:home_frontend/home_frontend.dart';
@@ -13,10 +13,8 @@ import 'package:material_ui/material_ui.dart';
 import '../helpers/fake_agent.dart';
 import '../helpers/helpers.dart';
 
-Finder _button(String label) => find.ancestor(
-  of: find.text(label),
-  matching: find.byWidgetPredicate((widget) => widget is TextButton),
-);
+/// The demo's clock button in the navigation rail.
+Finder _button(String label) => find.text(label);
 
 Future<void> _play(WidgetTester tester) async {
   await tester.pump();
@@ -65,40 +63,43 @@ void main() {
       expect(factory.agents, hasLength(1));
     });
 
-    testWidgets('puts the timeline below the tablet, outside its screen', (
+    testWidgets('keeps the time control inside the panel navigation', (
       tester,
     ) async {
       await tester.pumpApp(FakeAgentFactory());
 
+      expect(find.byType(TimelineRail), findsOneWidget);
       expect(
         find.descendant(
-          of: find.byType(DashboardPage),
-          matching: find.byType(TimelineBar),
+          of: find.byType(Sidebar),
+          matching: find.byType(TimelineRail),
         ),
-        findsNothing,
+        findsOneWidget,
       );
       expect(
-        tester.getTopLeft(find.byType(TimelineBar)).dy,
-        greaterThanOrEqualTo(tester.getBottomLeft(find.byType(DeviceFrame)).dy),
+        find.descendant(
+          of: find.byType(DeviceFrame),
+          matching: find.byType(TimelineRail),
+        ),
+        findsOneWidget,
       );
     });
 
-    testWidgets('puts the timeline to the right of the tablet on a phone', (
+    testWidgets('fills almost the whole phone window with the panel', (
       tester,
     ) async {
       await tester.pumpApp(FakeAgentFactory());
       tester.view.physicalSize = const Size(420, 900);
       await tester.pump();
 
-      final bar = find.byType(TimelineBar);
-      final frame = find.byType(DeviceFrame);
+      final frame = tester.getRect(find.byType(DeviceFrame));
+      expect(frame.width, moreOrLessEquals(420 * 0.98, epsilon: 1));
+      expect(frame.height, moreOrLessEquals(900 * 0.98, epsilon: 1));
+      // The 16:10 screen is centered inside it, never stretched.
+      final screen = tester.getRect(find.byType(DashboardPage));
       expect(
-        tester.getTopLeft(bar).dx,
-        greaterThanOrEqualTo(tester.getTopRight(frame).dx),
-      );
-      expect(
-        tester.getCenter(bar).dy,
-        moreOrLessEquals(tester.getCenter(frame).dy, epsilon: 1),
+        screen.width / screen.height,
+        moreOrLessEquals(1280 / 800, epsilon: 0.01),
       );
       expect(tester.takeException(), isNull);
     });

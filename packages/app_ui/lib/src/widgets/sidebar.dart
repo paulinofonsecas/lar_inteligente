@@ -20,8 +20,8 @@ class SidebarProfile {
 /// {@template sidebar}
 /// The rail down the left of the screen: who is looking, and where to go.
 ///
-/// The profiles switch the dashboard; the lightbulb opens the tips sheet and
-/// the settings reopen the key dialog.
+/// The profiles switch the dashboard; the lightbulb opens the tips sheet, the
+/// [timeControl] moves the demo's clock and the settings reopen the key dialog.
 /// {@endtemplate}
 class Sidebar extends StatelessWidget {
   /// {@macro sidebar}
@@ -33,6 +33,7 @@ class Sidebar extends StatelessWidget {
     required this.tipsTooltip,
     required this.onSettings,
     required this.settingsTooltip,
+    this.timeControl,
     this.onTheme,
     this.themeTooltip = '',
     super.key,
@@ -59,6 +60,11 @@ class Sidebar extends StatelessWidget {
   /// The tooltip and label of the settings button.
   final String settingsTooltip;
 
+  /// The app's own control above the bottom buttons, the demo's clock. The rail
+  /// only leaves it room; whether it is a clock, a timer or nothing is the
+  /// caller's business.
+  final Widget? timeControl;
+
   /// Called when the appearance button is pressed. Hidden when null.
   final VoidCallback? onTheme;
 
@@ -69,7 +75,7 @@ class Sidebar extends StatelessWidget {
   static const double width = 88;
   static const double _tileWidth = 72;
   static const double _tileHeight = 96;
-  static const double _gap = 12;
+  static const double _gap = 8;
   static const double _buttonSize = 64;
 
   @override
@@ -121,6 +127,7 @@ class Sidebar extends StatelessWidget {
                         onPressed: onTips,
                       ),
                       const Spacer(),
+                      ?timeControl,
                       if (onTheme != null)
                         _NavButton(
                           icon: Symbols.dark_mode_rounded,

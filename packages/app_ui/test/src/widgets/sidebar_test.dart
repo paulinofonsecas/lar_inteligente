@@ -13,6 +13,8 @@ Future<void> _pump(
   int selectedIndex = 0,
   ValueChanged<int>? onProfileSelected,
   VoidCallback? onSettings,
+  VoidCallback? onTheme,
+  Widget? timeControl,
   double height = 704,
 }) {
   return tester.pumpWidget(
@@ -31,6 +33,8 @@ Future<void> _pump(
               settingsTooltip: 'Settings',
               onTips: () {},
               tipsTooltip: '',
+              onTheme: onTheme,
+              timeControl: timeControl,
             ),
           ),
         ),
@@ -95,6 +99,21 @@ void main() {
           hasSelectedState: true,
         ),
       );
+    });
+
+    testWidgets('shows the caller control above the appearance button', (
+      tester,
+    ) async {
+      await _pump(
+        tester,
+        timeControl: const Text('Relógio', key: Key('time')),
+        onTheme: () {},
+      );
+
+      final clock = tester.getRect(find.byKey(const Key('time')));
+      final theme = tester.getRect(find.byIcon(Symbols.dark_mode_rounded));
+
+      expect(clock.bottom, lessThanOrEqualTo(theme.top));
     });
 
     testWidgets('runs the settings action', (tester) async {

@@ -9,13 +9,20 @@ import 'package:material_ui/material_ui.dart';
 /// inside the bezel is always [AppSpacing.panelWidth] by
 /// [AppSpacing.panelHeight] to the child, scaled down to fit a smaller window,
 /// so the layout is the same at every window size.
+///
+/// With [fill] the frame takes all the room it is given instead: a phone's
+/// screen, where the bezel reaches the edges and the 16:10 screen sits centered
+/// inside it. The content is never stretched.
 /// {@endtemplate}
 class DeviceFrame extends StatelessWidget {
   /// {@macro device_frame}
-  const DeviceFrame({required this.child, super.key});
+  const DeviceFrame({required this.child, this.fill = false, super.key});
 
   /// The screen shown inside the bezel.
   final Widget child;
+
+  /// Whether the frame fills its box instead of hugging the 16:10 screen.
+  final bool fill;
 
   static const double _bezel =
       AppSpacing.bezelWidth + AppSpacing.bezelEdgeWidth;
@@ -28,48 +35,48 @@ class DeviceFrame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screen = Padding(
+      padding: const EdgeInsets.all(AppSpacing.bezelWidth),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(AppSpacing.screenRadius),
+        // The screen is laid out at its full size and scaled to the frame, so a
+        // small window shrinks the panel, not its grid.
+        child: FittedBox(
+          child: SizedBox(
+            width: AppSpacing.panelWidth,
+            height: AppSpacing.panelHeight,
+            child: MediaQuery(
+              data: MediaQuery.of(context).copyWith(
+                size: const Size(
+                  AppSpacing.panelWidth,
+                  AppSpacing.panelHeight,
+                ),
+              ),
+              child: child,
+            ),
+          ),
+        ),
+      ),
+    );
+    final bezel = DecoratedBox(
+      decoration: BoxDecoration(
+        color: Colors.black,
+        borderRadius: BorderRadius.circular(AppSpacing.bezelRadius),
+        border: Border.all(
+          color: context.colors.bezelEdge,
+          width: AppSpacing.bezelEdgeWidth,
+        ),
+      ),
+      child: screen,
+    );
+    if (fill) return SizedBox.expand(child: bezel);
     return Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(
           maxWidth: maxWidth,
           maxHeight: maxHeight,
         ),
-        child: AspectRatio(
-          aspectRatio: maxWidth / maxHeight,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.circular(AppSpacing.bezelRadius),
-              border: Border.all(
-                color: context.colors.bezelEdge,
-                width: AppSpacing.bezelEdgeWidth,
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.bezelWidth),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(AppSpacing.screenRadius),
-                // The screen is laid out at its full size and scaled to the
-                // frame, so a small window shrinks the panel, not its grid.
-                child: FittedBox(
-                  child: SizedBox(
-                    width: AppSpacing.panelWidth,
-                    height: AppSpacing.panelHeight,
-                    child: MediaQuery(
-                      data: MediaQuery.of(context).copyWith(
-                        size: const Size(
-                          AppSpacing.panelWidth,
-                          AppSpacing.panelHeight,
-                        ),
-                      ),
-                      child: child,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
+        child: AspectRatio(aspectRatio: maxWidth / maxHeight, child: bezel),
       ),
     );
   }

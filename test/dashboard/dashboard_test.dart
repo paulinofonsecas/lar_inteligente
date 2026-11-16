@@ -10,7 +10,6 @@ import 'package:app_ui/app_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:home_frontend/home_frontend.dart';
 import 'package:home_repository/home_repository.dart';
-import 'package:material_ui/material_ui.dart';
 
 import '../helpers/fake_agent.dart';
 import '../helpers/helpers.dart';
@@ -20,6 +19,9 @@ Future<void> settle(WidgetTester tester) async {
     await tester.pump(const Duration(milliseconds: 20));
   }
 }
+
+/// The demo's clock button in the navigation rail.
+Finder _button(String label) => find.text(label);
 
 void main() {
   group('MemberDashboard', () {
@@ -179,12 +181,7 @@ void main() {
       );
       await settle(tester);
 
-      await tester.tap(
-        find.ancestor(
-          of: find.text('Dia'),
-          matching: find.byWidgetPredicate((widget) => widget is TextButton),
-        ),
-      );
+      await tester.tap(_button('Dia'));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 500));
       expect(find.byType(SkeletonSurface), findsOneWidget);

@@ -11,7 +11,6 @@ import 'package:a2ui_vgv_smart_home/theme/cubit/theme_cubit.dart';
 import 'package:a2ui_vgv_smart_home/theme/panel_theme.dart';
 import 'package:a2ui_vgv_smart_home/timeline/cubit/timeline_cubit.dart';
 import 'package:a2ui_vgv_smart_home/timeline/day_phase.dart';
-import 'package:a2ui_vgv_smart_home/timeline/view/timeline_bar.dart';
 import 'package:a2ui_vgv_smart_home/voice/microphone.dart';
 import 'package:a2ui_vgv_smart_home/voice/transcription_client.dart';
 import 'package:app_ui/app_ui.dart';
@@ -23,18 +22,12 @@ import 'package:material_ui/material_ui.dart';
 // delegate (flutter_localizations) does not provide.
 import 'package:material_ui/material_ui.dart' as mui;
 
-/// The room the timeline bar needs below the tablet, and above it to match.
-///
-/// Enough for the bar with its error line above the pill, the tallest it gets.
-const double _timelineSlot = 112;
+/// Below this width the window is a phone's, and the panel takes almost all of
+/// it instead of floating as a tablet.
+const double _phoneWidth = 700;
 
-/// The room the timeline bar needs to the right of the tablet, where it moves
-/// on a phone's window, and the width of the rail it becomes there.
-const double _timelineRail = 108;
-
-/// Below this width the window is a phone's, and the bar goes to the right of
-/// the tablet instead of below it, so the screen keeps its height.
-const double _railBelowWidth = 700;
+/// How much of a phone's window the panel takes, on both axes.
+const double _phoneFill = 0.98;
 
 /// {@template app}
 /// The page around the demo: a tablet frame holding the actual application.
@@ -115,62 +108,46 @@ class App extends StatelessWidget {
               ],
               supportedLocales: AppLocalizations.supportedLocales,
               debugShowCheckedModeBanner: false,
-              // The timeline control sits below the tablet, outside its screen,
-              // or to its right on a phone's window.
+              // The page around the panel: the kitchen, and the panel itself.
               builder: (context, child) => ColoredBox(
                 color: context.colors.bezel,
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
                     const _Backdrop(),
-                    // The tablet is centered in the window, and the timeline
-                    // bar is centered in the room left around it. The tablet
-                    // leaves room for the bar on every side, so the gaps match.
+                    // On a desktop the tablet keeps its 16:10 shape and floats
+                    // in the middle of the page. A phone's window has no room
+                    // for that framing, so the panel itself fills 98% of it and
+                    // the screen sits centered inside, never stretched. The
+                    // demo's clock lives in the panel's navigation rail.
                     LayoutBuilder(
                       builder: (context, constraints) {
-                        final rail = constraints.maxWidth < _railBelowWidth;
-                        final width = rail
-                            ? constraints.maxWidth - _timelineRail
-                            : constraints.maxWidth;
-                        final height = rail
-                            ? constraints.maxHeight - 2 * AppSpacing.s4
-                            : constraints.maxHeight - 2 * _timelineSlot;
-                        final frameHeight = [
-                          DeviceFrame.maxHeight,
-                          width * DeviceFrame.maxHeight / DeviceFrame.maxWidth,
-                          height,
-                        ].reduce(min).clamp(0, double.infinity).toDouble();
-                        // The frame keeps its ratio, so its width follows the
-                        // height the window leaves it.
-                        final frame = SizedBox(
-                          width:
-                              frameHeight *
-                              DeviceFrame.maxWidth /
-                              DeviceFrame.maxHeight,
-                          height: frameHeight,
-                          child: DeviceFrame(child: child!),
-                        );
-                        if (rail) {
-                          return Row(
-                            children: [
-                              Expanded(child: Center(child: frame)),
-                              const SizedBox(
-                                width: _timelineRail,
-                                child: Center(
-                                  child: TimelineBar(vertical: true),
-                                ),
-                              ),
-                            ],
+                        final phone = constraints.maxWidth < _phoneWidth;
+                        if (phone) {
+                          return Center(
+                            child: SizedBox(
+                              width: constraints.maxWidth * _phoneFill,
+                              height: constraints.maxHeight * _phoneFill,
+                              child: DeviceFrame(fill: true, child: child!),
+                            ),
                           );
                         }
-                        return Column(
-                          children: [
-                            const Spacer(),
-                            frame,
-                            const Expanded(
-                              child: Center(child: TimelineBar()),
-                            ),
-                          ],
+                        final frameHeight = [
+                          DeviceFrame.maxHeight,
+                          constraints.maxWidth *
+                              DeviceFrame.maxHeight /
+                              DeviceFrame.maxWidth,
+                          constraints.maxHeight - 2 * AppSpacing.s5,
+                        ].reduce(min).clamp(0, double.infinity).toDouble();
+                        return Center(
+                          child: SizedBox(
+                            width:
+                                frameHeight *
+                                DeviceFrame.maxWidth /
+                                DeviceFrame.maxHeight,
+                            height: frameHeight,
+                            child: DeviceFrame(child: child!),
+                          ),
                         );
                       },
                     ),

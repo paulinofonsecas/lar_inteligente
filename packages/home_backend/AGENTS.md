@@ -377,6 +377,11 @@ because Gemini answers silence with nothing. Gemini may also drop speech that
 starts on the first sample of the stream. The README's "Possible issue" section
 has the evidence. Nothing works around it until a real frontend confirms it.
 
+A close from Gemini after `finish` is the end of the utterance, whatever code it
+carries: the provider often closes abnormally right after `audioStreamEnd`, and
+treating that as a failure threw away transcripts the panel had already shown. A
+close before `finish` is still a `4502`.
+
 The relay test and the session test run against real sockets on localhost,
 with a fake session and a fake Gemini.
 

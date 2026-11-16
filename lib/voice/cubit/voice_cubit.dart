@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:math' as math;
-import 'dart:typed_data';
 
 import 'package:a2ui_vgv_smart_home/voice/microphone.dart';
 import 'package:a2ui_vgv_smart_home/voice/transcription_client.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 
 /// {@template voice_status}
 /// The stages of a spoken command, from idle to done or failed.
@@ -141,14 +141,19 @@ class VoiceCubit extends Cubit<VoiceState> {
     final TranscriptionSession session;
     try {
       session = await _client.connect();
-    } on Object {
+    } on Object catch (error) {
+      // The person sees a generic line; the reason belongs in the console.
+      debugPrint('Voice: the transcription session would not open: $error');
       _fail(VoiceFailure.transcriptionFailed);
       return;
     }
     _session = session;
     _transcripts = session.transcripts.listen(
       _onTranscript,
-      onError: (Object _) => _fail(VoiceFailure.transcriptionFailed),
+      onError: (Object error) {
+        debugPrint('Voice: the transcription session failed: $error');
+        _fail(VoiceFailure.transcriptionFailed);
+      },
       onDone: _onDone,
     );
     if (!_stillWanted(run)) return;
@@ -270,7 +275,10 @@ class VoiceCubit extends Cubit<VoiceState> {
   }
 
   void _onDone() {
-    final command = _join(_finals);
+    // The provider may close before it confirms the last words. What the panel
+    // already showed as the transcript is what the person said, so it is what
+    // goes to the model.
+    final command = _join([..._finals, if (_finals.isEmpty) _interim]);
     _teardown();
     emit(
       command.isEmpty

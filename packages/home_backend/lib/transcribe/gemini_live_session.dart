@@ -85,6 +85,15 @@ class GeminiLiveSession implements TranscriptionSession {
   Completer<void>? _finished;
   bool _closed = false;
 
+  /// Whether [finish] already told Gemini the audio stream ended.
+  ///
+  /// A provider that closes the socket after that has said all it will say, so
+  /// the close ends the utterance instead of failing it, whatever code it
+  /// carries. Gemini answers `audioStreamEnd` with an abnormal close often
+  /// enough that treating it as a failure threw away transcripts the panel had
+  /// already shown.
+  bool _finishing = false;
+
   @override
   Future<void> get ready => _ready.future;
 
@@ -102,6 +111,7 @@ class GeminiLiveSession implements TranscriptionSession {
   Future<void> finish() {
     if (_closed) return Future.value();
     final finished = _finished = Completer<void>();
+    _finishing = true;
     _send({
       'realtimeInput': {'audioStreamEnd': true},
     });
@@ -155,7 +165,9 @@ class GeminiLiveSession implements TranscriptionSession {
   void _onDone() {
     _closed = true;
     final code = _channel.closeCode;
-    if (code != null && code != WebSocketStatus.normalClosure) {
+    // Once the audio stream ended, the close is the provider saying it is done:
+    // the transcript it already sent is the answer, not a failure.
+    if (!_finishing && code != null && code != WebSocketStatus.normalClosure) {
       _fail(
         TranscriptionException(
           'Gemini closed the session: $code ${_channel.closeReason}',

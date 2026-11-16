@@ -385,7 +385,10 @@ KB. `TranscribeRelay` in `lib/transcribe/transcribe_relay.dart` owns the list.
 
 Gemini sends nothing back for audio with no speech in it, so after `stop` the
 session in `lib/transcribe/gemini_live_session.dart` waits at most 2 seconds for
-a last transcript.
+a last transcript. Once the audio stream ended, a close from Gemini is the end
+of the utterance and not a failure: the provider often closes abnormally right
+after `audioStreamEnd`, and the transcripts it already sent are the answer. Only
+a close before `stop` turns into a `4502`.
 
 ### Possible issue: speech at the very start of the audio
 

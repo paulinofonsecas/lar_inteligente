@@ -165,16 +165,36 @@ void main() {
     );
 
     blocTest<VoiceCubit, VoiceState>(
+      'keeps the words it showed when the session never confirms them',
+      build: build,
+      act: (cubit) async {
+        await cubit.start();
+        client.session.hear('Delay the oven preheat.');
+        await pumpEventQueue();
+
+        await cubit.finish();
+        client.session.end();
+        await pumpEventQueue();
+      },
+      skip: 3,
+      expect: () => const [
+        VoiceState(
+          status: VoiceStatus.finishing,
+          text: 'Delay the oven preheat.',
+        ),
+        VoiceState(status: VoiceStatus.done, text: 'Delay the oven preheat.'),
+      ],
+    );
+
+    blocTest<VoiceCubit, VoiceState>(
       'goes back to idle when nothing was heard',
       build: build,
       act: (cubit) async {
         await cubit.start();
-        client.session
-          ..hear('Uh')
-          ..end();
+        client.session.end();
         await pumpEventQueue();
       },
-      skip: 3,
+      skip: 2,
       expect: () => const [VoiceState()],
       verify: (_) => expect(microphone.isOn, isFalse),
     );

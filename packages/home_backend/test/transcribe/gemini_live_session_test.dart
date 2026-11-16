@@ -244,6 +244,31 @@ void main() {
       await expectLater(finished, completes);
     });
 
+    test('an abnormal close after audioStreamEnd ends the utterance', () async {
+      final session = connect();
+      addTearDown(session.close);
+      final gemini = await upstream;
+      await gemini.setupComplete(session);
+
+      final finished = session.finish();
+      await gemini.next();
+      gemini.send({
+        'serverContent': {
+          'interimInputTranscription': {'text': 'acende a'},
+        },
+      });
+      await gemini.socket.close(WebSocketStatus.internalServerError, 'boom');
+
+      await expectLater(finished, completes);
+      // The transcript the panel already showed survives the close.
+      await expectLater(
+        session.transcripts,
+        emitsInOrder(<Object>[
+          isA<Transcript>().having((t) => t.text, 'text', 'acende a'),
+        ]),
+      );
+    });
+
     test('completes right away once the session is closed', () async {
       final session = connect();
       final gemini = await upstream;

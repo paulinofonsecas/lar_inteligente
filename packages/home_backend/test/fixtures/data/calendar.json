@@ -4,7 +4,7 @@
   "events": [
     {
       "id": "cal_dinner",
-      "userId": "ana",
+      "userId": "palmira",
       "title": "Dinner party",
       "start": "2026-10-10T19:00:00",
       "end": "2026-10-10T22:30:00",
@@ -12,14 +12,14 @@
     },
     {
       "id": "cal_pickup",
-      "userId": "marco",
+      "userId": "paulino",
       "title": "School pickup",
       "start": "2026-10-10T17:15:00",
       "end": "2026-10-10T17:30:00"
     },
     {
       "id": "cal_cake",
-      "userId": "marco",
+      "userId": "paulino",
       "title": "Pick up the cake",
       "start": "2026-10-10T17:45:00",
       "end": "2026-10-10T18:00:00"

@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 void main() {
   group('requiredUserId', () {
     test('returns the user id', () {
-      expect(requiredUserId({'user_id': 'ana'}), 'ana');
+      expect(requiredUserId({'user_id': 'palmira'}), 'palmira');
     });
 
     test('throws a recoverable exception when it is missing or empty', () {

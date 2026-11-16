@@ -22,21 +22,21 @@ void main() {
   group('get_inbox', () {
     test('is empty until somebody changes something', () async {
       final result = await run(inboxTool(database), {
-        'user_id': 'marco',
+        'user_id': 'paulino',
       });
 
       expect(result['unread'], 0);
       expect(result['items'], isEmpty);
     });
 
-    test('shows Marco what Ana changed, with its suggestion', () async {
+    test('shows Paulino what Palmira changed, with its suggestion', () async {
       await run(rescheduleGuestArrivalTool(world), {
         'shift_minutes': -60,
-        'requested_by': 'ana',
+        'requested_by': 'palmira',
       });
 
       final result = await run(inboxTool(database), {
-        'user_id': 'marco',
+        'user_id': 'paulino',
       });
 
       expect(result['unread'], 1);
@@ -65,16 +65,16 @@ void main() {
 
     test('marks everything read', () async {
       final result = await run(markInboxReadTool(world), {
-        'user_id': 'marco',
+        'user_id': 'paulino',
       });
 
       expect(result['markedRead'], 1);
-      expect(database.inboxFor('marco')['unread'], 0);
+      expect(database.inboxFor('paulino')['unread'], 0);
     });
 
     test('marks one item read', () async {
       final result = await run(markInboxReadTool(world), {
-        'user_id': 'marco',
+        'user_id': 'paulino',
         'item_id': 'inbox_1',
       });
 
@@ -84,7 +84,7 @@ void main() {
     test('hands a missing item back to the model', () {
       expect(
         markInboxReadTool(world).call({
-          'user_id': 'marco',
+          'user_id': 'paulino',
           'item_id': 'nope',
         }),
         throwsA(isA<MockDataNotFound>()),
@@ -97,14 +97,14 @@ void main() {
       'shift_minutes': -60,
     });
 
-    await run(requestBakeryDeliveryTool(world), {'user_id': 'marco'});
+    await run(requestBakeryDeliveryTool(world), {'user_id': 'paulino'});
 
-    expect(database.inboxFor('marco')['unread'], 0);
+    expect(database.inboxFor('paulino')['unread'], 0);
   });
 
   test('only the owner of the pickup can ask the bakery to deliver', () {
     expect(
-      requestBakeryDeliveryTool(world).call({'user_id': 'ana'}),
+      requestBakeryDeliveryTool(world).call({'user_id': 'palmira'}),
       throwsA(isA<MockDataNotFound>()),
     );
   });

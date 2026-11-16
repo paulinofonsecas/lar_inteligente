@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:home_repository/home_repository.dart';
 
-const ana = HomeUser(id: 'ana', name: 'Ana', role: 'host');
-const marco = HomeUser(id: 'marco', name: 'Marco', role: 'logistics');
+const palmira = HomeUser(id: 'palmira', name: 'Palmira', role: 'host');
+const paulino = HomeUser(id: 'paulino', name: 'Paulino', role: 'logistics');
 
 class FakeUsersRepository implements UsersRepository {
   FakeUsersRepository({
-    this.users = const [ana, marco],
+    this.users = const [palmira, paulino],
     this.failures = 0,
     this.gate,
   });

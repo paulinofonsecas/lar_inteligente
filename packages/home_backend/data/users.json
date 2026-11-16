@@ -2,8 +2,8 @@
   "household": "Casa Rivera",
   "users": [
     {
-      "id": "ana",
-      "name": "Ana",
+      "id": "palmira",
+      "name": "Palmira",
       "age": 41,
       "role": "Anfitriã",
       "optional": false,
@@ -36,8 +36,8 @@
       ]
     },
     {
-      "id": "marco",
-      "name": "Marco",
+      "id": "paulino",
+      "name": "Paulino",
       "age": 43,
       "role": "Logística",
       "optional": false,

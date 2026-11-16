@@ -43,7 +43,7 @@
       "room": "kitchen",
       "type": "OvenDevice",
       "usedBy": [
-        "ana"
+        "palmira"
       ],
       "traits": {
         "TemperatureControl": {
@@ -64,7 +64,7 @@
       "room": "kitchen",
       "type": "RefrigeratorDevice",
       "usedBy": [
-        "ana"
+        "palmira"
       ],
       "traits": {
         "TemperatureMeasurement": {
@@ -87,7 +87,7 @@
       "room": "kitchen",
       "type": "DimmableLightDevice",
       "usedBy": [
-        "ana"
+        "palmira"
       ],
       "traits": {
         "OnOff": {
@@ -108,7 +108,7 @@
       "room": "kitchen",
       "type": "ExtractorHoodDevice",
       "usedBy": [
-        "ana"
+        "palmira"
       ],
       "traits": {
         "FanControl": {
@@ -126,7 +126,7 @@
       "room": "kitchen",
       "type": "DishwasherDevice",
       "usedBy": [
-        "ana"
+        "palmira"
       ],
       "traits": {
         "OperationalState": {
@@ -143,7 +143,7 @@
       "room": "dining_room",
       "type": "ColorTemperatureLightDevice",
       "usedBy": [
-        "ana"
+        "palmira"
       ],
       "traits": {
         "OnOff": {
@@ -168,7 +168,7 @@
       "room": "dining_room",
       "type": "SpeakerDevice",
       "usedBy": [
-        "ana",
+        "palmira",
         "sofi"
       ],
       "traits": {
@@ -194,8 +194,8 @@
       "room": "living_room",
       "type": "Thermostat",
       "usedBy": [
-        "ana",
-        "marco"
+        "palmira",
+        "paulino"
       ],
       "traits": {
         "Thermostat": {
@@ -214,7 +214,7 @@
       "room": "living_room",
       "type": "WindowCovering",
       "usedBy": [
-        "ana"
+        "palmira"
       ],
       "traits": {
         "WindowCovering": {
@@ -231,7 +231,7 @@
       "room": "garage",
       "type": "EnergyEvseDevice",
       "usedBy": [
-        "marco"
+        "paulino"
       ],
       "traits": {
         "EnergyEvse": {
@@ -252,7 +252,7 @@
       "room": "garage",
       "type": "GoogleAutoDevice",
       "usedBy": [
-        "marco"
+        "paulino"
       ],
       "traits": {
         "Battery": {
@@ -273,7 +273,7 @@
       "room": "garage",
       "type": "GoogleGarageDevice",
       "usedBy": [
-        "marco"
+        "paulino"
       ],
       "traits": {
         "OpenClose": {
@@ -294,7 +294,7 @@
       "room": "entry",
       "type": "DoorLockDevice",
       "usedBy": [
-        "marco"
+        "paulino"
       ],
       "traits": {
         "DoorLock": {
@@ -314,8 +314,8 @@
       "room": "entry",
       "type": "GoogleDoorbellDevice",
       "usedBy": [
-        "ana",
-        "marco"
+        "palmira",
+        "paulino"
       ],
       "traits": {
         "DoorbellPress": {
@@ -335,7 +335,7 @@
       "room": "utility",
       "type": "ElectricalMeterDevice",
       "usedBy": [
-        "marco"
+        "paulino"
       ],
       "traits": {
         "ElectricalPowerMeasurement": {
@@ -360,7 +360,7 @@
       "room": "upstairs_office",
       "type": "DimmableLightDevice",
       "usedBy": [
-        "marco"
+        "paulino"
       ],
       "traits": {
         "OnOff": {
@@ -384,7 +384,7 @@
         "coffee"
       ],
       "usedBy": [
-        "ana"
+        "palmira"
       ],
       "traits": {
         "CoffeeMaker": {
@@ -405,7 +405,7 @@
         "dessert"
       ],
       "usedBy": [
-        "ana"
+        "palmira"
       ],
       "traits": {
         "Timer": {
@@ -423,7 +423,7 @@
         "wine"
       ],
       "usedBy": [
-        "ana"
+        "palmira"
       ],
       "traits": {
         "TemperatureMeasurement": {
@@ -445,7 +445,7 @@
         "upstairs office"
       ],
       "usedBy": [
-        "marco"
+        "paulino"
       ],
       "traits": {
         "Thermostat": {
@@ -476,7 +476,7 @@
       "id": "dinner_prep",
       "name": "Dinner prep",
       "owners": [
-        "ana"
+        "palmira"
       ],
       "starters": [
         {
@@ -497,7 +497,7 @@
       "id": "guests_arriving",
       "name": "Guests arriving",
       "owners": [
-        "ana"
+        "palmira"
       ],
       "starters": [
         {
@@ -528,7 +528,7 @@
       "id": "charge_for_pickup",
       "name": "Charge for pickup",
       "owners": [
-        "marco"
+        "paulino"
       ],
       "starters": [
         {
@@ -564,7 +564,7 @@
       ],
       "room": "dining_room",
       "owners": [
-        "ana"
+        "palmira"
       ],
       "starters": [
         {

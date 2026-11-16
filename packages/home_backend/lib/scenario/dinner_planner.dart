@@ -13,8 +13,8 @@ import 'package:home_timeline/home_timeline.dart';
 /// This is the demo's one place where a single request fans out over several
 /// services. Moving the guests is not one write: it changes the calendar, the
 /// recipe plan and the oven programme, tells the bakery, and, through the
-/// engine, changes what Marco's route looks like. It also tells the people the
-/// move concerns, through the inbox. [moveGuests] does each step in order and
+/// engine, changes what Paulino's route looks like. It also tells the people
+/// the move concerns, through the inbox. [moveGuests] does each step in order and
 /// returns them all as `effects`, so a model (and a reader of the log) can see
 /// exactly what a request touched.
 class DinnerPlanner {

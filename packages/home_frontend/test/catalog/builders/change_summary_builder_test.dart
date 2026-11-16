@@ -19,7 +19,7 @@ void main() {
           {
             'icon': 'send',
             'label': 'Notified',
-            'value': 'Marco',
+            'value': 'Paulino',
             'note': 'Sent 5:41 PM',
           },
           'skip',

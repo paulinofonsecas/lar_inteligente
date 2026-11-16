@@ -19,7 +19,7 @@ AgentTool userDataTool(MockDatabase database) {
         'user_id': {
           'type': 'string',
           'description':
-              'O id do usuário, por exemplo "ana". Omita para listar.',
+              'O id do usuário, por exemplo "palmira". Omita para listar.',
         },
       },
     },

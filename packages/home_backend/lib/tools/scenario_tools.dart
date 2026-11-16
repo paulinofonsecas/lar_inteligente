@@ -44,8 +44,8 @@ AgentTool homeActivityTool(MockDatabase database) {
 /// A tool that moves the guests' arrival, and with it the whole dinner plan.
 ///
 /// One call changes the calendar, the recipe plan and the oven schedule, tells
-/// the bakery, and replans Marco's route. The result lists each of those as an
-/// effect. The model should read the data again before it describes the day.
+/// the bakery, and replans Paulino's route. The result lists each of those as
+/// an effect. The model should read the data again before it describes the day.
 AgentTool rescheduleGuestArrivalTool(ScenarioWorld world) {
   return AgentTool(
     name: 'reschedule_guest_arrival',
@@ -53,7 +53,7 @@ AgentTool rescheduleGuestArrivalTool(ScenarioWorld world) {
         'Move a hora de chegada das visitas e move tudo que depende dela na '
         'mesma proporção: o evento do calendário, todos os passos do plano '
         'da receita, os horários de preaquecer e assar do forno, e a padaria '
-        'é avisada. A rota do Marco é replanejada também. Use quando as '
+        'é avisada. A rota do Paulino é replanejada também. Use quando as '
         'visitas chegam mais cedo ou mais tarde, por exemplo "as visitas '
         'chegam uma hora mais cedo" é shift_minutes -60. Dê exatamente um de '
         'shift_minutes (negativo é mais cedo) ou new_arrival. Passe '
@@ -76,7 +76,7 @@ AgentTool rescheduleGuestArrivalTool(ScenarioWorld world) {
         },
         'requested_by': {
           'type': 'string',
-          'description': 'O usuário que pede, por exemplo "ana".',
+          'description': 'O usuário que pede, por exemplo "palmira".',
         },
       },
     },
@@ -125,7 +125,7 @@ AgentTool requestBakeryDeliveryTool(ScenarioWorld world) {
     name: 'request_bakery_delivery',
     description:
         'Pede à padaria que entregue o bolo em casa em vez de alguém buscá-lo. '
-        'Só a pessoa a quem a retirada do bolo está designada (Marco) pode '
+        'Só a pessoa a quem a retirada do bolo está designada (Paulino) pode '
         'pedir. O pedido começa pending e a padaria o confirma um minuto '
         'depois. O entregador sai em um dos horários fixos da padaria '
         '(`slot`, HH:mm, padrão o horário padrão da padaria) e a viagem leva '

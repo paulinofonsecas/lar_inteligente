@@ -64,13 +64,13 @@ void main() {
         ShoppingList(
           title: 'List',
           items: _items,
-          footerLabel: 'Share list with Marco',
+          footerLabel: 'Share list with Paulino',
           footerIcon: 'share',
           onFooter: () => shared = true,
         ),
       );
 
-      await tester.tap(find.text('Share list with Marco'));
+      await tester.tap(find.text('Share list with Paulino'));
       expect(shared, isTrue);
     });
 

@@ -21,7 +21,7 @@ FeedRule _rule(Map<String, Object?> overrides) {
 void main() {
   final facts = <String, Object?>{
     'when': DateTime.utc(2026, 10, 10, 17, 40),
-    'name': 'Ana',
+    'name': 'Palmira',
     'id': 'abc',
     'flag': true,
   };
@@ -38,7 +38,7 @@ void main() {
 
   group('FeedRule', () {
     test('fills the summary, joining one given in parts', () {
-      expect(_rule({}).moment(facts)!['summary'], 'Hello Ana');
+      expect(_rule({}).moment(facts)!['summary'], 'Hello Palmira');
       expect(
         _rule({
           'summary': ['at ', '{when}'],
@@ -101,7 +101,7 @@ void main() {
       expect(moment['urgent'], isTrue);
       expect(moment['pastOnly'], isTrue);
       expect(moment['alwaysNext'], isTrue);
-      expect(moment['by'], 'Ana');
+      expect(moment['by'], 'Palmira');
       expect(moment['itinerary'], [1]);
     });
   });

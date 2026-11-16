@@ -6,8 +6,8 @@ import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:test/test.dart';
 
-const ana = HomeUser(id: 'ana', name: 'Ana', role: 'host');
-const marco = HomeUser(id: 'marco', name: 'Marco', role: 'logistics');
+const palmira = HomeUser(id: 'palmira', name: 'Palmira', role: 'host');
+const paulino = HomeUser(id: 'paulino', name: 'Paulino', role: 'logistics');
 
 HttpUsersRepository _repository(http.Client client) => HttpUsersRepository(
   client: HomeApiClient(
@@ -25,8 +25,8 @@ void main() {
           (_) async => http.Response(
             jsonEncode({
               'users': [
-                {'id': 'ana', 'name': 'Ana', 'role': 'host'},
-                {'id': 'marco', 'name': 'Marco', 'role': 'logistics'},
+                {'id': 'palmira', 'name': 'Palmira', 'role': 'host'},
+                {'id': 'paulino', 'name': 'Paulino', 'role': 'logistics'},
               ],
             }),
             200,
@@ -34,7 +34,7 @@ void main() {
         ),
       );
 
-      expect(await repository.fetchUsers(), [ana, marco]);
+      expect(await repository.fetchUsers(), [palmira, paulino]);
     });
 
     test('throws on a non 200 status', () async {

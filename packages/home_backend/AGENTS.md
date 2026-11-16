@@ -146,8 +146,8 @@ Each file is one source, named after the system that owns it in the real world:
 The calendar is one household calendar. An event has an owner (`userId`) and
 may name more people in `assignedTo`; `ActivityFeed` (package
 `home_timeline`) serves
-it to each of them, so the dinner is Ana's and Marco's and the pickups are
-Marco's. A task is assigned to a person, and a tool that acts on it checks
+it to each of them, so the dinner is Palmira's and Paulino's and the pickups are
+Paulino's. A task is assigned to a person, and a tool that acts on it checks
 that: `request_bakery_delivery` only works for the person the pickup is
 assigned to.
 
@@ -183,7 +183,7 @@ lets it be replayed. Four rules hold it together:
   mocked outside systems. `DinnerPlanner.moveGuests` is the one request that
   fans out over several of them: it moves the calendar event, shifts the recipe
   plan and the oven programme, tells the bakery, and the engine replans
-  Marco's route. It returns each step as an `effect`. Add a request like it
+  Paulino's route. It returns each step as an `effect`. Add a request like it
   the same way: one planner method, each step a service call, listed in the
   result. The model reaches them through `lib/tools/scenario_tools.dart`.
 - **A change that reaches past the person who made it goes through the
@@ -202,9 +202,9 @@ lets it be replayed. Four rules hold it together:
 
 The calendar has events around each part of the day the panel's timeline
 jumps to (morning 7:30 AM, day 4:30 PM, sunset 5:40 PM, evening 8:40 PM), so
-each one has something recent and something next. Marco's later events would
+each one has something recent and something next. Paulino's later events would
 flow into his trip's itinerary, which lists every event of his after he
-leaves, so the additions after that point belong to Ana.
+leaves, so the additions after that point belong to Palmira.
 
 `test/scenario/timeline_test.dart` walks the event timeline against the
 shipped data, from the first state to the guests at the door. Change the data

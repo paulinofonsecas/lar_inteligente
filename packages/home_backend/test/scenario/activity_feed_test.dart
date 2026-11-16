@@ -33,7 +33,7 @@ void main() {
 
   group('ActivityFeed', () {
     test('at 4:30 only the florist has come by', () {
-      final result = feed.forUser('ana');
+      final result = feed.forUser('palmira');
 
       expect(result['nowLabel'], '4:30 PM');
       expect(summaries(result['recent']), [
@@ -50,24 +50,27 @@ void main() {
       );
     });
 
-    test('the morning leads Ana to the market and Marco to his stand-up', () {
-      at('07:30');
+    test(
+      'the morning leads Palmira to the market and Paulino to his stand-up',
+      () {
+        at('07:30');
 
-      expect(
-        summaries(feed.forUser('ana')['next']),
-        contains('Feira: Tomilho, limões e flores para hoje'),
-      );
-      expect(
-        summaries(feed.forUser('marco')['next']),
-        contains('Daily do time: Do escritório no andar de cima'),
-      );
-    });
+        expect(
+          summaries(feed.forUser('palmira')['next']),
+          contains('Feira: Tomilho, limões e flores para hoje'),
+        );
+        expect(
+          summaries(feed.forUser('paulino')['next']),
+          contains('Daily do time: Do escritório no andar de cima'),
+        );
+      },
+    );
 
     test('at sunset the drinks and the neighbors chairs are next', () {
       at('17:40');
 
       expect(
-        summaries(feed.forUser('ana')['next']),
+        summaries(feed.forUser('palmira')['next']),
         containsAll([
           'Gelar as bebidas: Água com gás e vinho branco no gelo',
           'Vizinhos trazem cadeiras: Duas cadeiras da casa ao lado',
@@ -77,7 +80,7 @@ void main() {
 
     test('in the evening dessert comes and the cleanup waits', () {
       at('20:40');
-      final feedOfAna = feed.forUser('ana');
+      final feedOfAna = feed.forUser('palmira');
 
       expect(
         summaries(feedOfAna['next']),
@@ -88,7 +91,7 @@ void main() {
       );
       at('21:50');
       expect(
-        summaries(feed.forUser('ana')['next']),
+        summaries(feed.forUser('palmira')['next']),
         contains(
           'Lavar a louça: Rodar a lava-louças depois que as visitas forem',
         ),
@@ -96,7 +99,7 @@ void main() {
     });
 
     test('only what is within two hours is next, soonest first', () {
-      final next = (feed.forUser('ana')['next']! as List<dynamic>)
+      final next = (feed.forUser('palmira')['next']! as List<dynamic>)
           .cast<Map<String, Object?>>();
 
       expect(next.first['summary'], startsWith('Arrumar a mesa'));
@@ -109,7 +112,7 @@ void main() {
     });
 
     test('unfinished shopping is an urgent moment before the cooking', () {
-      final next = (feed.forUser('ana')['next']! as List<dynamic>)
+      final next = (feed.forUser('palmira')['next']! as List<dynamic>)
           .cast<Map<String, Object?>>();
       final shopping = next.singleWhere((m) => m['kind'] == 'todo');
 
@@ -118,7 +121,7 @@ void main() {
       expect(shopping['inMinutes'], 90);
       expect(shopping['summary'], contains('Tomilho fresco'));
       expect(
-        (feed.forUser('marco')['next']! as List<dynamic>)
+        (feed.forUser('paulino')['next']! as List<dynamic>)
             .cast<Map<String, Object?>>()
             .where((m) => m['kind'] == 'todo'),
         isEmpty,
@@ -128,7 +131,7 @@ void main() {
     test('unfinished shopping stays in next past its deadline', () {
       at('18:20');
 
-      final next = (feed.forUser('ana')['next']! as List<dynamic>)
+      final next = (feed.forUser('palmira')['next']! as List<dynamic>)
           .cast<Map<String, Object?>>();
 
       expect(
@@ -142,7 +145,7 @@ void main() {
       world.planner.moveGuests(shiftMinutes: -60);
       at('16:37');
 
-      final recent = feed.forUser('ana')['recent']! as List<dynamic>;
+      final recent = feed.forUser('palmira')['recent']! as List<dynamic>;
       final change = recent.cast<Map<String, Object?>>().firstWhere(
         (m) => m['kind'] == 'change',
       );
@@ -151,8 +154,8 @@ void main() {
       expect(change['minutesAgo'], 1);
     });
 
-    test("Marco's itinerary leads his feed, from the first minute", () {
-      final next = (feed.forUser('marco')['next']! as List<dynamic>)
+    test("Paulino's itinerary leads his feed, from the first minute", () {
+      final next = (feed.forUser('paulino')['next']! as List<dynamic>)
           .cast<Map<String, Object?>>();
       final trip = next.firstWhere((m) => m['kind'] == 'trip');
 
@@ -160,12 +163,12 @@ void main() {
       expect(trip['tripId'], 'trip_pickup');
       expect(
         trip['summary'],
-        'Itinerário de Marco: sair às 4:55 PM, '
+        'Itinerário de Paulino: sair às 4:55 PM, '
         'Aula de piano (buscar) 5:15 PM → '
         'Padaria 5:45 PM → Casa 6:30–6:45 PM',
       );
       expect(
-        (feed.forUser('ana')['next']! as List<dynamic>)
+        (feed.forUser('palmira')['next']! as List<dynamic>)
             .cast<Map<String, Object?>>()
             .where(
               (m) => m['kind'] == 'trip',
@@ -174,9 +177,9 @@ void main() {
       );
     });
 
-    test("Marco's itinerary lists his whole evening, guests included", () {
+    test("Paulino's itinerary lists his whole evening, guests included", () {
       List<String> itinerary() {
-        final trip = (feed.forUser('marco')['next']! as List<dynamic>)
+        final trip = (feed.forUser('paulino')['next']! as List<dynamic>)
             .cast<Map<String, Object?>>()
             .firstWhere((m) => m['kind'] == 'trip');
         return [
@@ -198,7 +201,7 @@ void main() {
       at('16:36');
       world.planner.moveGuests(shiftMinutes: -60);
       at('16:39');
-      world.bakery.requestDelivery('marco');
+      world.bakery.requestDelivery('paulino');
       at('16:41');
 
       expect(itinerary(), [
@@ -213,7 +216,7 @@ void main() {
     test('the itinerary drops what is already over', () {
       at('17:20');
 
-      final trip = (feed.forUser('marco')['recent']! as List<dynamic>)
+      final trip = (feed.forUser('paulino')['recent']! as List<dynamic>)
           .cast<Map<String, Object?>>()
           .firstWhere((m) => m['kind'] == 'trip');
       expect(
@@ -226,8 +229,8 @@ void main() {
       at('18:00');
 
       final all = [
-        ...summaries(feed.forUser('ana')['recent']),
-        ...summaries(feed.forUser('ana')['next']),
+        ...summaries(feed.forUser('palmira')['recent']),
+        ...summaries(feed.forUser('palmira')['next']),
       ];
       expect(all, isNot(contains('Preparar a peça')));
     });
@@ -235,7 +238,7 @@ void main() {
     test(
       'the shopping list says it has every item, not only the open ones',
       () {
-        final shopping = (feed.forUser('ana')['next']! as List<dynamic>)
+        final shopping = (feed.forUser('palmira')['next']! as List<dynamic>)
             .cast<Map<String, Object?>>()
             .firstWhere((m) => m['kind'] == 'todo');
 
@@ -244,10 +247,10 @@ void main() {
       },
     );
 
-    test('the itinerary stays in front of Marco until he is home', () {
+    test('the itinerary stays in front of Paulino until he is home', () {
       at('17:20');
 
-      final recent = (feed.forUser('marco')['recent']! as List<dynamic>)
+      final recent = (feed.forUser('paulino')['recent']! as List<dynamic>)
           .cast<Map<String, Object?>>();
       final trip = recent.firstWhere((m) => m['kind'] == 'trip');
       expect(trip['urgent'], isTrue);
@@ -255,7 +258,7 @@ void main() {
 
       at('18:45');
       expect(
-        (feed.forUser('marco')['recent']! as List<dynamic>)
+        (feed.forUser('paulino')['recent']! as List<dynamic>)
             .cast<Map<String, Object?>>()
             .where(
               (m) => m['kind'] == 'trip',
@@ -264,7 +267,7 @@ void main() {
       );
     });
 
-    test('Marco being late for the guests is only on Marco feed', () {
+    test('Paulino being late for the guests is only on Paulino feed', () {
       at('16:36');
       world.planner.moveGuests(shiftMinutes: -60);
 
@@ -280,18 +283,18 @@ void main() {
               .toList();
 
       expect(
-        late('marco'),
+        late('paulino'),
         contains(contains('A parada Padaria é a causa')),
       );
-      expect(late('ana'), isEmpty);
+      expect(late('palmira'), isEmpty);
     });
 
     test('a delivery is on both feeds, with its slot and duration', () {
       at('16:39');
-      world.bakery.requestDelivery('marco');
+      world.bakery.requestDelivery('paulino');
       at('16:42');
 
-      for (final user in ['ana', 'marco']) {
+      for (final user in ['palmira', 'paulino']) {
         final all = [
           ...summaries(feed.forUser(user)['recent']),
           ...summaries(feed.forUser(user)['next']),
@@ -312,7 +315,7 @@ void main() {
         at('16:36');
         world.planner.moveGuests(shiftMinutes: -60);
 
-        final next = (feed.forUser('ana')['next']! as List<dynamic>)
+        final next = (feed.forUser('palmira')['next']! as List<dynamic>)
             .cast<Map<String, Object?>>();
 
         expect(next.first['kind'], 'plan');
@@ -325,30 +328,30 @@ void main() {
       },
     );
 
-    test("Marco's bakery order is his news, and not Ana's", () {
+    test("Paulino's bakery order is his news, and not Palmira's", () {
       at('16:39');
-      world.bakery.requestDelivery('marco');
+      world.bakery.requestDelivery('paulino');
       at('16:42');
 
       expect(
-        summaries(feed.forUser('marco')['recent']),
+        summaries(feed.forUser('paulino')['recent']),
         containsAll([
           'Pediu à padaria que entregue o bolo',
           _confirmed,
         ]),
       );
       expect(
-        summaries(feed.forUser('ana')['recent']),
+        summaries(feed.forUser('palmira')['recent']),
         isNot(contains('Pediu à padaria que entregue o bolo')),
       );
     });
 
     test('a delivery not yet on the road asks both screens for its card', () {
       at('16:39');
-      world.bakery.requestDelivery('marco');
+      world.bakery.requestDelivery('paulino');
       at('16:42');
 
-      for (final user in ['ana', 'marco']) {
+      for (final user in ['palmira', 'paulino']) {
         final tracked = (feed.forUser(user)['recent']! as List<dynamic>)
             .cast<Map<String, Object?>>()
             .where((m) => (m['summary']! as String).contains('TripCard'));
@@ -361,10 +364,10 @@ void main() {
       'the courier on the road asks for a TripCard with its status',
       () {
         at('16:39');
-        world.bakery.requestDelivery('marco');
+        world.bakery.requestDelivery('paulino');
         at('17:30');
 
-        for (final user in ['ana', 'marco']) {
+        for (final user in ['palmira', 'paulino']) {
           final moment = (feed.forUser(user)['recent']! as List<dynamic>)
               .cast<Map<String, Object?>>()
               .singleWhere(
@@ -387,10 +390,10 @@ void main() {
       'the courier at the door leads with a heads up, then it is history',
       () {
         at('16:39');
-        world.bakery.requestDelivery('marco');
+        world.bakery.requestDelivery('paulino');
         at('17:46');
 
-        for (final user in ['ana', 'marco']) {
+        for (final user in ['palmira', 'paulino']) {
           final delivered = (feed.forUser(user)['recent']! as List<dynamic>)
               .cast<Map<String, Object?>>()
               .singleWhere(
@@ -410,7 +413,7 @@ void main() {
         }
 
         at('18:01');
-        final late = (feed.forUser('ana')['recent']! as List<dynamic>)
+        final late = (feed.forUser('palmira')['recent']! as List<dynamic>)
             .cast<Map<String, Object?>>();
         expect(
           late.where((m) => m['kind'] == 'bakery' && m['urgent'] == true),
@@ -427,10 +430,10 @@ void main() {
       at('16:36');
       world.planner.moveGuests(shiftMinutes: -60);
       at('16:39');
-      world.bakery.requestDelivery('marco');
+      world.bakery.requestDelivery('paulino');
       at('17:47');
 
-      final recent = summaries(feed.forUser('marco')['recent']);
+      final recent = summaries(feed.forUser('paulino')['recent']);
 
       expect(
         recent.where((s) => s.startsWith('O bolo foi entregue')),
@@ -444,7 +447,7 @@ void main() {
       world.planner.moveGuests(shiftMinutes: -60);
       at('17:46');
 
-      final recent = (feed.forUser('ana')['recent']! as List<dynamic>)
+      final recent = (feed.forUser('palmira')['recent']! as List<dynamic>)
           .cast<Map<String, Object?>>();
 
       final roast = recent.firstWhere(
@@ -464,19 +467,19 @@ void main() {
       at('17:50');
 
       expect(
-        summaries(feed.forUser('ana')['recent']),
+        summaries(feed.forUser('palmira')['recent']),
         isNot(contains('Preparar a peça')),
       );
     });
 
     test('after a rewind, what the clock has not reached is not recent', () {
       at('16:39');
-      world.bakery.requestDelivery('marco');
+      world.bakery.requestDelivery('paulino');
       at('16:30');
 
-      expect(summaries(feed.forUser('marco')['recent']), isEmpty);
+      expect(summaries(feed.forUser('paulino')['recent']), isEmpty);
       expect(
-        summaries(feed.forUser('marco')['next']),
+        summaries(feed.forUser('paulino')['next']),
         isNot(contains('Pediu à padaria que entregue o bolo')),
       );
     });
@@ -486,7 +489,7 @@ void main() {
       world.reconcile();
 
       expect(
-        (feed.forUser('ana')['next']! as List<dynamic>)
+        (feed.forUser('palmira')['next']! as List<dynamic>)
             .cast<Map<String, Object?>>()
             .where(
               (m) => m['kind'] == 'oven',
@@ -497,7 +500,7 @@ void main() {
 
     test('a database with no oven, doorbell or orders still answers', () {
       database.homeDevices.clear();
-      expect(feed.forUser('ana')['next'], isNotEmpty);
+      expect(feed.forUser('palmira')['next'], isNotEmpty);
     });
 
     test('an unknown user is not found', () {

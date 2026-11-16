@@ -18,7 +18,7 @@ void main() {
       database = MockDatabase(
         users: {
           'users': [
-            {'id': 'ana', 'name': 'Ana', 'role': 'Host', 'age': 41},
+            {'id': 'palmira', 'name': 'Palmira', 'role': 'Host', 'age': 41},
           ],
         },
         home: <String, dynamic>{},
@@ -28,14 +28,14 @@ void main() {
     RequestContext contextFor(HttpMethod method) {
       final context = _MockRequestContext();
       when(() => context.request).thenReturn(
-        Request(method.value, Uri.parse('http://localhost/users/ana')),
+        Request(method.value, Uri.parse('http://localhost/users/palmira')),
       );
       when(() => context.read<MockDatabase>()).thenReturn(database);
       return context;
     }
 
     test('returns the full profile', () async {
-      final response = route.onRequest(contextFor(HttpMethod.get), 'ana');
+      final response = route.onRequest(contextFor(HttpMethod.get), 'palmira');
 
       expect(response.statusCode, HttpStatus.ok);
       expect(
@@ -52,7 +52,10 @@ void main() {
     });
 
     test('rejects other methods with 405', () {
-      final response = route.onRequest(contextFor(HttpMethod.delete), 'ana');
+      final response = route.onRequest(
+        contextFor(HttpMethod.delete),
+        'palmira',
+      );
 
       expect(response.statusCode, HttpStatus.methodNotAllowed);
     });

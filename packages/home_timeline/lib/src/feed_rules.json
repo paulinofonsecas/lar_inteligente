@@ -7,7 +7,7 @@
       "at": "preheat",
       "kind": "oven",
       "summary": "O forno começa a preaquecer a {target} °C",
-      "subject": "ana",
+      "subject": "palmira",
       "deviceId": "oven"
     },
     {
@@ -15,7 +15,7 @@
       "at": "ready",
       "kind": "oven",
       "summary": "O forno chega a {target} °C",
-      "subject": "ana",
+      "subject": "palmira",
       "deviceId": "oven"
     },
     {
@@ -23,7 +23,7 @@
       "at": "roastIn",
       "kind": "oven",
       "summary": "O assado vai ao forno",
-      "subject": "ana",
+      "subject": "palmira",
       "deviceId": "oven"
     },
     {
@@ -31,7 +31,7 @@
       "at": "done",
       "kind": "oven",
       "summary": "O assado está pronto",
-      "subject": "ana",
+      "subject": "palmira",
       "deviceId": "oven"
     },
 

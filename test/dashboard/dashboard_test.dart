@@ -30,7 +30,7 @@ void main() {
       await settle(tester);
 
       expect(find.byType(A2uiSurface, skipOffstage: false), findsOneWidget);
-      expect(find.text(ana.prompt), findsNothing);
+      expect(find.text(palmira.prompt), findsNothing);
     });
 
     testWidgets('moves the surface with what the backend sends it', (
@@ -54,7 +54,7 @@ void main() {
 
       // Only the agent on screen is told, once, and nothing is asked again.
       expect(factory.agents.single.applied, [update]);
-      expect(factory.agents.single.sent, [ana.prompt]);
+      expect(factory.agents.single.sent, [palmira.prompt]);
       expect(factory.agents.single.refreshed, isEmpty);
     });
 
@@ -135,7 +135,7 @@ void main() {
         gate: gate,
       );
       await tester.pumpApp(factory);
-      await tester.tap(find.text(marco.name));
+      await tester.tap(find.text(paulino.name));
       await tester.pump();
 
       gate.complete();
@@ -168,7 +168,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 400));
 
       expect(find.text('Sugestões'), findsNothing);
-      expect(factory.agents.single.sent, [ana.prompt, tips.first.ask]);
+      expect(factory.agents.single.sent, [palmira.prompt, tips.first.ask]);
     });
 
     testWidgets('drops a tip while the time is still moving', (tester) async {
@@ -196,7 +196,7 @@ void main() {
 
       expect(
         [for (final agent in factory.agents) ...agent.sent],
-        [ana.prompt],
+        [palmira.prompt],
       );
 
       // Let the settle timer run out before the tree goes.
@@ -212,7 +212,7 @@ void main() {
         sessionId: 'visitor-0123456789abcdef',
         baseUri: Uri.parse('http://localhost:8080'),
       );
-      expect(factory.create(ana), isA<HttpGenUIAgent>());
+      expect(factory.create(palmira), isA<HttpGenUIAgent>());
     });
   });
 }

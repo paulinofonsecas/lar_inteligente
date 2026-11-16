@@ -171,7 +171,7 @@ void main() {
     expect(schemaProperties('UserSummary'), summary.keys.toSet());
     expect(
       schemaProperties('User'),
-      containsAll(database.findUser('ana')!.keys),
+      containsAll(database.findUser('palmira')!.keys),
     );
   });
 

@@ -22,7 +22,7 @@ void main() {
             'time': '7:00 PM',
             'title': 'Guests',
             'previousTime': '6:00',
-            'changedBy': 'Ana',
+            'changedBy': 'Palmira',
             'status': 'moved',
           },
         ],
@@ -32,7 +32,7 @@ void main() {
       expect(find.text('Friday, Oct 2'), findsOneWidget);
       expect(find.text('Now 4:30'), findsOneWidget);
       expect(find.text('400 °F'), findsOneWidget);
-      expect(find.text('era 6:00 · Ana'), findsOneWidget);
+      expect(find.text('era 6:00 · Palmira'), findsOneWidget);
     });
 
     testWidgets('reads the compact density', (tester) async {
@@ -102,7 +102,7 @@ void main() {
       }
 
       final changed = await tagFor({
-        'label': 'Changed by Ana',
+        'label': 'Changed by Palmira',
         'kind': 'moved',
       });
       expect(changed.icon, 'edit');

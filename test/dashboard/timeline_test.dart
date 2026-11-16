@@ -129,8 +129,8 @@ void main() {
       await tester.pump(const Duration(seconds: 1));
 
       expect(factory.agents, hasLength(2));
-      expect(factory.agents.last.user, ana);
-      expect(factory.agents.last.sent, [ana.prompt]);
+      expect(factory.agents.last.user, palmira);
+      expect(factory.agents.last.sent, [palmira.prompt]);
       expect(find.byType(SkeletonSurface), findsNothing);
       expect(find.byType(A2uiSurface), findsOneWidget);
       expect(factory.agents.last.disposed, isFalse);
@@ -153,7 +153,7 @@ void main() {
       await _play(tester);
 
       expect(factory.agents, hasLength(2));
-      expect(factory.agents.last.sent, [ana.prompt]);
+      expect(factory.agents.last.sent, [palmira.prompt]);
       expect(find.byType(SkeletonSurface), findsOneWidget);
       expect(find.byType(A2uiSurface), findsNothing);
     });
@@ -201,9 +201,9 @@ void main() {
       await tester.pumpApp(factory, liveRepository: live);
       await tester.pump();
       factory.agents.single.refreshHold = hold;
-      live.emit(const DataChanged(users: ['ana']));
+      live.emit(const DataChanged(users: ['palmira']));
       await tester.pump();
-      expect(factory.agents.single.refreshed, [ana.prompt]);
+      expect(factory.agents.single.refreshed, [palmira.prompt]);
 
       live.answers = false;
       await tester.tap(_button('Dia'));
@@ -229,16 +229,16 @@ void main() {
       await tester.pump();
 
       live
-        ..emit(const DataChanged(users: ['ana']))
-        ..emit(const DataChanged(users: ['ana']));
+        ..emit(const DataChanged(users: ['palmira']))
+        ..emit(const DataChanged(users: ['palmira']));
       await tester.pump();
-      live.emit(const InboxReceived(userId: 'ana', unread: 1));
+      live.emit(const InboxReceived(userId: 'palmira', unread: 1));
       await _drain(tester);
 
       // Folding the triggers into one request is the agent's queue's job.
       expect(factory.agents, hasLength(1));
       expect(factory.agents.single.refreshed, isNotEmpty);
-      expect(factory.agents.single.refreshed.toSet(), {ana.prompt});
+      expect(factory.agents.single.refreshed.toSet(), {palmira.prompt});
       expect(factory.agents.single.disposed, isFalse);
     });
 
@@ -248,13 +248,13 @@ void main() {
       await tester.pumpApp(factory, liveRepository: live);
       await tester.pump();
 
-      live.emit(const DataChanged(users: ['marco']));
+      live.emit(const DataChanged(users: ['paulino']));
       await _drain(tester);
       expect(factory.agents.single.refreshed, isEmpty);
 
-      live.emit(const DataChanged(users: ['ana']));
+      live.emit(const DataChanged(users: ['palmira']));
       await _drain(tester);
-      expect(factory.agents.single.refreshed, [ana.prompt]);
+      expect(factory.agents.single.refreshed, [palmira.prompt]);
     });
 
     testWidgets('keeps the surface when a refresh fails', (tester) async {
@@ -264,10 +264,10 @@ void main() {
       await tester.pump();
       factory.agents.single.refreshFailure = Exception('boom');
 
-      live.emit(const DataChanged(users: ['ana']));
+      live.emit(const DataChanged(users: ['palmira']));
       await _drain(tester);
 
-      expect(factory.agents.single.refreshed, [ana.prompt]);
+      expect(factory.agents.single.refreshed, [palmira.prompt]);
       expect(find.byType(A2uiSurface), findsOneWidget);
       expect(tester.takeException(), isNull);
     });
@@ -280,7 +280,7 @@ void main() {
 
       await tester.tap(_button('Dia'));
       await tester.pump();
-      live.emit(const DataChanged(users: ['ana']));
+      live.emit(const DataChanged(users: ['palmira']));
       await _drain(tester);
 
       expect(factory.agents.last.refreshed, isEmpty);
@@ -298,10 +298,10 @@ void main() {
       await tester.pumpApp(factory, liveRepository: live);
       await tester.pump();
       factory.agents.single.refreshHold = hold;
-      live.emit(const DataChanged(users: ['ana']));
+      live.emit(const DataChanged(users: ['palmira']));
       await tester.pump();
 
-      await tester.tap(find.text(marco.name));
+      await tester.tap(find.text(paulino.name));
       await tester.pump();
       hold.complete();
       await _drain(tester);

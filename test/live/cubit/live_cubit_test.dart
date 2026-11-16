@@ -48,21 +48,21 @@ void main() {
 
     test('an inbox item counts as a change for that user', () async {
       repository
-        ..emit(const InboxReceived(userId: 'marco', unread: 1))
-        ..emit(const InboxReceived(userId: 'marco', unread: 2));
+        ..emit(const InboxReceived(userId: 'paulino', unread: 1))
+        ..emit(const InboxReceived(userId: 'paulino', unread: 2));
       await pumpEventQueue();
 
-      expect(cubit.state.refreshes, {'marco': 2});
-      expect(cubit.state.unread, {'marco': 2});
+      expect(cubit.state.refreshes, {'paulino': 2});
+      expect(cubit.state.unread, {'paulino': 2});
     });
 
     test('a data change counts for every user it names', () async {
       repository
-        ..emit(const DataChanged(users: ['ana', 'marco']))
-        ..emit(const DataChanged(users: ['marco']));
+        ..emit(const DataChanged(users: ['palmira', 'paulino']))
+        ..emit(const DataChanged(users: ['paulino']));
       await pumpEventQueue();
 
-      expect(cubit.state.refreshes, {'ana': 1, 'marco': 2});
+      expect(cubit.state.refreshes, {'palmira': 1, 'paulino': 2});
     });
 
     test("the clock is the timeline's business, not state", () async {

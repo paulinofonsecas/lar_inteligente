@@ -201,7 +201,7 @@ is for the client's snackbar and is ignored here.
 | `run_device_action` | `deviceId`, `command`, optional `value` (number) | A named command, one of `on`, `off`, `start`, `stop`, `open`, `close`, `lock`, `unlock`, `add_time`, `set_level`, `set_temperature`, `up`, `down`. |
 | `run_scene` | `sceneId` | Starts the scene (`dinner_party`). |
 | `toggle_todo` | `listId`, `itemId`, `checked` (bool) | Checks or clears a list item. |
-| `share_list` | `listId` | Shares the list with its target (Marco, for the shopping list). |
+| `share_list` | `listId` | Shares the list with its target (Paulino, for the shopping list). |
 | `undo_change` | none | Reverts the last command that changed something. |
 
 `ask` is not an action name. The client sends an `ask` chip to `/generate` as a

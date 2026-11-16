@@ -51,11 +51,11 @@ void main() {
     });
 
     test('puts the devices the person uses first', () {
-      expect(ids(filler.cards(const {}, userId: 'marco')).take(2), [
+      expect(ids(filler.cards(const {}, userId: 'paulino')).take(2), [
         'thermostat',
         'front_door',
       ]);
-      expect(ids(filler.cards(const {}, userId: 'ana')).first, 'oven');
+      expect(ids(filler.cards(const {}, userId: 'palmira')).first, 'oven');
     });
 
     test('keeps the order of the home when it does not know who it is for', () {
@@ -109,8 +109,8 @@ void main() {
     final composer = LayoutComposer(homeCatalog);
     final validator = LayoutValidator(homeCatalog);
 
-    // Marco's screen as the model sends it: a trip, the car and two devices.
-    List<_Json> marco() => [
+    // Paulino's screen as the model sends it: a trip, the car and two devices.
+    List<_Json> paulino() => [
       _c('root', 'Column', {
         'children': ['row', 'chips'],
       }),
@@ -126,8 +126,8 @@ void main() {
 
     test('keeps the trip and adds a device to fill the second row', () {
       final reply = composer.compose(
-        _reply(marco()),
-        fill: (shown) => filler.cards(shown, userId: 'marco'),
+        _reply(paulino()),
+        fill: (shown) => filler.cards(shown, userId: 'paulino'),
       )!;
 
       final byId = _components(reply);
@@ -147,7 +147,7 @@ void main() {
     test('asks for cards with the devices already on the screen', () {
       Set<String>? asked;
       composer.compose(
-        _reply(marco()),
+        _reply(paulino()),
         fill: (shown) {
           asked = shown;
           return const [];
@@ -203,7 +203,7 @@ void main() {
           _c('trip', 'TripCard'),
           _c('chips', 'ActionChips', {'chips': <Object?>[]}),
         ]),
-        fill: (shown) => filler.cards(shown, userId: 'marco'),
+        fill: (shown) => filler.cards(shown, userId: 'paulino'),
       )!;
 
       final byId = _components(reply);
@@ -213,7 +213,7 @@ void main() {
 
     test('leaves a row short when there is nothing to fill it with', () {
       final reply = composer.compose(
-        _reply(marco()),
+        _reply(paulino()),
         fill: (_) => const [],
       )!;
 
@@ -251,15 +251,15 @@ void main() {
   group('userIdOf', () {
     test('reads the person the dashboard prompt names', () {
       expect(
-        userIdOf(['Build the dashboard (user_id "ana", host)', 'x']),
-        'ana',
+        userIdOf(['Build the dashboard (user_id "palmira", host)', 'x']),
+        'palmira',
       );
     });
 
     test('looks through the whole conversation', () {
       expect(
-        userIdOf(['{"action": {}}', 'Build it for (user_id "marco")']),
-        'marco',
+        userIdOf(['{"action": {}}', 'Build it for (user_id "paulino")']),
+        'paulino',
       );
     });
 

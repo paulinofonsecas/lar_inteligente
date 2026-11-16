@@ -8,7 +8,7 @@
   "steps": [
     {
       "id": "prep",
-      "userId": "ana",
+      "userId": "palmira",
       "at": "18:00",
       "step": "Preparar a peça",
       "done": false,
@@ -17,7 +17,7 @@
     },
     {
       "id": "preheat",
-      "userId": "ana",
+      "userId": "palmira",
       "at": "18:30",
       "step": "Preaquecer o forno a 400 °F",
       "done": false,
@@ -26,7 +26,7 @@
     },
     {
       "id": "roast_in",
-      "userId": "ana",
+      "userId": "palmira",
       "at": "18:45",
       "step": "Assado vai ao forno (25 min)",
       "done": false,
@@ -35,7 +35,7 @@
     },
     {
       "id": "scene",
-      "userId": "ana",
+      "userId": "palmira",
       "at": "18:45",
       "step": "Começar a cena da sala de jantar",
       "done": false,
@@ -44,7 +44,7 @@
     },
     {
       "id": "serve",
-      "userId": "ana",
+      "userId": "palmira",
       "at": "19:15",
       "step": "Servir",
       "done": false,

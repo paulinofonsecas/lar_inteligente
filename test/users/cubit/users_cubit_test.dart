@@ -20,8 +20,8 @@ void main() {
         UsersState(),
         UsersState(
           status: UsersStatus.loaded,
-          users: [ana, marco],
-          selected: ana,
+          users: [palmira, paulino],
+          selected: palmira,
         ),
       ],
     );
@@ -55,7 +55,7 @@ void main() {
       },
       verify: (cubit) {
         expect(cubit.state.status, UsersStatus.loaded);
-        expect(cubit.state.selected, ana);
+        expect(cubit.state.selected, palmira);
       },
     );
 
@@ -64,15 +64,15 @@ void main() {
       build: () => UsersCubit(repository: FakeUsersRepository()),
       seed: () => const UsersState(
         status: UsersStatus.loaded,
-        users: [ana, marco],
-        selected: ana,
+        users: [palmira, paulino],
+        selected: palmira,
       ),
-      act: (cubit) => cubit.select(marco),
+      act: (cubit) => cubit.select(paulino),
       expect: () => const [
         UsersState(
           status: UsersStatus.loaded,
-          users: [ana, marco],
-          selected: marco,
+          users: [palmira, paulino],
+          selected: paulino,
         ),
       ],
     );
@@ -82,15 +82,15 @@ void main() {
       build: () => UsersCubit(repository: FakeUsersRepository()),
       seed: () => const UsersState(
         status: UsersStatus.loaded,
-        users: [ana, marco],
-        selected: marco,
+        users: [palmira, paulino],
+        selected: paulino,
       ),
       act: (cubit) => cubit.selectFirst(),
       expect: () => const [
         UsersState(
           status: UsersStatus.loaded,
-          users: [ana, marco],
-          selected: ana,
+          users: [palmira, paulino],
+          selected: palmira,
         ),
       ],
     );

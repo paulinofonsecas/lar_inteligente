@@ -61,7 +61,7 @@ class ShoppingListComponentDefinition extends GenUiComponent {
         description:
             'The full-width pill under the list. Pressing it shares the list.',
         properties: {
-          'label': S.string(description: 'e.g. "Share list with Marco".'),
+          'label': S.string(description: 'e.g. "Share list with Paulino".'),
           'icon': CatalogSchemas.icon(description: 'e.g. share.'),
         },
         required: ['label'],

@@ -8,7 +8,7 @@ String iconFromWords(String text) {
   if (has(['oven', 'preheat', 'roast', 'baking'])) return 'oven';
   if (has(['wine', 'drink', 'chill'])) return 'wine';
   if (has(['scene', 'light', 'music', 'lamp'])) return 'scene';
-  if (has(['cake', 'bakery', 'marco'])) return 'cake';
+  if (has(['cake', 'bakery', 'paulino'])) return 'cake';
   if (has(['school', 'lesson', 'pickup', 'pick up', 'class'])) return 'school';
   if (has(['guest', 'serve', 'dinner', 'arrive', 'people'])) return 'guests';
   if (has(['car', 'charge', 'drive', 'leave'])) return 'car';

@@ -36,16 +36,16 @@ void main() {
   group('the cake delivery', () {
     test('is on the calendar of both of them as soon as it is asked for', () {
       at('16:39');
-      world.bakery.requestDelivery('marco');
+      world.bakery.requestDelivery('paulino');
       world.reconcile();
 
       expect(delivery()['status'], 'tentative');
-      expect(database.assigneesOf(delivery()), ['marco', 'ana']);
+      expect(database.assigneesOf(delivery()), ['paulino', 'palmira']);
     });
 
     test('says when it leaves the bakery and when it arrives', () {
       at('16:39');
-      world.bakery.requestDelivery('marco');
+      world.bakery.requestDelivery('paulino');
       at('16:41');
 
       expect(delivery()['status'], 'confirmed');
@@ -61,7 +61,7 @@ void main() {
 
     test('the pickup stays until the bakery confirms, then it is gone', () {
       at('16:39');
-      world.bakery.requestDelivery('marco');
+      world.bakery.requestDelivery('paulino');
       world.reconcile();
       expect(
         database.calendarEvents.firstWhere(
@@ -81,10 +81,10 @@ void main() {
 
     test('both feeds carry the event with its times', () {
       at('16:39');
-      world.bakery.requestDelivery('marco');
+      world.bakery.requestDelivery('paulino');
       at('16:41');
 
-      for (final user in ['ana', 'marco']) {
+      for (final user in ['palmira', 'paulino']) {
         final next =
             (ActivityFeed(DatabaseFeedSource(database)).forUser(user)['next']!
                     as List<dynamic>)
@@ -103,26 +103,28 @@ void main() {
 
     test('the bar reads full in the last two minutes', () {
       at('16:39');
-      world.bakery.requestDelivery('marco');
+      world.bakery.requestDelivery('paulino');
 
       at('17:42');
       var order =
-          (database.bakeryFor('ana')['orders']! as List<dynamic>).single as Map;
+          (database.bakeryFor('palmira')['orders']! as List<dynamic>).single
+              as Map;
       expect(order['progressPercent'], lessThan(100));
 
       at('17:43');
       order =
-          (database.bakeryFor('ana')['orders']! as List<dynamic>).single as Map;
+          (database.bakeryFor('palmira')['orders']! as List<dynamic>).single
+              as Map;
       expect(order['status'], 'out_for_delivery');
       expect(order['progressPercent'], 100);
     });
 
     test('is tracked by the one at home too, halfway and at the door', () {
       at('16:39');
-      world.bakery.requestDelivery('marco');
+      world.bakery.requestDelivery('paulino');
 
       at('17:30');
-      for (final user in ['ana', 'marco']) {
+      for (final user in ['palmira', 'paulino']) {
         final order =
             (database.bakeryFor(user)['orders']! as List<dynamic>).single
                 as Map;
@@ -149,25 +151,26 @@ void main() {
 
       at('17:45');
       final order =
-          (database.bakeryFor('ana')['orders']! as List<dynamic>).single as Map;
+          (database.bakeryFor('palmira')['orders']! as List<dynamic>).single
+              as Map;
       expect(order['status'], 'delivered');
     });
 
     test('refreshes the others screens, without an inbox item', () {
       at('16:39');
-      world.bakery.requestDelivery('marco');
+      world.bakery.requestDelivery('paulino');
       frames.clear();
 
-      world.notifyDeliveryRequested('marco');
+      world.notifyDeliveryRequested('paulino');
 
-      expect(bakeryRefreshes(), ['ana']);
-      expect(database.inboxFor('ana')['items'], isEmpty);
-      expect(database.inboxFor('marco')['items'], isEmpty);
+      expect(bakeryRefreshes(), ['palmira']);
+      expect(database.inboxFor('palmira')['items'], isEmpty);
+      expect(database.inboxFor('paulino')['items'], isEmpty);
     });
 
     test('refreshes both screens as it moves on, once per stage', () {
       at('16:39');
-      world.bakery.requestDelivery('marco');
+      world.bakery.requestDelivery('paulino');
       frames.clear();
 
       for (final time in [
@@ -181,7 +184,7 @@ void main() {
         at(time);
       }
       // Confirmed at 4:40 (only once), left the bakery at 5:20.
-      expect(bakeryRefreshes(), ['marco,ana', 'marco,ana']);
+      expect(bakeryRefreshes(), ['paulino,palmira', 'paulino,palmira']);
 
       for (final time in [
         '17:30',
@@ -200,7 +203,7 @@ void main() {
 
     test('a rewind takes the event back off the calendar', () {
       at('16:39');
-      world.bakery.requestDelivery('marco');
+      world.bakery.requestDelivery('paulino');
       at('16:41');
       expect(delivery(), isNotNull);
 

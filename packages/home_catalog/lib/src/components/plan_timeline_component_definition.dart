@@ -74,7 +74,7 @@ class PlanTimelineComponentDefinition extends GenUiComponent {
                   description: 'The time before the change, e.g. "6:00".',
                 ),
                 'changedBy': S.string(
-                  description: 'Who moved it, e.g. "Ana".',
+                  description: 'Who moved it, e.g. "Palmira".',
                 ),
                 'status': S.string(
                   description:

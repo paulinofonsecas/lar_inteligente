@@ -180,7 +180,7 @@
       "get": {
         "operationId": "live",
         "summary": "Move the scenario clock and receive what changes",
-        "description": "A WebSocket that carries the scenario to the panel as it happens. OpenAPI cannot describe the messages, so they are listed here and in the backend README's \"Live connection\" section.\n\nConnect with two subprotocols: `genui.live.v1` and the visitor's session id. The server selects `genui.live.v1`. It needs no key, and it only carries the visitor's own world.\n\nClient to server: `{\"type\": \"clock\", \"to\": \"2026-10-10T16:45:00\"}` as a text frame moves the scenario clock, one frame per minute as the time dial turns.\n\nServer to client, to every connection: `{\"type\": \"clock\", \"now\": \"...\", \"start\": \"...\", \"end\": \"...\", \"timeZone\": \"...\"}` on connect and after the clock moves or the demo resets; `{\"type\": \"a2ui\", \"message\": {...}}` with an `updateDataModel` after a device's card values change; `{\"type\": \"inbox\", \"userId\": \"marco\", \"unread\": 1, \"item\": {...}}` when a notification lands for a user; `{\"type\": \"changed\", \"users\": [\"marco\"], \"reason\": \"plan_change\"}` when household data changed for those users outside the clock; and `{\"type\": \"error\", \"message\": \"...\"}` for a frame it cannot read, after which the connection stays open.",
+        "description": "A WebSocket that carries the scenario to the panel as it happens. OpenAPI cannot describe the messages, so they are listed here and in the backend README's \"Live connection\" section.\n\nConnect with two subprotocols: `genui.live.v1` and the visitor's session id. The server selects `genui.live.v1`. It needs no key, and it only carries the visitor's own world.\n\nClient to server: `{\"type\": \"clock\", \"to\": \"2026-10-10T16:45:00\"}` as a text frame moves the scenario clock, one frame per minute as the time dial turns.\n\nServer to client, to every connection: `{\"type\": \"clock\", \"now\": \"...\", \"start\": \"...\", \"end\": \"...\", \"timeZone\": \"...\"}` on connect and after the clock moves or the demo resets; `{\"type\": \"a2ui\", \"message\": {...}}` with an `updateDataModel` after a device's card values change; `{\"type\": \"inbox\", \"userId\": \"paulino\", \"unread\": 1, \"item\": {...}}` when a notification lands for a user; `{\"type\": \"changed\", \"users\": [\"paulino\"], \"reason\": \"plan_change\"}` when household data changed for those users outside the clock; and `{\"type\": \"error\", \"message\": \"...\"}` for a frame it cannot read, after which the connection stays open.",
         "security": [],
         "responses": {
           "101": {
@@ -245,7 +245,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "The user id, for example ana."
+            "description": "The user id, for example palmira."
           }
         ],
         "responses": {

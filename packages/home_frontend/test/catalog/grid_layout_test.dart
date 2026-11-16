@@ -273,7 +273,7 @@ void main() {
     testWidgets('lays out the Figma screen of a plan between two bands', (
       tester,
     ) async {
-      // Ana, Fri 4:30 PM: 5 + 4 + 3 columns.
+      // Palmira, Fri 4:30 PM: 5 + 4 + 3 columns.
       await _pump(tester, [
         _column('root', ['body', 'chips']),
         _row('body', ['left', 'plan', 'right']),
@@ -362,7 +362,7 @@ void main() {
     testWidgets('lays out the shopping list with its two bands', (
       tester,
     ) async {
-      // Ana, Fri 7:30 AM: 5 + 4 + 3 columns.
+      // Palmira, Fri 7:30 AM: 5 + 4 + 3 columns.
       await _pump(tester, [
         _column('root', ['body', 'chips']),
         _row('body', ['list', 'middle', 'right']),

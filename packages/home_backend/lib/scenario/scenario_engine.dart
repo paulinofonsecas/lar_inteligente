@@ -230,8 +230,7 @@ class ScenarioEngine {
       final fraction =
           now.difference(preheat).inSeconds /
           ready.difference(preheat).inSeconds;
-      final degrees =
-          (_ambientC + (target - _ambientC) * fraction).round();
+      final degrees = (_ambientC + (target - _ambientC) * fraction).round();
       _ovenIs(
         op,
         control,
@@ -254,7 +253,14 @@ class ScenarioEngine {
       );
     } else {
       // ignore: lines_longer_than_80_chars
-      _ovenIs(op, control, cook, 'done', 'Pronto · o assado está no ponto', target);
+      _ovenIs(
+        op,
+        control,
+        cook,
+        'done',
+        'Pronto · o assado está no ponto',
+        target,
+      );
     }
   }
 

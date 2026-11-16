@@ -30,45 +30,45 @@ void main() {
   group('InboxService', () {
     test('writes an unread item for the person it is for', () {
       final effect = world.inbox.post(
-        to: 'marco',
-        from: 'ana',
+        to: 'paulino',
+        from: 'palmira',
         kind: 'note',
         title: 'Hello',
-        body: 'Hi Marco.',
+        body: 'Hi Paulino.',
       );
 
       expect(effect, {
         'service': 'inbox',
         'action': 'notify',
-        'to': 'marco',
+        'to': 'paulino',
         'itemId': 'inbox_1',
         'title': 'Hello',
       });
-      expect(inboxOf('ana'), isEmpty);
-      expect(inboxOf('marco').single, {
+      expect(inboxOf('palmira'), isEmpty);
+      expect(inboxOf('paulino').single, {
         'id': 'inbox_1',
-        'userId': 'marco',
-        'from': 'ana',
+        'userId': 'paulino',
+        'from': 'palmira',
         'at': '2026-10-10T16:30:00',
         'kind': 'note',
         'title': 'Hello',
-        'body': 'Hi Marco.',
+        'body': 'Hi Paulino.',
         'read': false,
       });
-      expect(database.inboxFor('marco')['unread'], 1);
+      expect(database.inboxFor('paulino')['unread'], 1);
     });
 
     test('keeps the suggestion it was given', () {
       world.inbox.post(
-        to: 'marco',
-        from: 'ana',
+        to: 'paulino',
+        from: 'palmira',
         kind: 'note',
         title: 'Hello',
         body: 'Hi.',
         suggestion: {'tool': 'request_bakery_delivery'},
       );
 
-      expect(inboxOf('marco').single['suggestion'], {
+      expect(inboxOf('paulino').single['suggestion'], {
         'tool': 'request_bakery_delivery',
       });
     });
@@ -76,8 +76,8 @@ void main() {
     test('tells its listener about the item', () {
       final seen = <Map<String, Object?>>[];
       InboxService(database, onPosted: seen.add).post(
-        to: 'marco',
-        from: 'ana',
+        to: 'paulino',
+        from: 'palmira',
         kind: 'note',
         title: 'Hello',
         body: 'Hi.',
@@ -90,7 +90,7 @@ void main() {
       expect(
         () => world.inbox.post(
           to: 'nobody',
-          from: 'ana',
+          from: 'palmira',
           kind: 'k',
           title: 't',
           body: 'b',
@@ -99,7 +99,7 @@ void main() {
       );
       expect(
         () => world.inbox.post(
-          to: 'ana',
+          to: 'palmira',
           from: 'nobody',
           kind: 'k',
           title: 't',
@@ -113,8 +113,8 @@ void main() {
       setUp(() {
         for (final title in ['One', 'Two']) {
           world.inbox.post(
-            to: 'marco',
-            from: 'ana',
+            to: 'paulino',
+            from: 'palmira',
             kind: 'note',
             title: title,
             body: title,
@@ -123,23 +123,23 @@ void main() {
       });
 
       test('marks everything unread', () {
-        final result = world.inbox.markRead('marco');
+        final result = world.inbox.markRead('paulino');
 
-        expect(result, {'userId': 'marco', 'markedRead': 2});
-        expect(database.inboxFor('marco')['unread'], 0);
-        expect(world.inbox.markRead('marco')['markedRead'], 0);
+        expect(result, {'userId': 'paulino', 'markedRead': 2});
+        expect(database.inboxFor('paulino')['unread'], 0);
+        expect(world.inbox.markRead('paulino')['markedRead'], 0);
       });
 
       test('marks one item', () {
-        final result = world.inbox.markRead('marco', itemId: 'inbox_1');
+        final result = world.inbox.markRead('paulino', itemId: 'inbox_1');
 
         expect(result['markedRead'], 1);
-        expect(database.inboxFor('marco')['unread'], 1);
+        expect(database.inboxFor('paulino')['unread'], 1);
       });
 
       test('names the items there are for one that is missing', () {
         expect(
-          () => world.inbox.markRead('marco', itemId: 'nope'),
+          () => world.inbox.markRead('paulino', itemId: 'nope'),
           notFound('inbox_1, inbox_2'),
         );
         expect(() => world.inbox.markRead('nobody'), notFound('nobody'));
@@ -151,26 +151,26 @@ void main() {
     test('lists the newest first and hides what the clock has not reached', () {
       world.moveTo(atHhmm(database.clock.start, '17:00'));
       world.inbox.post(
-        to: 'marco',
-        from: 'ana',
+        to: 'paulino',
+        from: 'palmira',
         kind: 'note',
         title: 'Later',
         body: 'b',
       );
       world.moveTo(atHhmm(database.clock.start, '16:45'));
 
-      expect(inboxOf('marco'), isEmpty);
+      expect(inboxOf('paulino'), isEmpty);
 
       world.moveTo(atHhmm(database.clock.start, '17:10'));
       world.inbox.post(
-        to: 'marco',
-        from: 'ana',
+        to: 'paulino',
+        from: 'palmira',
         kind: 'note',
         title: 'Newest',
         body: 'b',
       );
 
-      expect(inboxOf('marco').map((item) => item['title']), [
+      expect(inboxOf('paulino').map((item) => item['title']), [
         'Newest',
         'Later',
       ]);
@@ -180,21 +180,21 @@ void main() {
       final bare = MockDatabase(
         users: {
           'users': [
-            {'id': 'ana'},
+            {'id': 'palmira'},
           ],
         },
         home: <String, dynamic>{},
       );
 
-      expect(bare.inboxFor('ana')['items'], isEmpty);
+      expect(bare.inboxFor('palmira')['items'], isEmpty);
       expect(bare.inbox['items'], isEmpty);
       expect(() => bare.inboxFor('nobody'), notFound('nobody'));
     });
 
     test('goes back to empty on a reset', () {
       world.inbox.post(
-        to: 'marco',
-        from: 'ana',
+        to: 'paulino',
+        from: 'palmira',
         kind: 'note',
         title: 'Hello',
         body: 'Hi.',
@@ -202,7 +202,7 @@ void main() {
 
       world.reset();
 
-      expect(inboxOf('marco'), isEmpty);
+      expect(inboxOf('paulino'), isEmpty);
     });
 
     test('has no items when the document has none', () {
@@ -213,23 +213,23 @@ void main() {
   });
 
   group('DinnerPlanner tells the people it concerns', () {
-    test('Marco hears Ana moved the dinner, and what to do about it', () {
+    test('Paulino hears Palmira moved the dinner, and what to do about it', () {
       final result = world.planner.moveGuests(
         shiftMinutes: -60,
-        requestedBy: 'ana',
+        requestedBy: 'palmira',
       );
 
       expect(
         (result['effects']! as List<dynamic>).last,
-        containsPair('to', 'marco'),
+        containsPair('to', 'paulino'),
       );
-      expect(inboxOf('ana'), isEmpty);
-      final item = inboxOf('marco').single;
-      expect(item['from'], 'ana');
+      expect(inboxOf('palmira'), isEmpty);
+      final item = inboxOf('paulino').single;
+      expect(item['from'], 'palmira');
       expect(item['title'], 'Jantar movido para 6:00 PM');
       expect(
         item['body'],
-        'Ana mudou o jantar de 7:00 PM para 6:00 PM. Sua rota agora '
+        'Palmira mudou o jantar de 7:00 PM para 6:00 PM. Sua rota agora '
         'chega em casa às 6:30–6:45 PM, depois das visitas.',
       );
       expect(
@@ -241,18 +241,18 @@ void main() {
     test('defaults to the owner of the dinner as the one who asked', () {
       world.planner.moveGuests(arrival: '18:00');
 
-      expect(inboxOf('marco'), hasLength(1));
-      expect(inboxOf('ana'), isEmpty);
+      expect(inboxOf('paulino'), hasLength(1));
+      expect(inboxOf('palmira'), isEmpty);
     });
 
-    test('Ana hears when Marco moves it, with nothing to fix', () {
-      world.planner.moveGuests(shiftMinutes: -60, requestedBy: 'marco');
+    test('Palmira hears when Paulino moves it, with nothing to fix', () {
+      world.planner.moveGuests(shiftMinutes: -60, requestedBy: 'paulino');
 
-      expect(inboxOf('marco'), isEmpty);
-      final item = inboxOf('ana').single;
+      expect(inboxOf('paulino'), isEmpty);
+      final item = inboxOf('palmira').single;
       expect(
         item['body'],
-        'Marco mudou o jantar de 7:00 PM para 6:00 PM.',
+        'Paulino mudou o jantar de 7:00 PM para 6:00 PM.',
       );
       expect(item.containsKey('suggestion'), isFalse);
     });
@@ -260,21 +260,21 @@ void main() {
     test('says what moved but offers nothing when the route still works', () {
       world.planner.moveGuests(shiftMinutes: 60);
 
-      final item = inboxOf('marco').single;
+      final item = inboxOf('paulino').single;
       expect(item['title'], 'Jantar movido para 8:00 PM');
       expect(
         item['body'],
-        'Ana mudou o jantar de 7:00 PM para 8:00 PM.',
+        'Palmira mudou o jantar de 7:00 PM para 8:00 PM.',
       );
       expect(item.containsKey('suggestion'), isFalse);
     });
 
     test('does not offer a delivery that was already asked for', () {
-      world.bakery.requestDelivery('marco');
+      world.bakery.requestDelivery('paulino');
 
       world.planner.moveGuests(shiftMinutes: -60);
 
-      final item = inboxOf('marco').single;
+      final item = inboxOf('paulino').single;
       expect(item['body'], contains('depois das visitas'));
       expect(item.containsKey('suggestion'), isFalse);
     });
@@ -282,7 +282,7 @@ void main() {
     test('does not tell anyone when nothing moved', () {
       world.planner.moveGuests(shiftMinutes: 0);
 
-      expect(inboxOf('marco'), isEmpty);
+      expect(inboxOf('paulino'), isEmpty);
     });
 
     test('knows who asked', () {
@@ -298,10 +298,10 @@ void main() {
       'only the person the pickup is assigned to can ask for a delivery',
       () {
         expect(
-          () => world.bakery.requestDelivery('ana'),
-          notFound('está designada a marco'),
+          () => world.bakery.requestDelivery('palmira'),
+          notFound('está designada a paulino'),
         );
-        expect(world.bakery.requestDelivery('marco')['action'], 'requested');
+        expect(world.bakery.requestDelivery('paulino')['action'], 'requested');
       },
     );
   });
@@ -316,16 +316,16 @@ void main() {
         m['summary']! as String,
     ];
 
-    test("puts the pickup in Marco's next and the dinner in both", () {
+    test("puts the pickup in Paulino's next and the dinner in both", () {
       world.moveTo(atHhmm(database.clock.start, '17:00'));
 
-      expect(summaries(feed.forUser('marco')['next']), [
+      expect(summaries(feed.forUser('paulino')['next']), [
         'Buscar na aula de piano',
         'Buscar bolo na padaria',
         'As visitas chegam',
       ]);
       expect(
-        summaries(feed.forUser('ana')['next']),
+        summaries(feed.forUser('palmira')['next']),
         contains('As visitas chegam'),
       );
     });
@@ -333,22 +333,22 @@ void main() {
     test('shows a notification as what just happened to its person', () {
       world.planner.moveGuests(shiftMinutes: -60);
 
-      final marco = feed.forUser('marco');
+      final paulino = feed.forUser('paulino');
 
       expect(
-        summaries(marco['recent']),
+        summaries(paulino['recent']),
         contains('Jantar movido para 6:00 PM'),
       );
       expect(
-        (marco['recent']! as List<dynamic>)
+        (paulino['recent']! as List<dynamic>)
             .cast<Map<String, dynamic>>()
             .firstWhere(
               (m) => m['kind'] == 'inbox',
             ),
-        containsPair('by', 'ana'),
+        containsPair('by', 'palmira'),
       );
       expect(
-        summaries(feed.forUser('ana')['recent']),
+        summaries(feed.forUser('palmira')['recent']),
         isNot(contains('Jantar movido para 6:00 PM')),
       );
     });

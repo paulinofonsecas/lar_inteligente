@@ -9,7 +9,7 @@ void main() {
   final database = MockDatabase(
     users: {
       'users': [
-        {'id': 'ana', 'name': 'Ana', 'role': 'Host'},
+        {'id': 'palmira', 'name': 'Palmira', 'role': 'Host'},
       ],
     },
     home: <String, dynamic>{},
@@ -46,9 +46,9 @@ void main() {
       final registered = registerAgentTools(Genkit(), tools);
       final userData = registered.firstWhere((t) => t.name == 'get_user_data');
 
-      final result = await userData.runRaw({'user_id': 'ana'});
+      final result = await userData.runRaw({'user_id': 'palmira'});
 
-      expect((result.result as Map)['id'], 'ana');
+      expect((result.result as Map)['id'], 'palmira');
     });
 
     test('registers a runnable tool called without arguments', () async {

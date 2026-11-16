@@ -146,7 +146,7 @@ final Map<String, Map<String, Object?>> _full = {
           'checked': i.isEven,
         },
     ],
-    'footerAction': {'label': 'Share list with Marco', 'icon': 'share'},
+    'footerAction': {'label': 'Share list with Paulino', 'icon': 'share'},
   },
 };
 

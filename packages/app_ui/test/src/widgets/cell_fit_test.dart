@@ -129,7 +129,7 @@ Widget _plan({PlanDensity density = PlanDensity.detailed}) => PlanTimeline(
       title: 'Preheat oven',
       icon: 'oven',
       previousTime: '6:00',
-      changedBy: 'Ana',
+      changedBy: 'Palmira',
     ),
     PlanEntry(time: '7:45 PM', title: 'Guest scene', icon: 'scene'),
     PlanEntry(time: '8:00 PM', title: 'Guests arrive', icon: 'guests'),
@@ -179,7 +179,7 @@ Widget _summary() => const ChangeSummary(
     ChangeTileData(
       icon: 'send',
       label: 'Notified',
-      value: 'Marco',
+      value: 'Paulino',
       note: 'Sent 5:41 PM',
     ),
     ChangeTileData(
@@ -202,7 +202,7 @@ Widget _todo() => ShoppingList(
     ShoppingItem(id: 'e', label: 'Red wine', detail: '2 bottles'),
     ShoppingItem(id: 'f', label: 'Parsley'),
   ],
-  footerLabel: 'Share list with Marco',
+  footerLabel: 'Share list with Paulino',
   footerIcon: 'share',
   onFooter: () {},
 );
@@ -402,7 +402,7 @@ void main() {
 
       expect(find.text('Red wine'), findsOneWidget);
       expect(find.text('Parsley'), findsNothing);
-      expect(find.text('Share list with Marco'), findsOneWidget);
+      expect(find.text('Share list with Paulino'), findsOneWidget);
     });
 
     testWidgets('ShoppingList keeps two rows and drops the footer when short', (
@@ -410,7 +410,7 @@ void main() {
     ) async {
       await _pump(tester, const Size(352, 360), _todo());
 
-      expect(find.text('Share list with Marco'), findsNothing);
+      expect(find.text('Share list with Paulino'), findsNothing);
       expect(find.text('Short ribs'), findsOneWidget);
       expect(find.text('Heavy cream'), findsOneWidget);
       expect(find.text('Parsley'), findsNothing);

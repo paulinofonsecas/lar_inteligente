@@ -145,7 +145,7 @@ void main() {
       expect(trait('car', 'Climate')['startAt'], '16:50');
       expect(trait('thermostat', 'Thermostat')['heatSetpoint'], 21);
       expect(database.scenes.single['state'], 'running');
-      expect(database.todoLists.single['sharedWith'], ['marco']);
+      expect(database.todoLists.single['sharedWith'], ['paulino']);
     });
   });
 

@@ -9,8 +9,8 @@ class _Source implements FeedSource {
 
   @override
   String userName(String userId) {
-    if (userId != 'ana') throw ArgumentError('No user $userId');
-    return 'Ana';
+    if (userId != 'palmira') throw ArgumentError('No user $userId');
+    return 'Palmira';
   }
 
   final devices = <String, Map<String, dynamic>>{};
@@ -20,8 +20,14 @@ class _Source implements FeedSource {
 
   @override
   List<Map<String, dynamic>> recipeSteps = [
-    {'id': 'prep', 'step': 'Prep the rack', 'at': '17:00', 'userId': 'ana'},
-    {'id': 'old', 'step': 'Shop', 'at': '15:00', 'userId': 'ana', 'done': true},
+    {'id': 'prep', 'step': 'Prep the rack', 'at': '17:00', 'userId': 'palmira'},
+    {
+      'id': 'old',
+      'step': 'Shop',
+      'at': '15:00',
+      'userId': 'palmira',
+      'done': true,
+    },
   ];
 
   @override
@@ -42,7 +48,7 @@ class _Source implements FeedSource {
       'start': '2026-10-10T18:00:00',
       'title': 'Pick up wine',
       'detail': 'Market',
-      'assignedTo': ['ana', 'marco'],
+      'assignedTo': ['palmira', 'paulino'],
     },
     {
       'start': '2026-10-10T18:30:00',
@@ -54,7 +60,8 @@ class _Source implements FeedSource {
 
   @override
   List<String> assigneesOf(Map<String, dynamic> event) =>
-      (event['assignedTo'] as List<dynamic>? ?? const ['ana']).cast<String>();
+      (event['assignedTo'] as List<dynamic>? ?? const ['palmira'])
+          .cast<String>();
 
   @override
   List<Map<String, dynamic>> inboxItems = [];
@@ -75,7 +82,7 @@ void main() {
   });
 
   test('lists what is coming up within the window, soonest first', () {
-    final result = feed.forUser('ana');
+    final result = feed.forUser('palmira');
 
     expect(result['nowLabel'], '4:30 PM');
     expect(result['recent'], isEmpty);
@@ -89,17 +96,17 @@ void main() {
   test('moves a moment to recent once the clock passes it', () {
     source.now = DateTime.utc(2026, 10, 10, 17, 10);
 
-    final recent = feed.forUser('ana')['recent']! as List<dynamic>;
+    final recent = feed.forUser('palmira')['recent']! as List<dynamic>;
 
     expect(_summaries(recent), ['Prep the rack']);
     expect((recent.first as Map<String, Object?>)['minutesAgo'], 10);
   });
 
   test('keeps only what concerns the user', () {
-    source.calendarEvents.first['assignedTo'] = ['marco'];
+    source.calendarEvents.first['assignedTo'] = ['paulino'];
 
     expect(
-      _summaries(feed.forUser('ana')['next']),
+      _summaries(feed.forUser('palmira')['next']),
       isNot(contains('Pick up wine: Market')),
     );
   });
@@ -110,7 +117,7 @@ void main() {
         'id': 'groceries',
         'title': 'Groceries',
         'dueBeforeStep': 'prep',
-        'owners': ['ana'],
+        'owners': ['palmira'],
         'items': [
           {'label': 'Eggs'},
           {'label': 'Milk', 'checked': true},
@@ -119,7 +126,7 @@ void main() {
     ];
     source.recipeSteps.first['at'] = '23:00';
 
-    final next = (feed.forUser('ana')['next']! as List<dynamic>)
+    final next = (feed.forUser('palmira')['next']! as List<dynamic>)
         .cast<Map<String, Object?>>();
 
     expect(next.last['listId'], 'groceries');
@@ -159,7 +166,7 @@ void main() {
         }
         ..orders = [
           {
-            'userId': 'ana',
+            'userId': 'palmira',
             'item': 'Bolo',
             'bakeryName': 'Doce Ponto',
             'requestedAt': '2026-10-10T16:40:00',
@@ -176,7 +183,7 @@ void main() {
         ..trips = [
           {
             'id': 'drive',
-            'userId': 'ana',
+            'userId': 'palmira',
             'leaveBy': '2026-10-10T17:55:00',
             'homeArrivalAt': '2026-10-10T19:30:00',
             'homeArrivalRange': '7:20 PM',
@@ -195,20 +202,20 @@ void main() {
         ..inboxItems = [
           {
             'at': '2026-10-10T17:35:00',
-            'title': 'Marco mudou o jantar',
-            'userId': 'ana',
-            'from': 'marco',
+            'title': 'Paulino mudou o jantar',
+            'userId': 'palmira',
+            'from': 'paulino',
           },
         ];
     });
 
     test('lists what just happened', () {
-      final recent = _summaries(feed.forUser('ana')['recent']);
+      final recent = _summaries(feed.forUser('palmira')['recent']);
 
       expect(recent, contains('O forno chega a 200 °C'));
       expect(recent, contains('Entrega · bolo'));
       expect(recent, contains('Pediu um horário mais tarde'));
-      expect(recent, contains('Marco mudou o jantar'));
+      expect(recent, contains('Paulino mudou o jantar'));
       expect(
         recent.any(
           (s) =>
@@ -226,7 +233,7 @@ void main() {
     });
 
     test('leads with the courier at the door', () {
-      final recent = (feed.forUser('ana')['recent']! as List<dynamic>)
+      final recent = (feed.forUser('palmira')['recent']! as List<dynamic>)
           .cast<Map<String, Object?>>();
 
       final arrival = recent.singleWhere(
@@ -236,7 +243,7 @@ void main() {
     });
 
     test('lists what is coming up', () {
-      final next = _summaries(feed.forUser('ana')['next']);
+      final next = _summaries(feed.forUser('palmira')['next']);
 
       expect(
         next,
@@ -246,7 +253,7 @@ void main() {
         next.any(
           (s) =>
               s.startsWith(
-                'Itinerário de Ana: sair às 5:55 PM, Padaria 6:10 PM',
+                'Itinerário de Palmira: sair às 5:55 PM, Padaria 6:10 PM',
               ) &&
               s.endsWith('Casa 7:20 PM'),
         ),
@@ -259,7 +266,7 @@ void main() {
       source.orders.first['statusLabel'] = 'Waiting';
       source.now = DateTime.utc(2026, 10, 10, 16, 45);
 
-      final recent = _summaries(feed.forUser('ana')['recent']);
+      final recent = _summaries(feed.forUser('palmira')['recent']);
 
       expect(recent.any((s) => s.contains('está pending')), isTrue);
     });
@@ -270,7 +277,7 @@ void main() {
         ..['progressPercent'] = 40;
       source.now = DateTime.utc(2026, 10, 10, 17, 30);
 
-      final recent = _summaries(feed.forUser('ana')['recent']);
+      final recent = _summaries(feed.forUser('palmira')['recent']);
 
       expect(
         recent.any((s) => s.contains('está a caminho, 40% do trajeto')),

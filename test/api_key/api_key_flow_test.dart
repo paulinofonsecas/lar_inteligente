@@ -180,7 +180,7 @@ void main() {
       await _settle(tester);
 
       expect(find.byType(ApiKeyDialog), findsNothing);
-      expect(factory.agents.single.sent, [ana.prompt]);
+      expect(factory.agents.single.sent, [palmira.prompt]);
       expect(find.byType(A2uiSurface), findsOneWidget);
       expect(find.byType(SkeletonSurface), findsNothing);
     });
@@ -196,7 +196,7 @@ void main() {
         ..save('two');
       await _settle(tester);
 
-      expect(factory.agents.single.sent, [ana.prompt]);
+      expect(factory.agents.single.sent, [palmira.prompt]);
     });
 
     testWidgets('does not refresh a dashboard that has not been asked for', (
@@ -211,7 +211,7 @@ void main() {
       );
       await _settle(tester);
 
-      live.emit(const DataChanged(users: ['ana']));
+      live.emit(const DataChanged(users: ['palmira']));
       await _settle(tester);
 
       expect(factory.agents.single.refreshed, isEmpty);
@@ -244,7 +244,7 @@ void main() {
       keys.save('late');
       await _settle(tester);
 
-      expect(factory.agents.last.sent, [ana.prompt]);
+      expect(factory.agents.last.sent, [palmira.prompt]);
       await tester.pump(const Duration(seconds: 4));
     });
   });

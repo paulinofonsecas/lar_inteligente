@@ -50,7 +50,7 @@ flutter run -d chrome --web-port 3000 --dart-define-from-file=config.json
 ### Verificações de API confirmadas
 
 - `GET /health` → `{"status":"ok"}`
-- `GET /users` (header `X-Session-Id`) → Ana e Marco com fotos em base64
+- `GET /users` (header `X-Session-Id`) → Palmira e Paulino com fotos em base64
 - `GET /clock` → `{"now":"2026-10-10T07:30:00","start":"...","end":"...","timeZone":"America/Chicago"}`
 
 > ⚠️ O id de sessão precisa casar com `^[A-Za-z0-9_-]{16,64}$` (ex.: `demo-session-000001`).
@@ -127,7 +127,7 @@ WS   /transcribe          áudio ↑ texto ↓ via Gemini Live (voz)
 | `HeadsUpCard` | Card urgente no topo — sempre *half tall* |
 | `ChangeSummary` | Resumo do que a pessoa pediu |
 | `PlanTimeline` | Itinerário — `density: detailed` (full height) ou `compact` (half tall) |
-| `TripCard` | Viagem do Marco — até 3 stops, *leave by* |
+| `TripCard` | Viagem do Paulino — até 3 stops, *leave by* |
 | `ChargeCard` | Carga do carro EV |
 | `SceneCard` | Cena "Dinner party" — botão Start quando `ready` |
 | `CountdownCard` | Contagem regressiva para 19:00 |
@@ -185,7 +185,7 @@ WS   /transcribe          áudio ↑ texto ↓ via Gemini Live (voz)
 
 ### H. Multi-usuário (o grande insight!)
 
-- **2 perfis: Ana (Host) e Marco (Logistics)** — cada um vê seu dashboard
+- **2 perfis: Palmira (Host) e Paulino (Logistics)** — cada um vê seu dashboard
 - **Mundo demo por visitante** — sessões isoladas por `X-Session-Id`
 - **`dashboardLeadsWith`** — o perfil diz ao modelo o que priorizar
 - **Troca de perfil rebuilda o dashboard** de outro ponto de vista
@@ -196,7 +196,7 @@ WS   /transcribe          áudio ↑ texto ↓ via Gemini Live (voz)
 2. **Falar** no mic → transcrição → mesmo resultado
 3. **Tap no DeviceCard** (toggle) → state machine → dashboard reflete
 4. **Mover o relógio** → ver o mundo reconciliar (forno, rota, bolo)
-5. **Trocar perfil** Ana ↔ Marco → dashboards diferentes da mesma casa
+5. **Trocar perfil** Palmira ↔ Paulino → dashboards diferentes da mesma casa
 6. **Chips de sugestão** → modelo lê o inbox e propõe ação ("Have the bakery deliver the cake")
 7. **Undo** → reverte a última mudança
 

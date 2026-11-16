@@ -132,7 +132,7 @@ void main() {
           (seen['a2ui']!['message'] as Map)['updateDataModel'] as Map;
       expect(update['path'], '/devices/oven');
       expect((update['value'] as Map)['status'], 'Preaquece às 5:30 PM');
-      expect(seen['inbox'], containsPair('userId', 'marco'));
+      expect(seen['inbox'], containsPair('userId', 'paulino'));
       expect(seen['inbox'], containsPair('unread', 1));
       expect(
         (seen['inbox']!['item'] as Map)['title'],
@@ -140,7 +140,7 @@ void main() {
       );
       expect(seen['changed'], {
         'type': 'changed',
-        'users': ['marco'],
+        'users': ['paulino'],
         'reason': 'plan_change',
       });
     });

@@ -21,7 +21,7 @@ void main() {
             ChangeTileData(
               icon: 'send',
               label: 'Notified',
-              value: 'Marco',
+              value: 'Paulino',
               note: 'Sent 5:41 PM',
             ),
             ChangeTileData(label: 'Plain', value: 'x'),
@@ -33,7 +33,7 @@ void main() {
       expect(find.text('Dinner moved to 8:00 PM'), findsOneWidget);
       expect(find.text('Oven preheat'), findsOneWidget);
       expect(find.text('was 6:00 PM'), findsOneWidget);
-      expect(find.text('Marco'), findsOneWidget);
+      expect(find.text('Paulino'), findsOneWidget);
       expect(find.text('Sent 5:41 PM'), findsOneWidget);
       expect(find.text('Plain'), findsOneWidget);
     });

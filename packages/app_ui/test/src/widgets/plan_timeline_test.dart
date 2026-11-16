@@ -65,7 +65,7 @@ void main() {
               PlanEntry(time: '7:00 PM', title: 'Preheat the oven'),
               PlanEntry(time: '7:15 PM', title: 'Chill the wine'),
               PlanEntry(time: '7:30 PM', title: 'Dining scene'),
-              PlanEntry(time: '7:45 PM', title: 'Marco brings the cake'),
+              PlanEntry(time: '7:45 PM', title: 'Paulino brings the cake'),
             ],
           ),
         ),
@@ -174,7 +174,7 @@ void main() {
                 time: '7:00 PM',
                 title: 'Moved',
                 previousTime: '6:00',
-                changedBy: 'Ana',
+                changedBy: 'Palmira',
               ),
               PlanEntry(
                 time: '7:45 PM',
@@ -191,7 +191,7 @@ void main() {
         ),
       );
 
-      expect(find.text('era 6:00 · Ana'), findsOneWidget);
+      expect(find.text('era 6:00 · Palmira'), findsOneWidget);
       expect(find.text('Sem mudança'), findsOneWidget);
       expect(find.text('era 7'), findsOneWidget);
     });
@@ -201,11 +201,13 @@ void main() {
     ) async {
       await tester.pumpComponent(
         const PlanTimeline(
-          entries: [PlanEntry(time: '24:00', title: 'Late', changedBy: 'Ana')],
+          entries: [
+            PlanEntry(time: '24:00', title: 'Late', changedBy: 'Palmira'),
+          ],
         ),
       );
 
-      expect(find.text('Ana'), findsOneWidget);
+      expect(find.text('Palmira'), findsOneWidget);
       expect(find.text('24:00'), findsOneWidget);
     });
 

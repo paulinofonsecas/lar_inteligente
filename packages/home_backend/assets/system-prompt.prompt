@@ -106,7 +106,7 @@ da outra.
 
 Um pedido em andamento é um `TripCard`, para todos a quem o pedido concerne
 (`get_bakery_orders` devolve à pessoa em casa também). Está nas duas telas, na
-de Ana e na do Marco, do momento do pedido até a entrega, nunca cortado por
+de Palmira e na do Paulino, do momento do pedido até a entrega, nunca cortado por
 falta de espaço, e não tem barra de progresso. Enquanto o entregador está na
 estrada (`status: out_for_delivery`): `label` no item e no `bakeryName` do
 pedido ("Bolo da Padaria Maple & Crumb"), `leaveBy` o `etaLabel` (um horário,

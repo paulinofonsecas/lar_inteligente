@@ -63,7 +63,7 @@ void main() {
       expect(trait('fridge', 'BooleanState')['doorOpen'], isFalse);
     });
 
-    test('the calendar has the guests at 7:00 and both of Marco pickups', () {
+    test('the calendar has the guests at 7:00 and both of Paulino pickups', () {
       expect(event('cal_dinner')['start'], '2026-10-10T19:00:00');
       expect(event('cal_piano')['start'], '2026-10-10T17:15:00');
       expect(event('cal_cake')['start'], '2026-10-10T17:45:00');
@@ -101,7 +101,7 @@ void main() {
       );
     });
 
-    test("Marco's route leaves at 4:55 with enough range for both stops", () {
+    test("Paulino's route leaves at 4:55 with enough range for both stops", () {
       expect(stopTimes(), [
         'Aula de piano (buscar) 5:15 PM',
         'Padaria 5:45 PM',
@@ -122,7 +122,7 @@ void main() {
     });
   });
 
-  test('Ana checks off the thyme', () {
+  test('Palmira checks off the thyme', () {
     machine.toggleTodo(itemId: 'thyme', checked: true);
     final items = database.todoLists.single['items'] as List<dynamic>;
     final thyme = items.cast<Map<String, dynamic>>().firstWhere(
@@ -131,7 +131,7 @@ void main() {
     expect(thyme['checked'], isTrue);
   });
 
-  test('Marco preconditions the cabin for the 4:55 departure', () {
+  test('Paulino preconditions the cabin for the 4:55 departure', () {
     at('16:33');
     machine.execute('car', DeviceCommand.start);
 
@@ -196,7 +196,7 @@ void main() {
       );
     });
 
-    test("flags Marco's home time as after the guests arrive", () {
+    test("flags Paulino's home time as after the guests arrive", () {
       expect(trip()['homeAfterGuestsArrive'], isTrue);
       expect(trip()['notes'], [
         'Casa às 6:30–6:45 PM é depois da chegada das visitas às 6:00 PM.',
@@ -213,7 +213,7 @@ void main() {
     });
 
     test('is pending when asked, with nothing changed yet', () {
-      final result = world.bakery.requestDelivery('marco');
+      final result = world.bakery.requestDelivery('paulino');
 
       expect(result['action'], 'requested');
       expect((result['order']! as Map)['status'], 'pending');
@@ -221,18 +221,18 @@ void main() {
     });
 
     test('is confirmed a minute later with an ETA of 5:45', () {
-      world.bakery.requestDelivery('marco');
+      world.bakery.requestDelivery('paulino');
       at('16:41');
 
-      final order = database.bakeryFor('marco')['orders']! as List<dynamic>;
+      final order = database.bakeryFor('paulino')['orders']! as List<dynamic>;
       expect((order.single as Map)['status'], 'confirmed');
       expect((order.single as Map)['eta'], '2026-10-10T17:45:00');
     });
 
     test('is pending until the courier leaves, then in progress', () {
-      world.bakery.requestDelivery('marco');
+      world.bakery.requestDelivery('paulino');
       Map<String, dynamic> order() =>
-          (database.bakeryFor('marco')['orders']! as List<dynamic>).single
+          (database.bakeryFor('paulino')['orders']! as List<dynamic>).single
               as Map<String, dynamic>;
 
       at('17:00');
@@ -258,7 +258,7 @@ void main() {
     });
 
     test('drops the bakery stop: home by 5:30–5:45, enough for the trip', () {
-      world.bakery.requestDelivery('marco');
+      world.bakery.requestDelivery('paulino');
       at('16:41');
 
       expect(stopTimes(), ['Aula de piano (buscar) 5:15 PM', 'Casa 5:30 PM']);
@@ -301,44 +301,44 @@ void main() {
     });
 
     test('is delivered at 5:45 and the doorbell sees the courier', () {
-      world.bakery.requestDelivery('marco');
+      world.bakery.requestDelivery('paulino');
       at('17:45');
 
-      final order = database.bakeryFor('marco')['orders']! as List<dynamic>;
+      final order = database.bakeryFor('paulino')['orders']! as List<dynamic>;
       expect((order.single as Map)['status'], 'delivered');
       expect(trait('doorbell', 'DoorbellEvent'), {
         'kind': 'delivery',
         'label': 'Entrega · bolo',
         'at': '2026-10-10T17:45:00',
-        'handledBy': 'marco',
+        'handledBy': 'paulino',
       });
     });
 
     test('rewinding before the request puts everything back', () {
-      world.bakery.requestDelivery('marco');
+      world.bakery.requestDelivery('paulino');
       at('17:40');
       at('16:30');
 
-      expect(database.bakeryFor('marco')['orders'], isEmpty);
+      expect(database.bakeryFor('paulino')['orders'], isEmpty);
       expect(event('cal_cake')['status'], 'confirmed');
       expect(stopTimes(), hasLength(3));
     });
 
     test('asking again returns the order that exists', () {
-      world.bakery.requestDelivery('marco');
+      world.bakery.requestDelivery('paulino');
 
       expect(
-        world.bakery.requestDelivery('marco')['action'],
+        world.bakery.requestDelivery('paulino')['action'],
         'already_requested',
       );
     });
 
     test('asking after a rewind makes a fresh order', () {
-      world.bakery.requestDelivery('marco');
+      world.bakery.requestDelivery('paulino');
       at('17:40');
       at('16:30');
 
-      expect(world.bakery.requestDelivery('marco')['action'], 'requested');
+      expect(world.bakery.requestDelivery('paulino')['action'], 'requested');
       expect(
         (database.bakery['orders']! as List<dynamic>).length,
         1,
@@ -351,7 +351,7 @@ void main() {
       at('16:36');
       world.planner.moveGuests(shiftMinutes: -60);
       at('16:39');
-      world.bakery.requestDelivery('marco');
+      world.bakery.requestDelivery('paulino');
     });
 
     test('prep is done by 5:30', () {
@@ -397,7 +397,7 @@ void main() {
       expect(trait('oven', 'OperationalState')['state'], 'done');
     });
 
-    test('Ana starts the dining scene at 5:42, ahead of the plan', () {
+    test('Palmira starts the dining scene at 5:42, ahead of the plan', () {
       at('17:42');
       machine.runScene('dinner_party');
 
@@ -430,9 +430,9 @@ void main() {
 
     test('a courier for someone with no trip is handled by nobody', () {
       world.reset();
-      world.calendar.event('cal_cake')['userId'] = 'ana';
+      world.calendar.event('cal_cake')['userId'] = 'palmira';
       at('16:36');
-      world.bakery.requestDelivery('ana');
+      world.bakery.requestDelivery('palmira');
       at('17:45');
 
       expect(trait('doorbell', 'DoorbellEvent')['kind'], 'delivery');
@@ -477,7 +477,7 @@ void main() {
       at('16:36');
       world.planner.moveGuests(shiftMinutes: -60);
       at('16:39');
-      world.bakery.requestDelivery('marco');
+      world.bakery.requestDelivery('paulino');
       machine.toggleTodo(itemId: 'thyme', checked: true);
       at('17:50');
 
@@ -486,7 +486,7 @@ void main() {
 
       expect(database.clock.nowIso, '2026-10-10T07:30:00');
       expect(event('cal_dinner')['start'], '2026-10-10T19:00:00');
-      expect(database.bakeryFor('marco')['orders'], isEmpty);
+      expect(database.bakeryFor('paulino')['orders'], isEmpty);
       expect(database.bakery['messages'], isEmpty);
       expect(trait('oven', 'TemperatureControl')['scheduledStart'], '18:30');
       expect(trait('oven', 'OperationalState')['state'], 'stopped');

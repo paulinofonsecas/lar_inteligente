@@ -32,7 +32,7 @@ void main() {
           return http.Response(
             jsonEncode({
               'users': [
-                {'id': 'ana'},
+                {'id': 'palmira'},
               ],
             }),
             200,
@@ -43,7 +43,7 @@ void main() {
       final users = await client.getUsers();
 
       expect(users, [
-        {'id': 'ana'},
+        {'id': 'palmira'},
       ]);
       expect(seen.method, 'GET');
       expect(seen.url, Uri.parse('http://localhost:8080/users'));

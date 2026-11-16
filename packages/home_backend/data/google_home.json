@@ -39,7 +39,7 @@
       "room": "kitchen",
       "type": "OvenDevice",
       "usedBy": [
-        "ana"
+        "palmira"
       ],
       "traits": {
         "TemperatureControl": {
@@ -74,7 +74,7 @@
       "room": "kitchen",
       "type": "RefrigeratorDevice",
       "usedBy": [
-        "ana"
+        "palmira"
       ],
       "traits": {
         "TemperatureMeasurement": {
@@ -98,7 +98,7 @@
       "room": "dining_room",
       "type": "ColorTemperatureLightDevice",
       "usedBy": [
-        "ana"
+        "palmira"
       ],
       "traits": {
         "OnOff": {
@@ -126,7 +126,7 @@
       "room": "dining_room",
       "type": "SpeakerDevice",
       "usedBy": [
-        "ana"
+        "palmira"
       ],
       "traits": {
         "OnOff": {
@@ -153,8 +153,8 @@
       "room": "living_room",
       "type": "Thermostat",
       "usedBy": [
-        "ana",
-        "marco"
+        "palmira",
+        "paulino"
       ],
       "traits": {
         "Thermostat": {
@@ -174,7 +174,7 @@
       "room": "garage",
       "type": "GoogleAutoDevice",
       "usedBy": [
-        "marco"
+        "paulino"
       ],
       "traits": {
         "Battery": {
@@ -200,7 +200,7 @@
       "room": "entry",
       "type": "DoorLockDevice",
       "usedBy": [
-        "marco"
+        "paulino"
       ],
       "traits": {
         "DoorLock": {
@@ -223,8 +223,8 @@
       "room": "entry",
       "type": "GoogleDoorbellDevice",
       "usedBy": [
-        "ana",
-        "marco"
+        "palmira",
+        "paulino"
       ],
       "traits": {
         "DoorbellPress": {
@@ -260,7 +260,7 @@
       ],
       "room": "dining_room",
       "owners": [
-        "ana"
+        "palmira"
       ],
       "starters": [
         {

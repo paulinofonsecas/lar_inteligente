@@ -46,7 +46,7 @@ void main() {
     test('the change is what every read tool sees', () {
       machine.setPower('oven', on: true);
 
-      final read = database.homeFor('ana', room: 'kitchen');
+      final read = database.homeFor('palmira', room: 'kitchen');
       final oven = (read['devices']! as List<Map<String, dynamic>>).firstWhere(
         (d) => d['id'] == 'oven',
       );
@@ -480,7 +480,7 @@ void main() {
     test('shares with the list target once', () {
       final result = machine.shareList('shopping');
 
-      expect(database.todoLists.single['sharedWith'], ['marco']);
+      expect(database.todoLists.single['sharedWith'], ['paulino']);
       expect(result.changed, isTrue);
       expect(machine.shareList('shopping').changed, isFalse);
     });

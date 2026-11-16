@@ -6,8 +6,8 @@ import 'package:test/test.dart';
 
 const _users = {
   'users': [
-    {'id': 'ana', 'name': 'Ana', 'role': 'Host'},
-    {'id': 'marco', 'name': 'Marco', 'role': 'Logistics'},
+    {'id': 'palmira', 'name': 'Palmira', 'role': 'Host'},
+    {'id': 'paulino', 'name': 'Paulino', 'role': 'Logistics'},
   ],
 };
 
@@ -30,11 +30,11 @@ const _home = {
   'automations': [
     {
       'id': 'dinner',
-      'owners': ['ana'],
+      'owners': ['palmira'],
     },
     {
       'id': 'charge',
-      'owners': ['marco'],
+      'owners': ['paulino'],
     },
   ],
 };
@@ -43,8 +43,8 @@ const _calendar = {
   'source': 'Google Calendar',
   'timeZone': 'America/Chicago',
   'events': [
-    {'id': 'c1', 'userId': 'ana', 'start': '2026-10-10T19:00:00'},
-    {'id': 'c2', 'userId': 'marco', 'start': '2026-10-10T17:15:00'},
+    {'id': 'c1', 'userId': 'palmira', 'start': '2026-10-10T19:00:00'},
+    {'id': 'c2', 'userId': 'paulino', 'start': '2026-10-10T17:15:00'},
   ],
 };
 
@@ -52,14 +52,14 @@ const _trips = {
   'source': 'Google Maps',
   'timeZone': 'America/Chicago',
   'trips': [
-    {'id': 't1', 'userId': 'marco'},
+    {'id': 't1', 'userId': 'paulino'},
   ],
 };
 
 const _recipeTimeline = {
   'timeZone': 'America/Chicago',
   'steps': [
-    {'userId': 'ana', 'step': 'Preheat'},
+    {'userId': 'palmira', 'step': 'Preheat'},
   ],
 };
 
@@ -68,13 +68,13 @@ const _todos = {
   'lists': [
     {
       'id': 'shopping',
-      'owners': ['ana'],
-      'sharedWith': ['marco'],
+      'owners': ['palmira'],
+      'sharedWith': ['paulino'],
       'items': <Object?>[],
     },
     {
       'id': 'chores',
-      'owners': ['marco'],
+      'owners': ['paulino'],
       'sharedWith': <String>[],
       'items': <Object?>[],
     },
@@ -84,7 +84,7 @@ const _todos = {
 const _bakery = {
   'name': 'Bakery',
   'orders': [
-    {'id': 'o1', 'userId': 'marco'},
+    {'id': 'o1', 'userId': 'paulino'},
   ],
   'messages': <Object?>[],
 };
@@ -117,25 +117,25 @@ void main() {
   group('MockDatabase', () {
     test('lists users as id, name and role', () {
       expect(database.listUsers(), [
-        {'id': 'ana', 'name': 'Ana', 'role': 'Host'},
-        {'id': 'marco', 'name': 'Marco', 'role': 'Logistics'},
+        {'id': 'palmira', 'name': 'Palmira', 'role': 'Host'},
+        {'id': 'paulino', 'name': 'Paulino', 'role': 'Logistics'},
       ]);
     });
 
     test('finds a user by id and returns null for an unknown one', () {
-      expect(database.findUser('marco')?['name'], 'Marco');
+      expect(database.findUser('paulino')?['name'], 'Paulino');
       expect(database.findUser('nobody'), isNull);
     });
 
     test('requireUser throws a not found naming the available ids', () {
-      expect(database.requireUser('ana')['role'], 'Host');
+      expect(database.requireUser('palmira')['role'], 'Host');
       expect(
         () => database.requireUser('nobody'),
         throwsA(
           isA<MockDataNotFound>().having(
             (e) => e.toString(),
             'message',
-            'Sem o usuário "nobody". Disponíveis: ana, marco.',
+            'Sem o usuário "nobody". Disponíveis: palmira, paulino.',
           ),
         ),
       );
@@ -143,7 +143,7 @@ void main() {
 
     group('homeFor', () {
       test("returns household wide data and the user's automations", () {
-        final home = database.homeFor('marco');
+        final home = database.homeFor('paulino');
 
         expect(home['now'], '2026-10-10T16:30:00');
         expect(home['timeZone'], 'America/Chicago');
@@ -155,7 +155,7 @@ void main() {
       });
 
       test('leaves out data that does not come from Google Home', () {
-        final keys = database.homeFor('ana').keys;
+        final keys = database.homeFor('palmira').keys;
 
         for (final other in ['calendar', 'trips', 'recipeTimeline']) {
           expect(keys, isNot(contains(other)));
@@ -163,23 +163,25 @@ void main() {
       });
 
       test('narrows automations to another user', () {
-        expect(_ids(database.homeFor('ana')['automations']), ['dinner']);
+        expect(_ids(database.homeFor('palmira')['automations']), ['dinner']);
       });
 
       test('filters devices by room id or name without regard to case', () {
         expect(
-          _ids(database.homeFor('ana', room: 'kitchen')['devices']),
+          _ids(database.homeFor('palmira', room: 'kitchen')['devices']),
           ['oven', 'fridge'],
         );
         expect(
-          _ids(database.homeFor('ana', room: 'GARAGE')['devices']),
+          _ids(database.homeFor('palmira', room: 'GARAGE')['devices']),
           ['car'],
         );
       });
 
       test('filters devices by device type without regard to case', () {
         expect(
-          _ids(database.homeFor('ana', deviceType: 'ovendevice')['devices']),
+          _ids(
+            database.homeFor('palmira', deviceType: 'ovendevice')['devices'],
+          ),
           ['oven'],
         );
       });
@@ -188,7 +190,7 @@ void main() {
         expect(
           _ids(
             database.homeFor(
-              'ana',
+              'palmira',
               room: 'Kitchen',
               deviceType: 'RefrigeratorDevice',
             )['devices'],
@@ -206,7 +208,7 @@ void main() {
 
       test('throws for an unknown room and lists the rooms', () {
         expect(
-          () => database.homeFor('ana', room: 'Attic'),
+          () => database.homeFor('palmira', room: 'Attic'),
           throwsA(
             isA<MockDataNotFound>().having(
               (e) => e.message,
@@ -219,7 +221,7 @@ void main() {
 
       test('throws for an unknown device type and lists the types', () {
         expect(
-          () => database.homeFor('ana', deviceType: 'Toaster'),
+          () => database.homeFor('palmira', deviceType: 'Toaster'),
           throwsA(
             isA<MockDataNotFound>().having(
               (e) => e.message,
@@ -233,7 +235,7 @@ void main() {
       test('throws when the filters match no device together', () {
         expect(
           () => database.homeFor(
-            'ana',
+            'palmira',
             room: 'Garage',
             deviceType: 'OvenDevice',
           ),
@@ -242,7 +244,7 @@ void main() {
               (e) => e.message,
               'message',
               'Nenhum dispositivo no cômodo "Garage" com o tipo de dispositivo '
-              '"OvenDevice".',
+                  '"OvenDevice".',
             ),
           ),
         );
@@ -252,7 +254,7 @@ void main() {
 
   group('home write access', () {
     test('serves the live device maps, so a write is seen by every read', () {
-      final read = database.homeFor('ana')['devices']! as List<Object?>;
+      final read = database.homeFor('palmira')['devices']! as List<Object?>;
 
       expect(read.first, same(database.homeDevices.first));
       expect(database.homeGroups, hasLength(1));
@@ -264,9 +266,12 @@ void main() {
 
     test('serves to-do lists to their owners and recipients', () {
       expect(_ids(database.todoLists), ['shopping', 'chores']);
-      expect(_ids(database.todosFor('ana')['lists']), ['shopping']);
-      expect(_ids(database.todosFor('marco')['lists']), ['shopping', 'chores']);
-      expect(database.todosFor('ana')['source'], 'Synthetic');
+      expect(_ids(database.todosFor('palmira')['lists']), ['shopping']);
+      expect(_ids(database.todosFor('paulino')['lists']), [
+        'shopping',
+        'chores',
+      ]);
+      expect(database.todosFor('palmira')['source'], 'Synthetic');
       expect(
         () => database.todosFor('nobody'),
         throwsA(isA<MockDataNotFound>()),
@@ -315,13 +320,13 @@ void main() {
 
       final loaded = await MockDatabase.load(directory: directory.path);
 
-      expect(loaded.findUser('ana'), isNotNull);
+      expect(loaded.findUser('palmira'), isNotNull);
     });
 
     test('reads a profile photo for the users that have one', () async {
       final directory = Directory.systemTemp.createTempSync('mock_db_');
       addTearDown(() => directory.deleteSync(recursive: true));
-      File('${directory.path}/ana.jpg').writeAsBytesSync([1, 2, 3]);
+      File('${directory.path}/palmira.jpg').writeAsBytesSync([1, 2, 3]);
 
       final loaded = await MockDatabase.load(
         directory: 'somewhere',
@@ -331,15 +336,15 @@ void main() {
 
       expect(loaded.listProfiles(), [
         {
-          'id': 'ana',
-          'name': 'Ana',
+          'id': 'palmira',
+          'name': 'Palmira',
           'role': 'Host',
           'photo': base64Encode([1, 2, 3]),
         },
-        {'id': 'marco', 'name': 'Marco', 'role': 'Logistics'},
+        {'id': 'paulino', 'name': 'Paulino', 'role': 'Logistics'},
       ]);
       expect(loaded.listUsers().first, isNot(contains('photo')));
-      expect(loaded.findUser('ana'), isNot(contains('photo')));
+      expect(loaded.findUser('palmira'), isNot(contains('photo')));
     });
 
     test('fails when a file is missing', () {
@@ -357,8 +362,8 @@ void main() {
       shipped = await MockDatabase.load();
     });
 
-    test('lists Ana and Marco, the two people in the timeline', () {
-      expect(shipped.listUsers().map((u) => u['id']), ['ana', 'marco']);
+    test('lists Palmira and Paulino, the two people in the timeline', () {
+      expect(shipped.listUsers().map((u) => u['id']), ['palmira', 'paulino']);
     });
 
     test('has a photo for both', () {
@@ -367,12 +372,12 @@ void main() {
           user['id']: user.containsKey('photo'),
       };
 
-      expect(photos, {'ana': true, 'marco': true});
+      expect(photos, {'palmira': true, 'paulino': true});
     });
 
     test('starts on Saturday at 7:30 AM', () {
       expect(shipped.clock.nowIso, '2026-10-10T07:30:00');
-      expect(shipped.homeFor('ana')['now'], '2026-10-10T07:30:00');
+      expect(shipped.homeFor('palmira')['now'], '2026-10-10T07:30:00');
     });
 
     test('serves every user a full home model', () {
@@ -387,8 +392,8 @@ void main() {
     });
 
     test('keeps only the dinner party scene as an automation', () {
-      expect(_ids(shipped.homeFor('ana')['automations']), ['dinner_party']);
-      expect(shipped.homeFor('marco')['automations'], isEmpty);
+      expect(_ids(shipped.homeFor('palmira')['automations']), ['dinner_party']);
+      expect(shipped.homeFor('paulino')['automations'], isEmpty);
     });
 
     test('has exactly the devices the timeline uses', () {
@@ -415,11 +420,11 @@ void main() {
     test(
       'serves the shopping list to its owner and to who it is shared with',
       () {
-        final lists = shipped.todosFor('ana')['lists']! as List<Object?>;
+        final lists = shipped.todosFor('palmira')['lists']! as List<Object?>;
         expect((lists.single! as Map)['items'], hasLength(5));
-        expect(shipped.todosFor('marco')['lists'], isEmpty);
-        shipped.todoLists.single['sharedWith'] = ['marco'];
-        expect(shipped.todosFor('marco')['lists'], hasLength(1));
+        expect(shipped.todosFor('paulino')['lists'], isEmpty);
+        shipped.todoLists.single['sharedWith'] = ['paulino'];
+        expect(shipped.todosFor('paulino')['lists'], hasLength(1));
       },
     );
   });

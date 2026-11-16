@@ -41,7 +41,7 @@ void main() {
       validator.validate(_reply(components));
 
   group('LayoutValidator accepts the screens of the Figma board', () {
-    test('Marco, Fri 4:30 PM: 7 + 5 over 4 + 4 + 4', () {
+    test('Paulino, Fri 4:30 PM: 7 + 5 over 4 + 4 + 4', () {
       expect(
         check([
           _root(['r1', 'r2', 'chips']),
@@ -58,7 +58,7 @@ void main() {
       );
     });
 
-    test('Ana, Fri 4:30 PM: a plan between two bands, 5 + 4 + 3', () {
+    test('Palmira, Fri 4:30 PM: a plan between two bands, 5 + 4 + 3', () {
       expect(
         check([
           _root(['body', 'chips']),
@@ -76,7 +76,7 @@ void main() {
       );
     });
 
-    test('Ana, Fri 5:41 PM: 8 + 4 over a compact plan and two devices', () {
+    test('Palmira, Fri 5:41 PM: 8 + 4 over a compact plan and two devices', () {
       expect(
         check([
           _root(['r1', 'r2', 'chips']),
@@ -93,39 +93,45 @@ void main() {
       );
     });
 
-    test('Marco, Sat 2:00 AM: an urgent heads-up is half tall, with chips', () {
-      expect(
-        check([
-          _root(['r1', 'r2', 'chips']),
-          _row('r1', ['alert', 'doors']),
-          _urgent('alert', 7),
-          _device('doors', 5),
-          _row('r2', ['night', 'a', 'b']),
-          _device('night', 4),
-          _device('a', 4),
-          _device('b', 4),
-          _chips(),
-        ]),
-        isNull,
-      );
-    });
+    test(
+      'Paulino, Sat 2:00 AM: an urgent heads-up is half tall, with chips',
+      () {
+        expect(
+          check([
+            _root(['r1', 'r2', 'chips']),
+            _row('r1', ['alert', 'doors']),
+            _urgent('alert', 7),
+            _device('doors', 5),
+            _row('r2', ['night', 'a', 'b']),
+            _device('night', 4),
+            _device('a', 4),
+            _device('b', 4),
+            _chips(),
+          ]),
+          isNull,
+        );
+      },
+    );
 
-    test('Ana, Fri 7:30 AM: the shopping list and two bands, 5 + 4 + 3', () {
-      expect(
-        check([
-          _root(['body', 'chips']),
-          _row('body', ['list', 'middle', 'right']),
-          _card('list', 'ShoppingList', 5),
-          _band('middle', 4, ['a', 'b']),
-          _band('right', 3, ['c', 'd']),
-          for (final id in ['a', 'b', 'c', 'd']) _device(id, null),
-          _chips(),
-        ]),
-        isNull,
-      );
-    });
+    test(
+      'Palmira, Fri 7:30 AM: the shopping list and two bands, 5 + 4 + 3',
+      () {
+        expect(
+          check([
+            _root(['body', 'chips']),
+            _row('body', ['list', 'middle', 'right']),
+            _card('list', 'ShoppingList', 5),
+            _band('middle', 4, ['a', 'b']),
+            _band('right', 3, ['c', 'd']),
+            for (final id in ['a', 'b', 'c', 'd']) _device(id, null),
+            _chips(),
+          ]),
+          isNull,
+        );
+      },
+    );
 
-    test('Marco, Fri 4:48 PM: 5 + 7 over 7 + 5', () {
+    test('Paulino, Fri 4:48 PM: 5 + 7 over 7 + 5', () {
       expect(
         check([
           _root(['r1', 'r2', 'chips']),

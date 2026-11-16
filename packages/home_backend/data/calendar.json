@@ -4,7 +4,7 @@
   "events": [
     {
       "id": "cal_dinner",
-      "userId": "ana",
+      "userId": "palmira",
       "title": "Jantar",
       "kind": "guests_arrive",
       "start": "2026-10-10T19:00:00",
@@ -12,259 +12,259 @@
       "guests": 6,
       "status": "confirmed",
       "assignedTo": [
-        "ana",
-        "marco"
+        "palmira",
+        "paulino"
       ]
     },
     {
       "id": "cal_piano",
-      "userId": "marco",
+      "userId": "paulino",
       "title": "Buscar na aula de piano",
       "start": "2026-10-10T17:15:00",
       "end": "2026-10-10T17:30:00",
       "status": "confirmed",
       "assignedTo": [
-        "marco"
+        "paulino"
       ]
     },
     {
       "id": "cal_cake",
-      "userId": "marco",
+      "userId": "paulino",
       "title": "Buscar bolo na padaria",
       "start": "2026-10-10T17:45:00",
       "end": "2026-10-10T18:00:00",
       "status": "confirmed",
       "assignedTo": [
-        "marco"
+        "paulino"
       ]
     },
     {
       "id": "cal_market",
-      "userId": "ana",
+      "userId": "palmira",
       "title": "Feira",
       "detail": "Tomilho, limões e flores para hoje",
       "start": "2026-10-10T08:30:00",
       "end": "2026-10-10T09:30:00",
       "status": "confirmed",
       "assignedTo": [
-        "ana"
+        "palmira"
       ]
     },
     {
       "id": "cal_standup",
-      "userId": "marco",
+      "userId": "paulino",
       "title": "Daily do time",
       "detail": "Do escritório no andar de cima",
       "start": "2026-10-10T09:00:00",
       "end": "2026-10-10T09:30:00",
       "status": "confirmed",
       "assignedTo": [
-        "marco"
+        "paulino"
       ]
     },
     {
       "id": "cal_florist",
-      "userId": "ana",
+      "userId": "palmira",
       "title": "Entrega do florista",
       "detail": "Flores da mesa na porta da frente",
       "start": "2026-10-10T16:00:00",
       "end": "2026-10-10T16:30:00",
       "status": "confirmed",
       "assignedTo": [
-        "ana"
+        "palmira"
       ]
     },
     {
       "id": "cal_table",
-      "userId": "ana",
+      "userId": "palmira",
       "title": "Arrumar a mesa",
       "detail": "Lugares para 8, velas no meio",
       "start": "2026-10-10T17:00:00",
       "end": "2026-10-10T17:30:00",
       "status": "confirmed",
       "assignedTo": [
-        "ana"
+        "palmira"
       ]
     },
     {
       "id": "cal_ice",
-      "userId": "ana",
+      "userId": "palmira",
       "title": "Gelar as bebidas",
       "detail": "Água com gás e vinho branco no gelo",
       "start": "2026-10-10T17:55:00",
       "end": "2026-10-10T18:05:00",
       "status": "confirmed",
       "assignedTo": [
-        "ana"
+        "palmira"
       ]
     },
     {
       "id": "cal_chairs",
-      "userId": "ana",
+      "userId": "palmira",
       "title": "Vizinhos trazem cadeiras",
       "detail": "Duas cadeiras da casa ao lado",
       "start": "2026-10-10T18:10:00",
       "end": "2026-10-10T18:20:00",
       "status": "confirmed",
       "assignedTo": [
-        "ana"
+        "palmira"
       ]
     },
     {
       "id": "cal_dessert",
-      "userId": "ana",
+      "userId": "palmira",
       "title": "Sobremesa e café",
       "detail": "Tiramisu e café para 8",
       "start": "2026-10-10T20:45:00",
       "end": "2026-10-10T21:15:00",
       "status": "confirmed",
       "assignedTo": [
-        "ana"
+        "palmira"
       ]
     },
     {
       "id": "cal_wind_down",
-      "userId": "ana",
+      "userId": "palmira",
       "title": "Abaixar a música",
       "detail": "Baixar o volume para conversar",
       "start": "2026-10-10T21:30:00",
       "end": "2026-10-10T21:45:00",
       "status": "confirmed",
       "assignedTo": [
-        "ana"
+        "palmira"
       ]
     },
     {
       "id": "cal_cleanup",
-      "userId": "ana",
+      "userId": "palmira",
       "title": "Lavar a louça",
       "detail": "Rodar a lava-louças depois que as visitas forem",
       "start": "2026-10-10T22:30:00",
       "end": "2026-10-10T23:00:00",
       "status": "confirmed",
       "assignedTo": [
-        "ana"
+        "palmira"
       ]
     },
     {
       "id": "cal_breakfast",
-      "userId": "ana",
+      "userId": "palmira",
       "title": "Café da manhã juntos",
       "detail": "Café e ovos na varanda",
       "start": "2026-10-10T07:30:00",
       "end": "2026-10-10T08:10:00",
       "status": "confirmed",
       "assignedTo": [
-        "ana",
-        "marco"
+        "palmira",
+        "paulino"
       ]
     },
     {
       "id": "cal_yoga",
-      "userId": "ana",
+      "userId": "palmira",
       "title": "Yoga da manhã",
       "detail": "Vinte minutos no tapete da sala",
       "start": "2026-10-10T08:00:00",
       "end": "2026-10-10T08:30:00",
       "status": "confirmed",
       "assignedTo": [
-        "ana"
+        "palmira"
       ]
     },
     {
       "id": "cal_run",
-      "userId": "marco",
+      "userId": "paulino",
       "title": "Corrida da manhã",
       "detail": "Volta tranquila pelo parque",
       "start": "2026-10-10T07:40:00",
       "end": "2026-10-10T08:20:00",
       "status": "confirmed",
       "assignedTo": [
-        "marco"
+        "paulino"
       ]
     },
     {
       "id": "cal_reading",
-      "userId": "ana",
+      "userId": "palmira",
       "title": "Hora da leitura",
       "detail": "Terminar o capítulo do clube do livro",
       "start": "2026-10-10T09:45:00",
       "end": "2026-10-10T10:30:00",
       "status": "confirmed",
       "assignedTo": [
-        "ana"
+        "palmira"
       ]
     },
     {
       "id": "cal_course",
-      "userId": "marco",
+      "userId": "paulino",
       "title": "Curso online",
       "detail": "Módulo 4 do curso de espanhol",
       "start": "2026-10-10T10:00:00",
       "end": "2026-10-10T11:30:00",
       "status": "confirmed",
       "assignedTo": [
-        "marco"
+        "paulino"
       ]
     },
     {
       "id": "cal_lunch",
-      "userId": "ana",
+      "userId": "palmira",
       "title": "Almoço",
       "detail": "Macarrão de ontem e salada",
       "start": "2026-10-10T12:30:00",
       "end": "2026-10-10T13:15:00",
       "status": "confirmed",
       "assignedTo": [
-        "ana",
-        "marco"
+        "palmira",
+        "paulino"
       ]
     },
     {
       "id": "cal_walk",
-      "userId": "ana",
+      "userId": "palmira",
       "title": "Passear com o cachorro",
       "start": "2026-10-10T13:30:00",
       "end": "2026-10-10T14:00:00",
       "status": "confirmed",
       "assignedTo": [
-        "ana",
-        "marco"
+        "palmira",
+        "paulino"
       ]
     },
     {
       "id": "cal_garage",
-      "userId": "marco",
+      "userId": "paulino",
       "title": "Arrumar a garagem",
       "detail": "Liberar um canto para as caixas do bolo",
       "start": "2026-10-10T14:15:00",
       "end": "2026-10-10T15:00:00",
       "status": "confirmed",
       "assignedTo": [
-        "marco"
+        "paulino"
       ]
     },
     {
       "id": "cal_prep_cook",
-      "userId": "ana",
+      "userId": "palmira",
       "title": "Preparar a marinada",
       "detail": "Ervas e alho para o cordeiro",
       "start": "2026-10-10T14:30:00",
       "end": "2026-10-10T15:15:00",
       "status": "confirmed",
       "assignedTo": [
-        "ana"
+        "palmira"
       ]
     },
     {
       "id": "cal_shower",
-      "userId": "marco",
+      "userId": "paulino",
       "title": "Banho e se arrumar",
       "start": "2026-10-10T15:30:00",
       "end": "2026-10-10T16:00:00",
       "status": "confirmed",
       "assignedTo": [
-        "marco"
+        "paulino"
       ]
     }
   ]

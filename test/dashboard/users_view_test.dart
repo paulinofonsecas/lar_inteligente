@@ -27,7 +27,7 @@ void main() {
       );
 
       expect(find.byType(SkeletonSurface), findsOneWidget);
-      expect(find.text('Ana'), findsNothing);
+      expect(find.text('Palmira'), findsNothing);
       expect(factory.agents, isEmpty);
 
       gate.complete();
@@ -41,8 +41,8 @@ void main() {
         FakeAgentFactory(),
         usersRepository: FakeUsersRepository(),
       );
-      expect(find.text('Ana'), findsOneWidget);
-      expect(find.text('Marco'), findsOneWidget);
+      expect(find.text('Palmira'), findsOneWidget);
+      expect(find.text('Paulino'), findsOneWidget);
     });
 
     testWidgets('shows the photo of a user that has one', (tester) async {
@@ -51,7 +51,12 @@ void main() {
         FakeAgentFactory(),
         usersRepository: FakeUsersRepository(
           users: [
-            HomeUser(id: 'ana', name: 'Ana', role: 'host', photo: photo),
+            HomeUser(
+              id: 'palmira',
+              name: 'Palmira',
+              role: 'host',
+              photo: photo,
+            ),
           ],
         ),
       );
@@ -66,7 +71,7 @@ void main() {
       await tester.pumpApp(factory, usersRepository: repository);
 
       expect(find.text('Não foi possível carregar a família.'), findsOneWidget);
-      expect(find.text('Ana'), findsNothing);
+      expect(find.text('Palmira'), findsNothing);
       expect(factory.agents, isEmpty);
 
       await tester.tap(find.text('Tentar novamente'));
@@ -75,7 +80,7 @@ void main() {
 
       expect(repository.calls, 2);
       expect(find.text('Não foi possível carregar a família.'), findsNothing);
-      expect(find.text('Marco'), findsOneWidget);
+      expect(find.text('Paulino'), findsOneWidget);
       expect(factory.agents, hasLength(1));
     });
 
@@ -92,7 +97,7 @@ void main() {
     ) async {
       final factory = FakeAgentFactory();
       await tester.pumpApp(factory);
-      expect(factory.agents.single.sent.single, contains('user_id "ana"'));
+      expect(factory.agents.single.sent.single, contains('user_id "palmira"'));
     });
   });
 }

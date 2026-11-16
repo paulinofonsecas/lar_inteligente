@@ -112,12 +112,12 @@ void main() {
           if ('${c['id']}'.startsWith('fill_')) c['deviceId'],
       ];
 
-      final forMarco = fills(run(createReply(), userId: 'marco'));
+      final forMarco = fills(run(createReply(), userId: 'paulino'));
 
       expect(forMarco, isNotEmpty);
       final usedBy =
           database.deviceOrNull('${forMarco.first}')!['usedBy'] as List?;
-      expect(usedBy, contains('marco'));
+      expect(usedBy, contains('paulino'));
     });
 
     test('rejects a reply with no A2UI in it', () {

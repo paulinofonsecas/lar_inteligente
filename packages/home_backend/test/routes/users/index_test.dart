@@ -18,11 +18,11 @@ void main() {
       database = MockDatabase(
         users: {
           'users': [
-            {'id': 'ana', 'name': 'Ana', 'role': 'Host', 'age': 41},
+            {'id': 'palmira', 'name': 'Palmira', 'role': 'Host', 'age': 41},
           ],
         },
         home: <String, dynamic>{},
-        photos: {'ana': 'abc'},
+        photos: {'palmira': 'abc'},
       );
     });
 
@@ -41,7 +41,7 @@ void main() {
       expect(response.statusCode, HttpStatus.ok);
       expect(jsonDecode(await response.body()), {
         'users': [
-          {'id': 'ana', 'name': 'Ana', 'role': 'Host', 'photo': 'abc'},
+          {'id': 'palmira', 'name': 'Palmira', 'role': 'Host', 'photo': 'abc'},
         ],
       });
     });

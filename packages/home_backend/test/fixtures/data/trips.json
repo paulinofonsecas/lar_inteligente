@@ -4,7 +4,7 @@
   "trips": [
     {
       "id": "trip_pickup",
-      "userId": "marco",
+      "userId": "paulino",
       "title": "School pickup, then bakery",
       "leaveBy": "2026-10-10T16:55:00",
       "stops": [

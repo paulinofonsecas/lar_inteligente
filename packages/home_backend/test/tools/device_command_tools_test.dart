@@ -41,7 +41,7 @@ void main() {
       expect(result['changed'], isTrue);
       expect(result['summary'], 'oven state: stopped -> running');
       final read = (await googleHomeTool(database).call({
-        'user_id': 'ana',
+        'user_id': 'palmira',
         'room': 'kitchen',
       }))!.toString();
       expect(read, contains('state: running'));
@@ -55,7 +55,7 @@ void main() {
       });
 
       final read =
-          database.homeFor('ana', room: 'kitchen')['devices']!
+          database.homeFor('palmira', room: 'kitchen')['devices']!
               as List<Map<String, dynamic>>;
       final pendants = read.firstWhere((d) => d['id'] == 'kitchen_pendants');
       expect(
@@ -133,7 +133,7 @@ void main() {
       MockDatabase(
         users: {
           'users': [
-            {'id': 'ana', 'name': 'Ana', 'role': 'Host'},
+            {'id': 'palmira', 'name': 'Palmira', 'role': 'Host'},
           ],
         },
         home: <String, dynamic>{},
@@ -142,7 +142,7 @@ void main() {
           'lists': [
             {
               'id': 'shopping',
-              'owners': ['ana'],
+              'owners': ['palmira'],
               'sharedWith': <String>[],
             },
           ],
@@ -156,7 +156,7 @@ void main() {
     });
 
     test('returns the lists of a user', () async {
-      final result = (await tool.call({'user_id': 'ana'}))! as Map;
+      final result = (await tool.call({'user_id': 'palmira'}))! as Map;
       expect(result['lists'], hasLength(1));
     });
 

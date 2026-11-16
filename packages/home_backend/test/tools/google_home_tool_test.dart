@@ -7,7 +7,7 @@ void main() {
     final database = MockDatabase(
       users: {
         'users': [
-          {'id': 'ana', 'name': 'Ana', 'role': 'Host'},
+          {'id': 'palmira', 'name': 'Palmira', 'role': 'Host'},
         ],
       },
       home: {
@@ -33,7 +33,7 @@ void main() {
     });
 
     test('returns the home model for a user', () async {
-      final result = (await tool.call({'user_id': 'ana'}))! as Map;
+      final result = (await tool.call({'user_id': 'palmira'}))! as Map;
 
       expect(result['structure'], {'name': 'Rivera Home'});
       expect(result['devices'], hasLength(1));
@@ -42,7 +42,7 @@ void main() {
     test('passes the room and device type filters through', () async {
       final result =
           (await tool.call({
-                'user_id': 'ana',
+                'user_id': 'palmira',
                 'room': 'Kitchen',
                 'device_type': 'OvenDevice',
               }))!
@@ -53,7 +53,7 @@ void main() {
 
     test('throws a recoverable exception when a filter matches nothing', () {
       expect(
-        () => tool.call({'user_id': 'ana', 'room': 'Attic'}),
+        () => tool.call({'user_id': 'palmira', 'room': 'Attic'}),
         throwsA(isA<MockDataNotFound>()),
       );
     });

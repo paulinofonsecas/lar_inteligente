@@ -128,18 +128,18 @@ void main() {
         ..sendText(
           jsonEncode({
             'type': 'inbox',
-            'userId': 'marco',
+            'userId': 'paulino',
             'unread': 2,
             'item': {'id': 'n1', 'title': 'Plans changed', 'body': 'Earlier'},
           }),
         )
         ..sendText(
-          jsonEncode({'type': 'inbox', 'userId': 'ana', 'unread': 0}),
+          jsonEncode({'type': 'inbox', 'userId': 'palmira', 'unread': 0}),
         )
         ..sendText(
           jsonEncode({
             'type': 'changed',
-            'users': ['marco'],
+            'users': ['paulino'],
             'reason': 'guests_rescheduled',
           }),
         )
@@ -167,13 +167,13 @@ void main() {
           ),
         ),
         const InboxReceived(
-          userId: 'marco',
+          userId: 'paulino',
           unread: 2,
           title: 'Plans changed',
           body: 'Earlier',
         ),
-        const InboxReceived(userId: 'ana', unread: 0),
-        const DataChanged(users: ['marco'], reason: 'guests_rescheduled'),
+        const InboxReceived(userId: 'palmira', unread: 0),
+        const DataChanged(users: ['paulino'], reason: 'guests_rescheduled'),
         const SurfaceMessageReceived({
           'version': 'v0.9',
           'updateDataModel': {

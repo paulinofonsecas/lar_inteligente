@@ -111,7 +111,7 @@ void main() {
     for (final path in [
       '/health',
       '/users',
-      '/users/ana',
+      '/users/palmira',
       '/clock',
       '/reset',
       '/live',

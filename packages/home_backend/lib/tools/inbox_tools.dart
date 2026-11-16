@@ -10,8 +10,8 @@ AgentTool inboxTool(MockDatabase database) {
     description:
         'Devolve a caixa de entrada da família de um usuário, da mais nova '
         'para a mais velha, com a contagem de itens não lidos. Um item é uma '
-        'mudança que outra pessoa fez e que concerne este usuário, como "Ana '
-        'mudou o jantar": traz o título, o corpo, quem enviou, quando, se '
+        'mudança que outra pessoa fez e que concerne este usuário, como '
+        '"Palmira mudou o jantar": traz o título, o corpo, quem enviou, se '
         'está lido e, quando uma opção é claramente a melhor para este '
         'usuário, uma `suggestion` ({tool, label, reason}) nomeando a '
         'ferramenta que resolveria o plano dele. Chame antes de montar uma '
@@ -36,7 +36,7 @@ AgentTool markInboxReadTool(ScenarioWorld world) {
       'properties': {
         'user_id': {
           'type': 'string',
-          'description': 'A caixa de entrada de quem, por exemplo "marco".',
+          'description': 'A caixa de entrada de quem, por exemplo "paulino".',
         },
         'item_id': {
           'type': 'string',

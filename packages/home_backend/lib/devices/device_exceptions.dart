@@ -94,8 +94,7 @@ String _the(String name) {
     'luzes da mesa': 'as',
   };
   final article = articles[lower] ?? 'o';
-  final capitalized =
-      article[0].toUpperCase() + article.substring(1);
+  final capitalized = article[0].toUpperCase() + article.substring(1);
   return '$capitalized $lower';
 }
 

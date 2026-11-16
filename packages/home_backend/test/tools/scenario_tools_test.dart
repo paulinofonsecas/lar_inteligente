@@ -71,11 +71,11 @@ void main() {
     test('asks, then the orders show it pending', () async {
       final asked = await run(
         requestBakeryDeliveryTool(world),
-        {'user_id': 'marco'},
+        {'user_id': 'paulino'},
       );
       final read = await run(
         bakeryOrdersTool(database),
-        {'user_id': 'marco'},
+        {'user_id': 'paulino'},
       );
 
       expect(asked['action'], 'requested');
@@ -91,7 +91,7 @@ void main() {
       () async {
         await run(
           requestBakeryDeliveryTool(world),
-          {'user_id': 'marco', 'slot': '17:20'},
+          {'user_id': 'paulino', 'slot': '17:20'},
         );
 
         final delivery = database.calendarEvents.singleWhere(
@@ -99,7 +99,7 @@ void main() {
         );
         expect(delivery['leavesAt'], '5:20 PM');
         expect(delivery['arrivesAt'], '5:45 PM');
-        expect(database.inboxFor('ana')['items'], isEmpty);
+        expect(database.inboxFor('palmira')['items'], isEmpty);
       },
     );
 
@@ -115,7 +115,7 @@ void main() {
     test('answers what just happened and what is next', () async {
       final result = await run(
         homeActivityTool(database),
-        {'user_id': 'ana'},
+        {'user_id': 'palmira'},
       );
 
       expect(result['nowLabel'], '4:30 PM');

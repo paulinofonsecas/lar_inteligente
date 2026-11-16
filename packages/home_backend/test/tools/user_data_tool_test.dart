@@ -7,7 +7,7 @@ void main() {
     final database = MockDatabase(
       users: {
         'users': [
-          {'id': 'ana', 'name': 'Ana', 'role': 'Host', 'age': 41},
+          {'id': 'palmira', 'name': 'Palmira', 'role': 'Host', 'age': 41},
         ],
       },
       home: <String, dynamic>{},
@@ -21,7 +21,7 @@ void main() {
     });
 
     test('returns the full profile for a user id', () async {
-      final result = await tool.call({'user_id': 'ana'});
+      final result = await tool.call({'user_id': 'palmira'});
 
       expect(result, containsPair('age', 41));
     });
@@ -31,7 +31,7 @@ void main() {
 
       expect(result, {
         'users': [
-          {'id': 'ana', 'name': 'Ana', 'role': 'Host'},
+          {'id': 'palmira', 'name': 'Palmira', 'role': 'Host'},
         ],
       });
     });

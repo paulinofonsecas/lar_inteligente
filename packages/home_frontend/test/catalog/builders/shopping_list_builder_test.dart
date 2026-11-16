@@ -14,7 +14,7 @@ Map<String, Object?> _literal() => {
     {'id': 'shallots', 'label': 'Shallots', 'checked': true},
   ],
   'footerAction': {
-    'label': 'Share list with Marco',
+    'label': 'Share list with Paulino',
     'icon': 'share',
   },
 };
@@ -184,11 +184,11 @@ void main() {
         _literal(),
       );
 
-      await tester.tap(find.text('Share list with Marco'));
+      await tester.tap(find.text('Share list with Paulino'));
 
       expect(harness.events.single.name, 'share_list');
       expect(harness.events.single.context, {
-        'progressLabel': 'Share list with Marco',
+        'progressLabel': 'Share list with Paulino',
         'listId': 'shopping',
       });
     });

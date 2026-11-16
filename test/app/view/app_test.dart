@@ -38,8 +38,8 @@ void main() {
       final factory = FakeAgentFactory();
       await tester.pumpApp(factory);
       expect(factory.agents, hasLength(1));
-      expect(factory.agents.single.user, ana);
-      expect(factory.agents.single.sent, [ana.prompt]);
+      expect(factory.agents.single.user, palmira);
+      expect(factory.agents.single.sent, [palmira.prompt]);
     });
 
     testWidgets('the appearance sheet turns the panel dark', (tester) async {
@@ -77,13 +77,13 @@ void main() {
       final factory = FakeAgentFactory();
       await tester.pumpApp(factory);
 
-      await tester.tap(find.text(marco.name));
+      await tester.tap(find.text(paulino.name));
       await tester.pump();
 
       expect(factory.agents, hasLength(2));
       expect(factory.agents.first.disposed, isTrue);
-      expect(factory.agents.last.user, marco);
-      expect(factory.agents.last.sent, [marco.prompt]);
+      expect(factory.agents.last.user, paulino);
+      expect(factory.agents.last.sent, [paulino.prompt]);
     });
 
     testWidgets('switching back requests the first user again', (
@@ -92,13 +92,13 @@ void main() {
       final factory = FakeAgentFactory();
       await tester.pumpApp(factory);
 
-      await tester.tap(find.text(marco.name));
+      await tester.tap(find.text(paulino.name));
       await tester.pump();
-      await tester.tap(find.text(ana.name));
+      await tester.tap(find.text(palmira.name));
       await tester.pump();
 
       expect(factory.agents, hasLength(3));
-      expect(factory.agents.last.user, ana);
+      expect(factory.agents.last.user, palmira);
     });
   });
 

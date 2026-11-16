@@ -23,7 +23,7 @@ Future<void> settle(WidgetTester tester) async {
 final Finder _askMicrophone = find.byTooltip('Toque para falar');
 final Finder _sendMicrophone = find.byTooltip('Toque para enviar');
 final Finder _cancel = find.text('Cancelar');
-final Finder _card = find.text('Ouvindo Ana');
+final Finder _card = find.text('Ouvindo Palmira');
 
 void main() {
   group('VoiceLayer', () {
@@ -375,7 +375,10 @@ void main() {
       await tapToSpeak(tester);
       // The veil covers the sidebar while the card is open, so the user is
       // switched from where a reset would switch it.
-      tester.element(find.byType(VoiceInput)).read<UsersCubit>().select(marco);
+      tester
+          .element(find.byType(VoiceInput))
+          .read<UsersCubit>()
+          .select(paulino);
       await settle(tester);
 
       expect(microphone.isOn, isFalse);

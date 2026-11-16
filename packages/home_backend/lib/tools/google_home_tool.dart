@@ -26,12 +26,13 @@ AgentTool googleHomeTool(MockDatabase database) {
       'properties': {
         'user_id': {
           'type': 'string',
-          'description': 'O id do usuário, por exemplo "ana" ou "marco".',
+          'description': 'O id do usuário, por exemplo "palmira" ou "paulino".',
         },
         'room': {
           'type': 'string',
           // ignore: lines_longer_than_80_chars
-          'description': 'Id ou nome opcional do cômodo, por exemplo "Cozinha".',
+          'description':
+              'Id ou nome opcional do cômodo, por exemplo "Cozinha".',
         },
         'device_type': {
           'type': 'string',

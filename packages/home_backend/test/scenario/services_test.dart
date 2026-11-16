@@ -127,10 +127,10 @@ void main() {
     });
 
     test('a delivery has labels too', () {
-      world.bakery.requestDelivery('marco');
+      world.bakery.requestDelivery('paulino');
       world.moveTo(atHhmm(database.clock.start, '16:41'));
       final order =
-          (database.bakeryFor('marco')['orders']! as List<dynamic>).single
+          (database.bakeryFor('paulino')['orders']! as List<dynamic>).single
               as Map;
       expect(order['departsAtLabel'], '5:20 PM');
       expect(order['etaLabel'], '5:45 PM');
@@ -141,13 +141,16 @@ void main() {
     test('needs a user and a pickup to replace', () {
       expect(() => world.bakery.requestDelivery('nobody'), notFound('nobody'));
       world.calendar.removeEvent('cal_cake');
-      expect(() => world.bakery.requestDelivery('marco'), notFound('cal_cake'));
+      expect(
+        () => world.bakery.requestDelivery('paulino'),
+        notFound('cal_cake'),
+      );
     });
 
     test('a late request leaves as soon as the bakery confirms', () {
       world.moveTo(atHhmm(database.clock.start, '17:20'));
 
-      final order = world.bakery.requestDelivery('marco')['order']! as Map;
+      final order = world.bakery.requestDelivery('paulino')['order']! as Map;
 
       expect(order['slot'], '17:21');
       expect(order['status'], 'pending');
@@ -169,7 +172,8 @@ void main() {
     test('books the slot asked for and refuses one it does not offer', () {
       database.bakery['deliverySlots'] = ['17:10', '17:20', '17:40'];
       final order =
-          world.bakery.requestDelivery('marco', slot: '17:40')['order']! as Map;
+          world.bakery.requestDelivery('paulino', slot: '17:40')['order']!
+              as Map;
 
       expect(order['departsAt'], '2026-10-10T17:40:00');
       expect(order['eta'], '2026-10-10T18:05:00');
@@ -178,7 +182,7 @@ void main() {
 
     test('a slot the bakery does not have lists the ones it has', () {
       expect(
-        () => world.bakery.requestDelivery('marco', slot: '17:30'),
+        () => world.bakery.requestDelivery('paulino', slot: '17:30'),
         notFound('Disponíveis: 17:20'),
       );
     });
@@ -193,7 +197,7 @@ void main() {
         result['message'],
         'As visitas agora chegam às 6:00 PM (era 7:00 PM).',
       );
-      expect(database.bakeryFor('marco')['messages'], hasLength(1));
+      expect(database.bakeryFor('paulino')['messages'], hasLength(1));
     });
   });
 
@@ -228,7 +232,7 @@ void main() {
       expect((result['effects']! as List<dynamic>).length, 5);
       expect(
         ((result['trips']! as List<dynamic>).single as Map)['userId'],
-        'marco',
+        'paulino',
       );
     });
 
@@ -288,7 +292,7 @@ void main() {
     test('a trip whose stops are all dropped is left alone', () {
       final trip = database.tripRows.single;
       (trip['plannedStops'] as List<dynamic>).removeAt(0);
-      world.bakery.requestDelivery('marco');
+      world.bakery.requestDelivery('paulino');
       world.moveTo(atHhmm(database.clock.start, '16:45'));
 
       expect((trip['stops'] as List<dynamic>).length, 3);

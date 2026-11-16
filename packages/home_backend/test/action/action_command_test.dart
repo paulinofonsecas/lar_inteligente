@@ -218,7 +218,7 @@ void main() {
         'listId': 'shopping',
       }).applyTo(machine);
       expect(database.scenes.single['state'], 'running');
-      expect(database.todoLists.single['sharedWith'], ['marco']);
+      expect(database.todoLists.single['sharedWith'], ['paulino']);
     });
 
     test('undo_change reverts the last command', () {

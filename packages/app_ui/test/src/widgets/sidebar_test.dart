@@ -4,8 +4,8 @@ import 'package:material_symbols_icons/symbols.dart';
 import 'package:material_ui/material_ui.dart';
 
 const _profiles = [
-  SidebarProfile(name: 'Ana'),
-  SidebarProfile(name: 'Marco'),
+  SidebarProfile(name: 'Palmira'),
+  SidebarProfile(name: 'Paulino'),
 ];
 
 Future<void> _pump(
@@ -44,8 +44,8 @@ void main() {
     testWidgets('lists the profiles and the navigation', (tester) async {
       await _pump(tester);
 
-      expect(find.text('Ana'), findsOneWidget);
-      expect(find.text('Marco'), findsOneWidget);
+      expect(find.text('Palmira'), findsOneWidget);
+      expect(find.text('Paulino'), findsOneWidget);
       expect(find.byIcon(Symbols.home_rounded), findsOneWidget);
       expect(find.byIcon(Symbols.settings_rounded), findsOneWidget);
     });
@@ -55,14 +55,15 @@ void main() {
     ) async {
       await _pump(tester);
 
-      expect(find.text('A'), findsOneWidget);
+      // Both people's names start with a P, so both initials read the same.
+      expect(find.text('P'), findsNWidgets(2));
     });
 
     testWidgets('selects the tapped profile', (tester) async {
       final selected = <int>[];
       await _pump(tester, onProfileSelected: selected.add);
 
-      await tester.tap(find.text('Marco'));
+      await tester.tap(find.text('Paulino'));
 
       expect(selected, [1]);
     });
@@ -86,9 +87,9 @@ void main() {
       await _pump(tester, selectedIndex: 1);
 
       expect(
-        tester.getSemantics(find.bySemanticsLabel('Marco')),
+        tester.getSemantics(find.bySemanticsLabel('Paulino')),
         isSemantics(
-          label: 'Marco',
+          label: 'Paulino',
           isButton: true,
           isSelected: true,
           hasSelectedState: true,

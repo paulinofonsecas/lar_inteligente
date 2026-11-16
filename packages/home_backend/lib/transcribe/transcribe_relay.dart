@@ -78,7 +78,6 @@ class TranscribeRelay {
   /// documentation.
   final _pending = <List<int>>[];
   final _done = Completer<void>();
-  StreamSubscription<dynamic>? _clientSubscription;
   StreamSubscription<Transcript>? _transcriptSubscription;
   bool _ready = false;
   bool _stopping = false;
@@ -87,7 +86,7 @@ class TranscribeRelay {
   /// Relays until either side closes or fails. Completes once the session is
   /// closed and the client socket is closing.
   Future<void> run() {
-    _clientSubscription = _client.stream.listen(
+    _client.stream.listen(
       _onClientMessage,
       onError: _onClientGone,
       onDone: _onClientGone,
@@ -182,12 +181,13 @@ class TranscribeRelay {
     if (_closed) return;
     _closed = true;
     _pending.clear();
-    await _clientSubscription?.cancel();
+    // Close the client socket before dropping its listener. Cancelling the
+    // subscription first tears the socket down without a close frame, and the
+    // browser then reports 1006 even when the utterance ended cleanly. The
+    // socket's own close ends the subscription.
+    unawaited(_client.sink.close(code));
     await _transcriptSubscription?.cancel();
     await _session.close();
-    // Not awaited: a client that never answers the close frame must not keep
-    // the relay open.
-    unawaited(_client.sink.close(code));
     _done.complete();
   }
 

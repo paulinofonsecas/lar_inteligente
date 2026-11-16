@@ -5,6 +5,13 @@ import 'package:a2ui_vgv_smart_home/api_key/gemini_key_store.dart';
 import 'package:equatable/equatable.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
+/// Close codes that end a session without a verdict from the backend.
+///
+/// `1000` is the relay's own close. `1005` and `1006` are what a browser
+/// reports when the socket went away without a close frame, which a proxy in
+/// front of the backend can cause; neither means the transcription failed.
+const _noVerdictCodes = {1000, 1005, 1006};
+
 /// The subprotocol `/transcribe` selects. The person's Gemini key rides next to
 /// it, because browsers can't set an `Authorization` header on a WebSocket.
 const transcribeProtocol = 'genui.transcribe.v1';
@@ -135,7 +142,7 @@ class _WebSocketTranscriptionSession implements TranscriptionSession {
         // An `error` message is always followed by a close with its own code,
         // so the code alone says whether the backend finished.
         final code = _channel.closeCode;
-        if (code != null && code != 1000) {
+        if (code != null && !_noVerdictCodes.contains(code)) {
           sink.addError(TranscriptionFailed('Closed with $code.'));
         }
         sink.close();

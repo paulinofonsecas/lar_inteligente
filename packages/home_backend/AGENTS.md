@@ -370,7 +370,9 @@ client socket and one `TranscriptionSession`. Two properties are load-bearing:
   transcription" describe the list. Change both together.
 - **Close codes are 1000 or from 3000 to 4999.** `package:web_socket` throws
   on any other code, and the throw lands in an unawaited close where nothing
-  catches it. `4400` and `4502` are the relay's own.
+  catches it. `4400` and `4502` are the relay's own. Close the client sink
+  before cancelling its listener: cancelling first drops the socket without a
+  close frame, and the browser reports `1006` on a clean finish.
 
 `GeminiLiveSession` speaks the Live API. It ends `finish` after 2 seconds
 because Gemini answers silence with nothing. Gemini may also drop speech that

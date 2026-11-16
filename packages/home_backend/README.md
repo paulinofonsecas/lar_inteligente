@@ -360,7 +360,12 @@ no `final` means nothing was heard.
 | `4400` | The client sent a message the protocol doesn't define. |
 | `4502` | Gemini failed, or wasn't ready within 5 seconds. |
 
-The real cause of a `4502` goes to the log.
+The real cause of a `4502` goes to the log. The relay closes the client socket
+before dropping its own listener: cancelling the listener first tears the socket
+down without a close frame, and the browser then reports `1006` even when the
+utterance ended cleanly. A client that sees `1005` or `1006` also treats it as a
+finished utterance, since a proxy in front of the backend can still cut the
+socket.
 
 ### Audio that arrives before Gemini is ready
 

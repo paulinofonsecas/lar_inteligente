@@ -123,6 +123,17 @@ void main() {
       await expectLater(transcripts, throwsA(isA<TranscriptionFailed>()));
     });
 
+    test('ends quietly when the socket went away without a close', () async {
+      final session = await connect();
+      final transcripts = session.transcripts.toList();
+
+      // The browser reports 1005 or 1006 when a proxy in front of the backend
+      // drops the socket without a close frame; neither is a failure.
+      await server.close();
+
+      expect(await transcripts, isEmpty);
+    });
+
     test('fails when the connection fails', () async {
       final session = await WebSocketTranscriptionClient(
         keys: GeminiKeyStore('key-1'),

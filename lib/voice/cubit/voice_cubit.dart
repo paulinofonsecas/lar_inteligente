@@ -79,17 +79,18 @@ class VoiceState extends Equatable {
 /// Turns a tap on the microphone button into a spoken command.
 ///
 /// [start] opens a [TranscriptionSession], streams the [Microphone] into it,
-/// and collects what comes back. The command ends by itself: two seconds after
-/// the last words, or ten seconds after the start if nothing was said, which
-/// drops it. [finish] ends it early and sends what was heard, and [cancel]
-/// drops it. The session ends once the backend has sent the last transcript.
+/// and collects what comes back. The command ends by itself: less than a second
+/// after the last words, or ten seconds after the start if nothing was said,
+/// which drops it. [finish] ends it early and sends what was heard, and
+/// [cancel] drops it. The session ends once the backend has sent the last
+/// transcript.
 /// {@endtemplate}
 class VoiceCubit extends Cubit<VoiceState> {
   /// {@macro voice_cubit}
   VoiceCubit({
     required this._microphone,
     required this._client,
-    this._pause = const Duration(seconds: 2),
+    this._pause = const Duration(milliseconds: 900),
     this._silenceTimeout = const Duration(seconds: 10),
   }) : super(const VoiceState());
 

@@ -78,6 +78,7 @@ class TranscribeRelay {
   /// documentation.
   final _pending = <List<int>>[];
   final _done = Completer<void>();
+  StreamSubscription<dynamic>? _clientSubscription;
   StreamSubscription<Transcript>? _transcriptSubscription;
   bool _ready = false;
   bool _stopping = false;
@@ -86,7 +87,7 @@ class TranscribeRelay {
   /// Relays until either side closes or fails. Completes once the session is
   /// closed and the client socket is closing.
   Future<void> run() {
-    _client.stream.listen(
+    _clientSubscription = _client.stream.listen(
       _onClientMessage,
       onError: _onClientGone,
       onDone: _onClientGone,
@@ -153,7 +154,8 @@ class TranscribeRelay {
   });
 
   /// Handles the client leaving, cleanly or with a socket [error].
-  void _onClientGone([Object? error]) => unawaited(_close(null));
+  void _onClientGone([Object? error]) =>
+      unawaited(_close(null, clientGone: true));
 
   Future<void> _reject() async {
     _log.warning('/transcribe: closed a client that sent an unknown message');
@@ -177,15 +179,17 @@ class TranscribeRelay {
     await _close(transcribeProviderFailedCode);
   }
 
-  Future<void> _close(int? code) async {
+  Future<void> _close(int? code, {bool clientGone = false}) async {
     if (_closed) return;
     _closed = true;
     _pending.clear();
     // Close the client socket before dropping its listener. Cancelling the
     // subscription first tears the socket down without a close frame, and the
-    // browser then reports 1006 even when the utterance ended cleanly. The
-    // socket's own close ends the subscription.
+    // browser then reports 1006 even when the utterance ended cleanly.
     unawaited(_client.sink.close(code));
+    // A client that hung up first is already closing: cancelling its listener
+    // is what completes the handshake it started.
+    if (clientGone) await _clientSubscription?.cancel();
     await _transcriptSubscription?.cancel();
     await _session.close();
     _done.complete();

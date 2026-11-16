@@ -14,7 +14,7 @@ const geminiLiveEndpoint =
 /// Gemini's live speech-to-text model.
 const geminiTranscribeModel = 'gemini-3.5-transcribe-live';
 
-const _defaultFinishTimeout = Duration(seconds: 2);
+const _defaultFinishTimeout = Duration(milliseconds: 600);
 
 /// {@template gemini_live_session}
 /// A [TranscriptionSession] on Gemini's live transcription model.
@@ -94,6 +94,9 @@ class GeminiLiveSession implements TranscriptionSession {
   /// already shown.
   bool _finishing = false;
 
+  /// Whether Gemini already answered `generationComplete` for this utterance.
+  bool _generationDone = false;
+
   @override
   Future<void> get ready => _ready.future;
 
@@ -112,6 +115,12 @@ class GeminiLiveSession implements TranscriptionSession {
     if (_closed) return Future.value();
     final finished = _finished = Completer<void>();
     _finishing = true;
+    // Gemini already closed this utterance, so there is nothing left to flush:
+    // the person should not wait for a timer that has nothing to wait for.
+    if (_generationDone) {
+      _completeFinish();
+      return finished.future;
+    }
     _send({
       'realtimeInput': {'audioStreamEnd': true},
     });
@@ -156,7 +165,10 @@ class GeminiLiveSession implements TranscriptionSession {
     if (interim != null) _transcripts.add(Transcript(interim, isFinal: false));
     final last = _text(content['inputTranscription']);
     if (last != null) _transcripts.add(Transcript(last, isFinal: true));
-    if (content['generationComplete'] == true) _completeFinish();
+    if (content['generationComplete'] == true) {
+      _generationDone = true;
+      _completeFinish();
+    }
   }
 
   void _onError(Object error) =>

@@ -9,6 +9,12 @@ import 'package:web_socket_channel/io.dart';
 
 /// A provider session the test drives by hand.
 class _FakeSession implements TranscriptionSession {
+  _FakeSession() {
+    // The test may fail setup before the relay subscribes; without a listener
+    // the error would count as unhandled and fail the test.
+    setup.future.ignore();
+  }
+
   final setup = Completer<void>();
   final output = StreamController<Transcript>();
   final finished = Completer<void>();
@@ -242,6 +248,8 @@ void main() {
     await client.socket.close();
 
     await _until(() => session.calls.contains('close'));
+    // The client's own close completes once the relay's socket goes away.
+    await _until(() => client.isClosed);
     expect(client.isClosed, isTrue);
   });
 }

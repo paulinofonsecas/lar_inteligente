@@ -269,6 +269,28 @@ void main() {
       );
     });
 
+    test(
+      'completes at once when Gemini already finished the utterance',
+      () async {
+        final session = connect(finishTimeout: const Duration(seconds: 5));
+        addTearDown(session.close);
+        final gemini = await upstream;
+        await gemini.setupComplete(session);
+
+        gemini.send({
+          'serverContent': {'generationComplete': true},
+        });
+        await Future<void>.delayed(const Duration(milliseconds: 50));
+
+        final watch = Stopwatch()..start();
+        await session.finish();
+        watch.stop();
+
+        // No audioStreamEnd wait: the utterance was already over.
+        expect(watch.elapsed, lessThan(const Duration(seconds: 1)));
+      },
+    );
+
     test('completes right away once the session is closed', () async {
       final session = connect();
       final gemini = await upstream;
